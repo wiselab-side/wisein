@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CommentDAO {
 
+
     /* comment 다건조회 */
     public List<CommentDTO> selectComment(CommentDTO dto) throws Exception;
 
