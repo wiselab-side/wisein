@@ -53,6 +53,8 @@ public class tipController {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
 
+        List<TipBoardDTO> categoryList = tipBoardService.categoryList();
+
         List<TipBoardDTO> tipList = new ArrayList<>();
         tipList = tipBoardService.selectTipList(dto);
 
@@ -63,6 +65,7 @@ public class tipController {
             tipList = null;
         }
 
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
 

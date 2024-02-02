@@ -218,5 +218,11 @@
                      )
     </select>
 
+    <!-- 카테고리 조회 -->
+    <select id="categoryList" resultType="TipBoardDTO">
+        SELECT DISTINCT CATEGORY
+        FROM TIP_BOARD
+    </select>
+
 
 </mapper>

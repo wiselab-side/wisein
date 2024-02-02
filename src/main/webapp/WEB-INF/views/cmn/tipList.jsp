@@ -33,7 +33,14 @@
                     <div class="board-cell board-no">
                     </div>
                     <div class="board-cell board-category purple2">
-                        <p class="category-select">카테고리</p>
+                        <p class="category-select">
+                            <select id="selectOption" onchange="boardCategorySelect(this)">
+                                <option value="none">카테고리</option>
+                                <c:forEach items="${categoryList}" var="categoryList">
+                                    <option value="category"><c:out value="${categoryList.category}"/></option>
+                                </c:forEach>
+                            </select>
+                        </p>
                         <!--
                         <ul class="person-function">
                             <li><a href="#">FRONT</a></li>
@@ -62,7 +69,7 @@
                     <div class="board-cell board-like gray">
                         스크랩
                     </div>
-                    <div class="board-cell board-writer gray">
+                    <div class="board-cell board-writer gray" name="writer">
                         작성자
                     </div>
                     <div class="board-cell board-date gray">
@@ -137,5 +144,4 @@
         </ul>
     </div>
 </c:if>
-
 

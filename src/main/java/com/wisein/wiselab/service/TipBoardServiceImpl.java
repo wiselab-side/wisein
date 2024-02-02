@@ -85,4 +85,9 @@ public class TipBoardServiceImpl implements TipBoardService {
         return dao.selectMeetLink(num);
     }
 
+    @Override
+    public List<TipBoardDTO> categoryList() throws Exception {
+        return dao.categoryList();
+    }
+
 }

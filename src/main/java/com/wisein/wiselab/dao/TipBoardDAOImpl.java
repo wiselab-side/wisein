@@ -80,5 +80,11 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         return sql.selectOne(NS + ".selectMeetLink", num);
     }
 
+    /* 카테고리 조회 */
+    @Override
+    public List<TipBoardDTO> categoryList() throws Exception {
+        return sql.selectList(NS + ".categoryList");
+    }
+
 
 }

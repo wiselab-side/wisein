@@ -35,4 +35,7 @@ public interface TipBoardService {
     /* 작성자 meetLink */
     public String selectMeetLink(int num) throws Exception;
 
+    /* 카테고리 조회 */
+    public List<TipBoardDTO> categoryList() throws Exception;
+
 }
