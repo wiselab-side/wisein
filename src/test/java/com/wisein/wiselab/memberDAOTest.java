@@ -20,5 +20,4 @@ public class memberDAOTest {
        dao.register(dto);
     }
 
-
 }
