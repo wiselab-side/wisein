@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.tipBoardMapper">
+    <!--
+        카테고리 정렬의 경우 선택한 카테고리의 글만 보여야하기 때문에
+        WHERE 절에서 AND 조건을 추가하는 방식으로 구현했다.
+        제목 정렬의 경우 ORDER BY를 통해 각각 오름차순과 내림차순으로 정렬했고
+        선택하지 않은 경우에는 최신글 순서대로(NUM DESC) 정렬되도록 했다.
+    -->
+    <!-- 카테고리 정렬 -->
+    <sql id="tipListCategory">
+        <if test="category == 'FRONT'">
+            AND category = 'FRONT'
+        </if>
+        <if test="category == 'BACK'">
+            AND category = 'BACK'
+        </if>
+        <if test="category == 'DB'">
+            AND category = 'DB'
+        </if>
+    </sql>
+    <!-- 제목 정렬 -->
+    <sql id="tipListSubject">
+        <if test="subject == 'ASC'">
+            SUBJECT ASC,
+        </if>
+        <if test="subject =='DESC'">
+            SUBJECT DESC,
+        </if>
+    </sql>
 
     <!--TipBoard 다건조회-->
     <select id="selectTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
-        <![CDATA[
+
             SELECT A.RNUM
                   ,A.NUM
                   ,A.CATEGORY
@@ -41,13 +68,16 @@
                     AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
                     AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
                     AND DEL_YN = 'N'
+                    <![CDATA[
                     AND TB.NUM > 0
+                    ]]>
+                    <include refid="tipListCategory"/>
                   GROUP BY TB.NUM
-                  ORDER BY NUM DESC
+                  ORDER BY <include refid="tipListSubject"/> NUM DESC
                   ) AS A
            LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
-           ]]>
-        </select>
+
+    </select>
 
     <!--TipBoard 작성글 모아보기-->
     <select id="selectMemberTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">

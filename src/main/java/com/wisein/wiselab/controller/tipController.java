@@ -49,7 +49,28 @@ public class tipController {
 
     //다건 조회
     @GetMapping(value="/tipList")
-    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
+    public String tipList (HttpSession session
+                          , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
+                          , Model model
+                          , @RequestParam(name="category", required = false) String category
+                          , @RequestParam(name="subject", required = false) String subject
+
+    ) throws Exception {
+        /*
+        카테고리 및 제목 정렬 처리
+        작성자 : 이영주
+         날짜  : 2024.02.05
+         내용  : form을 통해 받아온 카테고리/제목 정렬 기준을 확인한 후 dto에 넣어준다
+                카테고리를 선택하지 않은 경우 최신글부터 정렬되도록 한다
+
+         */
+        if(category != null && !category.isEmpty()){
+            dto.setCategory(category);
+        }
+        if(subject != null && !subject.isEmpty()){
+            dto.setSubject(subject);
+        }
+
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
 
@@ -65,6 +86,8 @@ public class tipController {
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("selectedSubject", subject);
 
         return "cmn/tipList";
     }
@@ -73,13 +96,15 @@ public class tipController {
     @GetMapping(value="/gatherMemTip")
     public String gatherMemTip (HttpServletRequest request
             , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
-            ,  @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
             , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
             , @RequestParam(value="commentListWriter", required = false) String commentListWriter
             , @RequestParam(value="tipWriter", required = false) String tipWriter
             , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+
 
         if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
             questionsListWriter = questionsListWriter.substring(1);
@@ -129,6 +154,9 @@ public class tipController {
         tipList = tipBoardService.selectMemberTipList(dto);
         dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
+
+        //페이지 처리
+        //PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 12, 10, "tipList.do", "&tip_category=" + category);
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);

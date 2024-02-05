@@ -33,20 +33,35 @@
                     <div class="board-cell board-no">
                     </div>
                     <div class="board-cell board-category purple2">
-                        <p class="category-select">카테고리</p>
-                        <!--
-                        <ul class="person-function">
-                            <li><a href="#">FRONT</a></li>
-                            <li><a href="#">BACK</a></li>
-                            <li><a href="#">DB</a></li>
-                        </ul>
-                        <span class="material-icons">
-                                expand_more
-                        </span>
-                        -->
+                        <!--카테고리 처리 -->
+                        <!-- controller 에 전해줄 form 시작-->
+                         <form action="/tipList" method="get">
+                             <select id="category" name="category" class="category-select" onchange="this.form.submit()">
+                                 <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
+                                 <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
+                                 <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
+                                 <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
+                             </select>
+                            <!--
+                            <ul class="person-function">
+                                <li><a href="#">FRONT</a></li>
+                                <li><a href="#">BACK</a></li>
+                                <li><a href="#">DB</a></li>
+                            </ul>
+                            <span class="material-icons">
+                                    expand_more
+                            </span>
+                            -->
                     </div>
                     <div class="board-cell board-title">
-                        제목(가나다)
+                        <!--제목 처리 -->
+                             <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
+                                 <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
+                                 <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
+                                 <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
+                             </select>
+                        </form>
+                        <!-- controller 에 전해줄 form 끝-->
                         <!--
                         <span class="material-icons">
                                 expand_more
