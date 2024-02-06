@@ -2,6 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.tipBoardMapper">
 
+    <sql id="sort">
+        <if test="sort == null">
+            ORDER BY NUM DESC
+        </if>
+        <if test="sort == 'category'">
+            ORDER BY CATEGORY DESC
+        </if>
+        <if test="sort == 'num'">
+            ORDER BY NUM DESC
+        </if>
+        <if test="sort == 'content'">
+            ORDER BY CONTENT DESC
+        </if>
+        <if test="sort == 'writer'">
+            ORDER BY WRITER
+        </if>
+        <if test="sort == 'likeCount'">
+            ORDER BY LIKE_COUNT DESC
+        </if>
+        <if test="sort == 'scrapCount'">
+            ORDER BY SCRAP_COUNT DESC
+        </if>
+        <if test="sort == 'regDate'">
+            ORDER BY REG_DATE DESC
+        </if>
+
+    </sql>
+
     <!--TipBoard 다건조회-->
     <select id="selectTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
         <![CDATA[
@@ -45,8 +73,11 @@
                   GROUP BY TB.NUM
                   ORDER BY NUM DESC
                   ) AS A
-           LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
-           ]]>
+        ]]>
+            <include refid='sort'/>
+        <![CDATA[
+            LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+        ]]>
         </select>
 
     <!--TipBoard 작성글 모아보기-->
@@ -222,6 +253,10 @@
     <select id="categoryList" resultType="TipBoardDTO">
         SELECT DISTINCT CATEGORY
         FROM TIP_BOARD
+    </select>
+
+    <select id="categoryDetail">
+        SELECT
     </select>
 
 

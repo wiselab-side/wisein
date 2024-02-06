@@ -49,9 +49,10 @@ public class tipController {
 
     //다건 조회
     @GetMapping(value="/tipList")
-    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
+    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model, @RequestParam(value="sort", required = false) String sort) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
+        dto.setSort(sort);
 
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 
@@ -65,12 +66,13 @@ public class tipController {
             tipList = null;
         }
 
-        model.addAttribute("categoryList", categoryList);
         model.addAttribute("tipList", tipList);
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("pagination", pagination);
 
         return "cmn/tipList";
     }
+
 
     //작성글 모아보기
     @GetMapping(value="/gatherMemTip")
@@ -138,6 +140,7 @@ public class tipController {
 
         return "cmn/tipList";
     }
+
 
     //단건 조회
     @GetMapping(value="/tipDetail")

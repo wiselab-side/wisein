@@ -34,12 +34,12 @@
                     </div>
                     <div class="board-cell board-category purple2">
                         <p class="category-select">
-                            <select id="selectOption" onchange="boardCategorySelect(this)">
-                                <option value="none">카테고리</option>
-                                <c:forEach items="${categoryList}" var="categoryList">
-                                    <option value="category"><c:out value="${categoryList.category}"/></option>
-                                </c:forEach>
-                            </select>
+                                <select id="selectOption" name="category" onchange="if(this.value) location.href=(this.value)">
+                                    <option value="/tipList">카테고리</option>
+                                    <c:forEach items="${categoryList}" var="categoryList">
+                                        <option value="/tipList/${categoryList.category}"><c:out value="${categoryList.category}"/></option>
+                                    </c:forEach>
+                                </select>
                         </p>
                         <!--
                         <ul class="person-function">
@@ -52,26 +52,36 @@
                         </span>
                         -->
                     </div>
-                    <div class="board-cell board-title">
-                        제목(가나다)
-                        <!--
-                        <span class="material-icons">
-                                expand_more
-                        </span>
-                        -->
-                    </div>
-                    <div class="board-cell board-like gray">
-                        댓글수
-                    </div>
-                    <div class="board-cell board-like gray">
-                        좋아요
-                    </div>
-                    <div class="board-cell board-like gray">
-                        스크랩
-                    </div>
-                    <div class="board-cell board-writer gray" name="writer">
-                        작성자
-                    </div>
+                    <a href="/tipList?sort=content">
+                        <div class="board-cell board-title">
+                            제목(가나다)
+                            <!--
+                            <span class="material-icons">
+                                    expand_more
+                            </span>
+                            -->
+                        </div>
+                    </a>
+                    <a href="tipList?sort=#">
+                        <div class="board-cell board-like gray">
+                            댓글수
+                        </div>
+                    </a>
+                    <a href="tipList?sort=likeCount">
+                        <div class="board-cell board-like gray">
+                            좋아요
+                        </div>
+                    </a>
+                    <a href="tipList?sort=scrapCount">
+                        <div class="board-cell board-like gray">
+                            스크랩
+                        </div>
+                    </a>
+                    <a href="/tipList?sort=writer">
+                        <div class="board-cell board-writer gray" name="writer">
+                            작성자
+                        </div>
+                    </a>
                     <div class="board-cell board-date gray">
                         날짜
                     </div>
@@ -144,4 +154,6 @@
         </ul>
     </div>
 </c:if>
+
+<script src="resources/js/tipBoard.js"></script>
 
