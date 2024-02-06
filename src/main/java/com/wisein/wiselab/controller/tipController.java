@@ -60,10 +60,10 @@ public class tipController {
         카테고리 및 제목 정렬 처리
         작성자 : 이영주
          날짜  : 2024.02.05
-         내용  : form을 통해 받아온 카테고리/제목 정렬 기준을 확인한 후 dto에 넣어준다
-                카테고리를 선택하지 않은 경우 최신글부터 정렬되도록 한다
-
+         내용  : form을 통해 받아온 카테고리/제목 정렬 기준을 확인한 후 각각 dto에 값을 setting 해준다
+                option을 선택하지 않은 경우 최신글부터 정렬되도록 한다
          */
+
         if(category != null && !category.isEmpty()){
             dto.setCategory(category);
         }
@@ -86,6 +86,7 @@ public class tipController {
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
+        //추가한 부분
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
 
@@ -103,8 +104,6 @@ public class tipController {
             , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-
-
 
         if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
             questionsListWriter = questionsListWriter.substring(1);
@@ -154,9 +153,6 @@ public class tipController {
         tipList = tipBoardService.selectMemberTipList(dto);
         dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
-
-        //페이지 처리
-        //PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 12, 10, "tipList.do", "&tip_category=" + category);
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);

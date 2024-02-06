@@ -33,9 +33,10 @@
                     <div class="board-cell board-no">
                     </div>
                     <div class="board-cell board-category purple2">
-                        <!--카테고리 처리 -->
-                        <!-- controller 에 전해줄 form 시작-->
+                         <!-- controller 에 전해줄 form 생성,
+                              카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄지기 때문에 하나의 form 태그로 진행했다-->
                          <form action="/tipList" method="get">
+                            <!--카테고리 조회 -->
                              <select id="category" name="category" class="category-select" onchange="this.form.submit()">
                                  <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
                                  <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
@@ -54,7 +55,7 @@
                             -->
                     </div>
                     <div class="board-cell board-title">
-                        <!--제목 처리 -->
+                        <!--제목 정렬 -->
                              <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
                                  <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
                                  <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
