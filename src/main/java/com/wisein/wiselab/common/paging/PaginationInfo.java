@@ -13,7 +13,27 @@ public class PaginationInfo {
 	
 	private String searchType;
 	private String keyword;
-	
+
+	private String category;
+
+	private String sort;
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public String getViewAddr() {
 		return viewAddr != null ? viewAddr.replace("/", "") : null;
 	}
