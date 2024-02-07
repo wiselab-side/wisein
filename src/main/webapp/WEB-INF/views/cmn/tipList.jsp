@@ -34,7 +34,7 @@
                     </div>
                     <div class="board-cell board-category purple2">
                          <!-- controller 에 전해줄 form 생성,
-                              카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄지기 때문에 하나의 form 태그로 진행했다-->
+                              카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄질 수 있기 때문에 하나의 form 태그로 진행-->
                          <form action="/tipList" method="get">
                             <!--카테고리 조회 -->
                              <select id="category" name="category" class="category-select" onchange="this.form.submit()">
@@ -43,16 +43,6 @@
                                  <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
                                  <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
                              </select>
-                            <!--
-                            <ul class="person-function">
-                                <li><a href="#">FRONT</a></li>
-                                <li><a href="#">BACK</a></li>
-                                <li><a href="#">DB</a></li>
-                            </ul>
-                            <span class="material-icons">
-                                    expand_more
-                            </span>
-                            -->
                     </div>
                     <div class="board-cell board-title">
                         <!--제목 정렬 -->
@@ -63,11 +53,7 @@
                              </select>
                         </form>
                         <!-- controller 에 전해줄 form 끝-->
-                        <!--
-                        <span class="material-icons">
-                                expand_more
-                        </span>
-                        -->
+
                     </div>
                     <div class="board-cell board-like gray">
                         댓글수
@@ -144,14 +130,26 @@
                 </c:forEach>
             </div>
         </section>
-
         <!--페이징-->
         <ul class="pageno-group">
             <div class="pagination">
                 ${pagination}
             </div>
         </ul>
+
     </div>
 </c:if>
 
+<script>
+<!-- 함수로 처리? -->
+$(function(){
+    const sortOption = $('select[name="subject"]>option');
 
+
+
+
+});
+
+
+
+</script>

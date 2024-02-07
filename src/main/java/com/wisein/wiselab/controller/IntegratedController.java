@@ -18,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/integration")
-public class IntegratedController {
+public class  IntegratedController {
 
     private final IntegrationSearchService integrationSearchService;
     private static final int INTEGRATION_SEARCH_RECORDS_PER_SCROLL_PAGE = 35;

@@ -1,6 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
+import com.wisein.wiselab.common.paging.PaginationInfo;
 import com.wisein.wiselab.dto.*;
 import com.wisein.wiselab.service.*;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,25 +53,16 @@ public class tipController {
     @GetMapping(value="/tipList")
     public String tipList (HttpSession session
                           , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
-                          , Model model
                           , @RequestParam(name="category", required = false) String category
                           , @RequestParam(name="subject", required = false) String subject
-
-    ) throws Exception {
+                          , Model model) throws Exception {
         /*
         카테고리 및 제목 정렬 처리
         작성자 : 이영주
-         날짜  : 2024.02.05
-         내용  : form을 통해 받아온 카테고리/제목 정렬 기준을 확인한 후 각각 dto에 값을 setting 해준다
-                option을 선택하지 않은 경우 최신글부터 정렬되도록 한다
+         날짜  : 2024.02.05 ~ 2024.02.07
+         내용  : form을 통해 카테고리/제목 정렬 기준을 받아온다
+                 두가지 옵션이 동시에 실행될 수 있도록 값을 저장한다
          */
-
-        if(category != null && !category.isEmpty()){
-            dto.setCategory(category);
-        }
-        if(subject != null && !subject.isEmpty()){
-            dto.setSubject(subject);
-        }
 
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
@@ -86,7 +79,7 @@ public class tipController {
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
-        //추가한 부분
+        // ============== 추가부분 ==============
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
 
@@ -101,9 +94,18 @@ public class tipController {
             , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
             , @RequestParam(value="commentListWriter", required = false) String commentListWriter
             , @RequestParam(value="tipWriter", required = false) String tipWriter
-            , Model model) throws Exception {
+            , Model model
+            ,@RequestParam(name="category", required = false) String category
+            , @RequestParam(name="subject", required = false) String subject
+    ) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+        if(category != null && !category.isEmpty()){
+            dto.setCategory(category);
+        }
+        if(subject != null && !subject.isEmpty()){
+            dto.setSubject(subject);
+        }
 
         if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
             questionsListWriter = questionsListWriter.substring(1);
@@ -156,7 +158,8 @@ public class tipController {
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
-
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("selectedSubject", subject);
         return "cmn/tipList";
     }
 

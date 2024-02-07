@@ -1,7 +1,13 @@
 package com.wisein.wiselab.common.paging;
 
+import lombok.Setter;
+
 public class PaginationInfo {
-	
+	//카테고리, 제목 추가
+	@Setter
+	private String category;
+	@Setter
+	private String subject;
 	private static int RECORDSPERPAGE = 10;
 	private static int PAGESIZE       = 10;
 	
@@ -13,7 +19,16 @@ public class PaginationInfo {
 	
 	private String searchType;
 	private String keyword;
-	
+
+	//=========== 추가 부분 ===========
+	public String getCategory() {
+		return category == null ? "all" : category;
+	}
+
+	public String getSubject() {
+		return subject == null ? "all" : subject;
+	}
+
 	public String getViewAddr() {
 		return viewAddr != null ? viewAddr.replace("/", "") : null;
 	}
@@ -49,6 +64,8 @@ public class PaginationInfo {
 		int calcPageSize = (((this.currentPageNo - 1) / PAGESIZE) + 1) * PAGESIZE;
 		return getTotalPageCount() < calcPageSize ? getTotalPageCount() : calcPageSize ;
 	}
+
+	//pageCount
 	public int getTotalPageCount() {
 		return (int) Math.ceil((this.totalRecordCount / (double)PAGESIZE));
 	}
