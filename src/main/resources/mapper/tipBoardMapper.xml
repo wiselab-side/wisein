@@ -4,28 +4,34 @@
 
     <sql id="sort">
         <if test="sort == null">
-            ORDER BY NUM DESC
-        </if>
-        <if test="sort == 'category'">
-            ORDER BY CATEGORY DESC
+            NUM DESC,
         </if>
         <if test="sort == 'num'">
-            ORDER BY NUM DESC
+            NUM DESC,
         </if>
-        <if test="sort == 'content'">
-            ORDER BY CONTENT DESC
+        <if test="sort == 'subject'">
+            <![CDATA[
+                (
+                CASE WHEN ASCII(SUBSTRING(A.SUBJECT,1)) > 45217 THEN 1 -- 한글
+                WHEN ASCII(SUBSTRING(UPPER(A.SUBJECT),1)) BETWEEN 65 AND 90 THEN 2 -- 영어
+                WHEN ASCII(SUBSTRING(A.SUBJECT,1)) BETWEEN 48 AND 57 THEN 3 -- 숫자
+                ELSE 4 END -- 특수기호
+                ),
+            ]]>
+            A.SUBJECT DESC,
         </if>
         <if test="sort == 'writer'">
-            ORDER BY WRITER
+            A.WRITER,
         </if>
         <if test="sort == 'likeCount'">
-            ORDER BY LIKE_COUNT DESC
+            A.LIKE_COUNT DESC,
         </if>
         <if test="sort == 'scrapCount'">
-            ORDER BY SCRAP_COUNT DESC
+            A.SCRAP_COUNT DESC,
         </if>
         <if test="sort == 'regDate'">
-            ORDER BY REG_DATE DESC
+            A.REG_DATE DESC,
+            A.NUM DESC,
         </if>
 
     </sql>
@@ -74,7 +80,8 @@
                   ORDER BY NUM DESC
                   ) AS A
         ]]>
-            <include refid='sort'/>
+            WHERE CATEGORY = CASE WHEN #{category} != 'all' THEN #{category} ELSE CATEGORY END
+            ORDER BY <include refid='sort'/> A.SUBJECT
         <![CDATA[
             LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
@@ -251,13 +258,11 @@
 
     <!-- 카테고리 조회 -->
     <select id="categoryList" resultType="TipBoardDTO">
+        SELECT '카테고리' AS CATEGORY
+        FROM DUAL
+        UNION ALL
         SELECT DISTINCT CATEGORY
         FROM TIP_BOARD
     </select>
-
-    <select id="categoryDetail">
-        SELECT
-    </select>
-
 
 </mapper>

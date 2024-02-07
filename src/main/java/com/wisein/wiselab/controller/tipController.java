@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -49,7 +46,9 @@ public class tipController {
 
     //다건 조회
     @GetMapping(value="/tipList")
-    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model, @RequestParam(value="sort", required = false) String sort) throws Exception {
+    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model
+            , @RequestParam(value="sort", required = false) String sort
+            , @RequestParam(value="category", required = false) String category) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
         dto.setSort(sort);
