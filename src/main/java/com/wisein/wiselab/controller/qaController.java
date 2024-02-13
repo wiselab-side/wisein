@@ -47,11 +47,19 @@ public class qaController {
     ScrapService scrapService;
 
     private final AbstractPagingCustom PagingTagCustom;
-
+    /*
+      카테고리 및 제목 정렬 처리
+      작성자 : 이영주
+       날짜  : 2024.02.13 ~
+       내용  : form을 통해 카테고리/제목 정렬 기준을 받아온다
+               두가지 옵션이 동시에 실행될 수 있도록 값을 저장한다
+       */
     @GetMapping(value="/qalist")
     public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO
                         //, HttpSession session
                         //, @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
+                        , @RequestParam(name="category", required = false) String category
+                        , @RequestParam(name="subject", required = false) String subject
                         , Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
@@ -66,6 +74,9 @@ public class qaController {
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
+        // ============== 추가부분 ==============
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("selectedSubject", subject);
         return "cmn/qaList";
     }
 

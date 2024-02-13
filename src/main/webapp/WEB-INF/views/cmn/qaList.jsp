@@ -39,9 +39,8 @@
             <div class="board-line board-header">
                 <div class="board-cell board-no">
                 </div>
+                <!--
                 <div class="board-cell board-category purple2">
-                    <p class="category-select">카테고리</p>
-                    <!--
                     <ul class="person-function">
                         <li><a href="#">FRONT</a></li>
                         <li><a href="#">BACK</a></li>
@@ -50,15 +49,30 @@
                     <span class="material-icons">
                             expand_more
                         </span>
-                        -->
                 </div>
-                <div class="board-cell board-title ">
-                    제목(가나다)
-                    <!--
-                    <span class="material-icons">
-                        expand_more
-                    </span>
-                    -->
+                 -->
+                <!-- 카테고리 -->
+                <div class="board-cell board-category purple2">
+                     <!-- controller 에 전해줄 form 생성,
+                          카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄질 수 있기 때문에 하나의 form 태그로 진행-->
+                     <form action="/qalist" method="get">
+                        <!--카테고리 조회 -->
+                         <select id="category" name="category" class="category-select" onchange="this.form.submit()">
+                             <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
+                             <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
+                             <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
+                             <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
+                         </select>
+                </div>
+                <div class="board-cell board-title">
+                    <!--제목 정렬 -->
+                         <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
+                             <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
+                             <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
+                             <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
+                         </select>
+                    </form>
+                    <!-- controller 에 전해줄 form 끝-->
                 </div>
                 <div class="board-cell board-answer  gray">
                     답변

@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.qaListMapper">
+    <!-- qna 게시판은 계층형 게시판이다-->
+    <!-- 카테고리 정렬 -->
+    <sql id="qaListCategory">
+        <if test="category == 'FRONT'">
+            AND CATEGORY = 'FRONT'
+        </if>
+        <if test="category == 'BACK'">
+            AND CATEGORY = 'BACK'
+        </if>
+        <if test="category == 'DB'">
+            AND CATEGORY = 'DB'
+        </if>
+    </sql>
+    <!-- 제목 정렬 -->
+    <sql id="qaListSubject">
+        <if test="subject == 'ASC'">
+            SUBJECT ASC,
+        </if>
+        <if test="subject =='DESC'">
+            SUBJECT DESC,
+        </if>
+    </sql>
 
     <select id="selectQaList" parameterType="QaListDTO" resultType="QaListDTO">
         <![CDATA[
@@ -42,12 +64,14 @@
            		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
                    AND DEL_YN = 'N'
                    AND QB.NUM > 0
+                    ]]>
                    AND PARENT_NUM is NULL
+                   <include refid="qaListCategory"/>
                  GROUP BY QB.NUM
-                 ORDER BY NUM DESC
+                 ORDER BY <include refid="qaListSubject"/> NUM DESC
                 ) AS A
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
-        ]]>
+
     </select>
 
     <select id="selectBoardTotalCount" parameterType="QaListDTO" resultType="int">
@@ -60,7 +84,8 @@
 		   AND DEL_YN = 'N'
 		   AND NUM > 0
 		   AND PARENT_NUM is NULL
-		]]>
+		   ]]>
+		   <include refid="qaListCategory"/>
     </select>
 
     <!-- 게시글 등록 -->
@@ -212,8 +237,8 @@
 		SELECT COUNT(NUM)
 		  FROM QA_BOARD
 		 WHERE 1=1
-		   AND NUM > 0
-		]]>
+		   AND NUM > 0]]>
+        <include refid="qaListCategory"/>
     </select>
 
     <select id="checkLikeQaBoard" parameterType="LikeBoardDTO" resultType="LikeBoardDTO">
@@ -456,9 +481,9 @@
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
            AND WRITER = #{writer}
 		   AND DEL_YN = 'N'
-		   AND NUM > 0
+		   AND NUM > 0]]>
 		   AND PARENT_NUM is NULL
-		]]>
+           <include refid="qaListCategory"/>
     </select>
 
     <!--QaBoard 작성글 모아보기-->
@@ -471,9 +496,9 @@
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
            AND WRITER = #{writer}
 		   AND DEL_YN = 'N'
-		   AND NUM > 0
+		   AND NUM > 0]]>
 		   AND PARENT_NUM is NOT NULL
-		]]>
+           <include refid="qaListCategory"/>
     </select>
 
     <!-- 좋아요 삭제 -->
