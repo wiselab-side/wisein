@@ -34,9 +34,10 @@
                     </div>
                     <div class="board-cell board-category purple2">
                         <p class="category-select">
-                            <select id="selectOption" name="category" onchange="if(this.value) location.href=(this.value)">
+                            <select id="selectOption" name="category" onchange="selectCategory()">
+                                <option value="all">카테고리</option>
                                 <c:forEach items="${categoryList}" var="categoryList">
-                                    <option value="/tipList?category=${categoryList.category}"><c:out value="${categoryList.category}"/></option>
+                                    <option value="${categoryList.category}"><c:out value="${categoryList.category}"/></option>
                                 </c:forEach>
                             </select>
                         </p>
@@ -51,41 +52,29 @@
                         </span>
                         -->
                     </div>
-                    <a href="/tipList?sort=subject">
-                        <div class="board-cell board-title">
-                            제목(가나다)
-                            <!--
-                            <span class="material-icons">
-                                    expand_more
-                            </span>
-                            -->
-                        </div>
-                    </a>
+                    <div class="board-cell board-title" onClick="sort(event)" id="content" value="content">
+                        <value="content">제목(가나다)
+                        <!--
+                        <span class="material-icons">
+                                expand_more
+                        </span>
+                        -->
+                    </div>
 
-                    <div class="board-cell board-like gray">
-                        <a href="tipList?sort=commCnt">
-                            댓글수
-                        </a>
+                    <div class="board-cell board-like gray" onClick="sort(event)" value="commCnt">
+                        댓글수
                     </div>
-                    <div class="board-cell board-like gray">
-                        <a href="tipList?sort=likeCount">
-                            좋아요
-                        </a>
+                    <div class="board-cell board-like gray" onClick="sort(event)" value="likeCount">
+                        좋아요
                     </div>
-                    <div class="board-cell board-like gray">
-                        <a href="tipList?sort=scrapCount">
-                            스크랩
-                        </a>
+                    <div class="board-cell board-like gray" onClick="sort(event)" value="scrapCount">
+                        스크랩
                     </div>
-                    <div class="board-cell board-writer gray" name="writer">
-                        <a href="/tipList?sort=writer">
-                            작성자
-                        </a>
+                    <div class="board-cell board-writer gray" onClick="sort(event)" value="writer" name="writer">
+                        작성자
                     </div>
-                    <div class="board-cell board-date gray">
-                        <a href="tipList?sort=regDate">
-                            날짜
-                        </a>
+                    <div class="board-cell board-date gray" onClick="sort(event)" value="regDate" >
+                        날짜
                     </div>
                 </div>
 

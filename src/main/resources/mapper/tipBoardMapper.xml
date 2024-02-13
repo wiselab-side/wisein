@@ -263,9 +263,9 @@
 
     <!-- 카테고리 조회 -->
     <select id="categoryList" resultType="TipBoardDTO">
-        SELECT '카테고리' AS CATEGORY
-        FROM DUAL
-        UNION ALL
+<!--        SELECT '카테고리' AS CATEGORY-->
+<!--        FROM DUAL-->
+<!--        UNION ALL-->
         SELECT DISTINCT CATEGORY
         FROM TIP_BOARD
     </select>

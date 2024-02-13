@@ -51,7 +51,7 @@ public class tipController {
             , @RequestParam(value="category", required = false) String category) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
-        dto.setSort(sort);
+        //dto.setSort(sort);
 
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 

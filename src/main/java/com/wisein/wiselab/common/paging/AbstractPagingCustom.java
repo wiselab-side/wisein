@@ -9,6 +9,7 @@ public abstract class AbstractPagingCustom {
 	
 	public String render(PaginationInfo pageInfo) {
 			
+
 			StringBuilder sbuilder = new StringBuilder();
 
 			if(pageInfo.isHasPreviousPage() == true) {
@@ -18,6 +19,7 @@ public abstract class AbstractPagingCustom {
 				map1.put("currentPageNo", 1);
 				map1.put("searchType", pageInfo.getSearchType());
 				map1.put("keyword", pageInfo.getKeyword());
+
 				map1.put("category", pageInfo.getCategory());
 				map1.put("sort", pageInfo.getSort());
 				
@@ -30,6 +32,7 @@ public abstract class AbstractPagingCustom {
 				map2.put("currentPageNo", pageInfo.getFirstPage()-1); 
 				map2.put("searchType", pageInfo.getSearchType()); 
 				map2.put("keyword", pageInfo.getKeyword());
+
 				map2.put("category", pageInfo.getCategory());
 				map2.put("sort", pageInfo.getSort());
 					
