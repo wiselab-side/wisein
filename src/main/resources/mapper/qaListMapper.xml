@@ -24,6 +24,38 @@
         </if>
     </sql>
 
+    <!-- 좋아요 순 정렬 -->
+    <sql id="likeSort">
+        <if test = "like_count == 'ASC'">
+            LIKE_COUNT ASC,
+        </if>
+
+        <if test = "like_count == 'DESC'">
+            LIKE_COUNT DESC,
+        </if>
+    </sql>
+
+    <!-- 스크랩 순 정렬 -->
+    <sql id="scrapSort">
+        <if test = "scrap_count == 'ASC'">
+            SCRAP_COUNT ASC,
+        </if>
+        <if test = "scrap_count == 'DESC'">
+            SCRAP_COUNT DESC,
+        </if>
+    </sql>
+    <!-- 작성자 -->
+    <sql id="writerSort">
+        <if test = "writer == 'ASC'">
+            WRITER ASC,
+        </if>
+        <if test = "writer == 'DESC'">
+            WRITER DESC,
+        </if>
+    </sql>
+
+    <!-- 날짜 -->
+
     <select id="selectQaList" parameterType="QaListDTO" resultType="QaListDTO">
         <![CDATA[
         SELECT A.RNUM

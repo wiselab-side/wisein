@@ -60,6 +60,9 @@ public class qaController {
                         //, @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
                         , @RequestParam(name="category", required = false) String category
                         , @RequestParam(name="subject", required = false) String subject
+                        //, @RequestParam(name="like_count", required = false) int like_count
+                       // , @RequestParam(name="scrap_count", required = false) int scrap_count
+                       // , @RequestParam(name="writer", required = false) String writer
                         , Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
@@ -77,6 +80,9 @@ public class qaController {
         // ============== 추가부분 ==============
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
+       // model.addAttribute("selectedLikecount", like_count);
+       // model.addAttribute("selectedScrapcount", scrap_count);
+       // model.addAttribute("selectedWriter", writer);
         return "cmn/qaList";
     }
 

@@ -39,18 +39,7 @@
             <div class="board-line board-header">
                 <div class="board-cell board-no">
                 </div>
-                <!--
-                <div class="board-cell board-category purple2">
-                    <ul class="person-function">
-                        <li><a href="#">FRONT</a></li>
-                        <li><a href="#">BACK</a></li>
-                        <li><a href="#">DB</a></li>
-                    </ul>
-                    <span class="material-icons">
-                            expand_more
-                        </span>
-                </div>
-                 -->
+
                 <!-- 카테고리 -->
                 <div class="board-cell board-category purple2">
                      <!-- controller 에 전해줄 form 생성,
@@ -66,23 +55,29 @@
                 </div>
                 <div class="board-cell board-title">
                     <!--제목 정렬 -->
-                         <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
-                             <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
-                             <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
-                             <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
-                         </select>
+                     <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
+                         <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
+                         <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
+                         <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
+                     </select>
                     </form>
                     <!-- controller 에 전해줄 form 끝-->
                 </div>
+
                 <div class="board-cell board-answer  gray">
                     답변
                 </div>
                 <div class="board-cell board-like gray">
                     좋아요
                 </div>
+                <button id="sortButton">
+                   좋아요버튼
+                </button>
+
                 <div class="board-cell board-scrap gray">
                     스크랩
                 </div>
+
                 <div class="board-cell board-writer gray">
                     작성자
                 </div>
@@ -90,6 +85,18 @@
                     날짜
                 </div>
             </div>
+
+            <!--
+
+
+            좋아요수, 스크랩수, 작성자(문자열)
+            좋아요, 스크랩은 정수형이기 때문에 js로 처리?
+            버튼 누르면 오름차순, 내림차순으로 정렬되도록
+            화살표 표시로 효과주기?
+            click 효과로 js...
+
+
+            -->
 
             <c:forEach var="qa" items="${qaList}">
                 <div class="board-line ">
@@ -116,10 +123,16 @@
                             <span class="material-icons">thumb_up</span>${qa.likeCount}
                         </div>
                     </c:if>
+                    <!-- 좋아요 수 -->
                     <c:if test="${qa.likeCount != 0}">
-                        <div class="board-cell board-like purple2">
-                            <span class="material-icons">thumb_up</span>${qa.likeCount}
+
+                        <div class="board-cell board-like gray">
+                            <span class="material-icons">thumb_up</span>
+                            <span class="like-count">${qa.likeCount}</span>
                         </div>
+
+
+
                     </c:if>
 
                     <c:if test="${qa.scrapCount == 0}">
@@ -127,12 +140,17 @@
                             <span class="material-icons" style="max-width:24px;">bookmarks</span>${qa.scrapCount}
                         </div>
                     </c:if>
+                    <!-- 스크랩 수 -->
                     <c:if test="${qa.scrapCount != 0}">
                         <div class="board-cell board-scrap purple2">
                             <span class="material-icons" style="max-width:24px;">bookmarks</span>${qa.scrapCount}
+
+
                         </div>
                     </c:if>
 
+
+                    <!-- 작성자명 -->
                     <div class="board-cell board-writer gray">
                         <p class="writer"><c:out value="${qa.writer}" /><br>
                         </p>
@@ -157,3 +175,20 @@
     </ul>
 </div>
 </c:if>
+
+<script>
+    document.getElementById("sortButton").addEventListener("click", function() {
+        var qaList = document.querySelectorAll('.board-list');
+        var sortedList = Array.from(qaList).sort(function(a, b) {
+            var likeCountA = parseInt(a.querySelector('.like-count'));
+            var likeCountB = parseInt(b.querySelector('.like-count'));
+            return likeCountA - likeCountB;
+        });
+
+        var boardList = document.querySelector('.board-list');
+        boardList.innerHTML = '';
+        sortedList.forEach(function(item) {
+            boardList.appendChild(item);
+        });
+    });
+</script>
