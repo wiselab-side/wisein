@@ -37,22 +37,23 @@
         </div>
         <div class="board-list">
             <div class="board-line board-header">
-                <div class="board-cell board-no">
+                <div class="board-cell board-no" value="num" onClick="sort(event)">
                 </div>
                 <div class="board-cell board-category purple2">
-                    <p class="category-select">카테고리</p>
+                    <p class="category-select">
+                        <select id="selectOption" name="category" onchange="selectSearchType()">
+                            <option hidden="" selected>카테고리</option>
+                            <option value="all">전체</option>
+                            <option value="FRONT">FRONT</option>
+                            <option value="BACK">BACK</option>
+                            <option value="DB">DB</option>
+                        </select>
+                    </p>
                     <!--
-                    <ul class="person-function">
-                        <li><a href="#">FRONT</a></li>
-                        <li><a href="#">BACK</a></li>
-                        <li><a href="#">DB</a></li>
-                    </ul>
-                    <span class="material-icons">
-                            expand_more
-                        </span>
-                        -->
+                    <span class="material-icons">expand_more</span>
+                    -->
                 </div>
-                <div class="board-cell board-title ">
+                <div class="board-cell board-title" value="content" onClick="sort(event)">
                     제목(가나다)
                     <!--
                     <span class="material-icons">
@@ -60,19 +61,19 @@
                     </span>
                     -->
                 </div>
-                <div class="board-cell board-answer  gray">
+                <div class="board-cell board-answer gray" value="commCnt" onClick="sort(event)">
                     답변
                 </div>
-                <div class="board-cell board-like gray">
+                <div class="board-cell board-like gray" value="likeCount" onClick="sort(event)">
                     좋아요
                 </div>
-                <div class="board-cell board-scrap gray">
+                <div class="board-cell board-scrap gray" value="scrapCount" onClick="sort(event)">
                     스크랩
                 </div>
-                <div class="board-cell board-writer gray">
+                <div class="board-cell board-writer gray" value="writer" onClick="sort(event)">
                     작성자
                 </div>
-                <div class="board-cell board-date gray">
+                <div class="board-cell board-date gray" value="regDate" onClick="sort(event)">
                     날짜
                 </div>
             </div>
@@ -143,3 +144,5 @@
     </ul>
 </div>
 </c:if>
+
+<script src="resources/js/qaBoard.js"></script>

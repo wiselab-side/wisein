@@ -34,8 +34,8 @@
                     </div>
                     <div class="board-cell board-category purple2">
                         <p class="category-select">
-                            <select id="selectOption" name="category" onchange="selectCategory()">
-                                <option value="all">카테고리</option>
+                            <select id="selectOption" name="category" onchange="selectSearchType()">
+                                <option hidden="" disabled>카테고리</option>
                                 <c:forEach items="${categoryList}" var="categoryList">
                                     <option value="${categoryList.category}"><c:out value="${categoryList.category}"/></option>
                                 </c:forEach>
@@ -73,7 +73,7 @@
                     <div class="board-cell board-writer gray" onClick="sort(event)" value="writer" name="writer">
                         작성자
                     </div>
-                    <div class="board-cell board-date gray" onClick="sort(event)" value="regDate" >
+                    <div class="board-cell board-date gray" onClick="sort(event)" value="regDate">
                         날짜
                     </div>
                 </div>

@@ -24,7 +24,7 @@
         }
         // 댓글 삭제
         async function comment_delete_btn(commentQaNum) {
-            if(await commonPopup.confirmPopup('정말 삭제하시겠습니?', commonPopup.callback)){
+            if(await commonPopup.confirmPopup('정말 삭제하시겠습니까?', commonPopup.callback)){
                 window.location.href="/qaDelete?commentQaNum="+commentQaNum;
             }
         }

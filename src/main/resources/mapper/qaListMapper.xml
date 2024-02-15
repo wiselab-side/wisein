@@ -2,6 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.qaListMapper">
 
+    <sql id="sort">
+        <if test="sort == null">
+            A.NUM DESC,
+        </if>
+        <if test="sort == 'num'">
+            A.NUM DESC,
+        </if>
+        <if test="sort == 'subject'">
+            <![CDATA[
+                (
+                CASE
+                    WHEN ASCII(SUBSTRING(UPPER(A.SUBJECT),1,1)) BETWEEN 65 AND 90 THEN 2 -- 영어
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 48 AND 57 THEN 3 -- 숫자
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 33 AND 47 THEN 4
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 58 AND 64 THEN 4
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 91 AND 96 THEN 4
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 123 AND 126 THEN 4
+                    ELSE 1 -- 한글
+                END
+                ),
+            ]]>
+            A.SUBJECT,
+        </if>
+        <if test="sort == 'commCnt'">
+            COMM_CNT DESC,
+        </if>
+        <if test="sort == 'likeCount'">
+            A.LIKE_COUNT DESC,
+        </if>
+        <if test="sort == 'scrapCount'">
+            A.SCRAP_COUNT DESC,
+        </if>
+        <if test="sort == 'writer'">
+            A.WRITER,
+        </if>
+        <if test="sort == 'regDate'">
+            A.REG_DATE DESC,
+            A.NUM DESC,
+        </if>
+    </sql>
+
     <select id="selectQaList" parameterType="QaListDTO" resultType="QaListDTO">
         <![CDATA[
         SELECT A.RNUM
@@ -46,6 +87,9 @@
                  GROUP BY QB.NUM
                  ORDER BY NUM DESC
                 ) AS A
+        ]]>
+            ORDER BY <include refid='sort'/> A.SUBJECT DESC
+        <![CDATA[
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>

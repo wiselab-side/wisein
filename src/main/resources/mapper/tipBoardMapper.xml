@@ -4,10 +4,10 @@
 
     <sql id="sort">
         <if test="sort == null">
-            NUM DESC,
+            A.NUM DESC,
         </if>
         <if test="sort == 'num'">
-            NUM DESC,
+            A.NUM DESC,
         </if>
         <if test="sort == 'subject'">
             <![CDATA[
@@ -25,8 +25,8 @@
             ]]>
             A.SUBJECT,
         </if>
-        <if test="sort == 'writer'">
-            A.WRITER,
+        <if test="sort == 'commCnt'">
+            COMM_CNT DESC,
         </if>
         <if test="sort == 'likeCount'">
             A.LIKE_COUNT DESC,
@@ -34,11 +34,13 @@
         <if test="sort == 'scrapCount'">
             A.SCRAP_COUNT DESC,
         </if>
+        <if test="sort == 'writer'">
+            A.WRITER,
+        </if>
         <if test="sort == 'regDate'">
             A.REG_DATE DESC,
             A.NUM DESC,
         </if>
-
     </sql>
 
     <!--TipBoard 다건조회-->
@@ -85,8 +87,7 @@
                   ORDER BY NUM DESC
                   ) AS A
         ]]>
-            WHERE CATEGORY = CASE WHEN #{category} != 'all' THEN #{category} ELSE CATEGORY END
-            ORDER BY <include refid='sort'/> A.SUBJECT
+            ORDER BY <include refid='sort'/> A.SUBJECT DESC
         <![CDATA[
             LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
@@ -263,9 +264,9 @@
 
     <!-- 카테고리 조회 -->
     <select id="categoryList" resultType="TipBoardDTO">
-<!--        SELECT '카테고리' AS CATEGORY-->
-<!--        FROM DUAL-->
-<!--        UNION ALL-->
+        SELECT '전체' AS CATEGORY
+        FROM DUAL
+        UNION ALL
         SELECT DISTINCT CATEGORY
         FROM TIP_BOARD
     </select>

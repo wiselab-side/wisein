@@ -58,34 +58,36 @@
         };
 
         // 카테고리 선택
-        function selectCategory(){
-            let selectedCategory = document.querySelector("#selectOption").value;
+        function selectSearchType(){
+            let selectedSearchType = document.querySelector("#selectOption").value;
 
             // 현재 URL 가져오기
             let currentUrl = window.location.href;
 
-            // category 파라미터가 있는지 확인 (indexOf : 값이 있으면 인덱스값, 없으면 -1 반환)
-            let categoryParamTF = currentUrl.indexOf('category=');
+            // searchType 파라미터가 있는지 확인 (indexOf : 값이 있으면 인덱스값, 없으면 -1 반환)
+            let searchTypeParamTF = currentUrl.indexOf('searchType=');
 
-            // "카테고리"가 선택된 경우 모든 카테고리 조회
-            if (selectedCategory == "all") {
+            // "전체"가 선택된 경우 모든 카테고리 조회
+            if (selectedSearchType == "전체") {
 
-                if (categoryParamTF !== -1) {
-                    // 이미 category 파라미터가 있으면 해당 파라미터 제거
-                    currentUrl = currentUrl.substring(0, categoryParamTF - 1);
-                }
-                window.location.href = "/tipList";
+//                if (searchTypeParamTF !== -1) {
+//                    // 이미 category 파라미터가 있으면 해당 파라미터 제거
+//                    currentUrl = currentUrl.substring(0, searchTypeParamTF - 1);
+//                }
+//                window.location.href = "/tipList";
+                window.location.href = currentUrl.replace(/searchType=[^&]+/, 'searchType=' + 'all');
                 return;
             }
 
-            // 카테고리 선택된 경우
+            // 이미 카테고리 선택된 경우(if)
             let newUrl;
-            if (categoryParamTF !== -1) {
+            if (searchTypeParamTF !== -1) {
                 // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
-                newUrl = currentUrl.replace(/category=[^&]+/, 'category=' + selectedCategory);
+                newUrl = currentUrl.replace(/searchType=[^&]+/, 'searchType=' + selectedSearchType);
+                newUrl = newUrl.replace(/currentPageNo=[^&]+/, 'currentPageNo=1');
             } else {
                 // category 파라미터가 없으면 추가
-                newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'category=' + selectedCategory;
+                newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'searchType=' + selectedSearchType;
             }
 
             // 새로운 URL로 이동
@@ -99,13 +101,13 @@
             let currentUrl = window.location.href;
 
             // 파라미터가 있는지 확인 (indexOf : 값이 있으면 인덱스값, 없으면 -1 반환)
-            let ParamTF = currentUrl.indexOf('sorted');
+            let ParamTF = currentUrl.indexOf('sort=');
 
             // 이미 content 로 sort 된 경우 전체 조회
-//            if (sorted == "content") {
-//                window.location.href = "/tipList";
-//                return;
-//            }
+            if (sorted == "${sorted}") {
+                window.location.href = "/tipList";
+                return;
+            }
 
             // 카테고리 선택된 경우
             let newUrl;
@@ -119,5 +121,4 @@
 
             // 새로운 URL로 이동
             window.location.href = newUrl;
-
         };

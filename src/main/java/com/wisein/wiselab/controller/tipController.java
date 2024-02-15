@@ -51,13 +51,15 @@ public class tipController {
             , @RequestParam(value="category", required = false) String category) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
-        //dto.setSort(sort);
 
+        // 카테고리 목록 가져오기
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 
+        // TIP BOARD 게시판 목록 가져오기
         List<TipBoardDTO> tipList = new ArrayList<>();
         tipList = tipBoardService.selectTipList(dto);
 
+        /* 게시글 총 개수 */
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
