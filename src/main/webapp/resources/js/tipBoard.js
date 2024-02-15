@@ -59,7 +59,7 @@
 
         // 카테고리 선택
         function selectSearchType(){
-            let selectedSearchType = document.querySelector("#selectOption").value;
+            let selectedSearchType = document.querySelector("#selectOption");
 
             // 현재 URL 가져오기
             let currentUrl = window.location.href;
@@ -68,7 +68,7 @@
             let searchTypeParamTF = currentUrl.indexOf('searchType=');
 
             // "전체"가 선택된 경우 모든 카테고리 조회
-            if (selectedSearchType == "전체") {
+            if (selectedSearchType.text() == "전체") {
 
 //                if (searchTypeParamTF !== -1) {
 //                    // 이미 category 파라미터가 있으면 해당 파라미터 제거
@@ -83,11 +83,11 @@
             let newUrl;
             if (searchTypeParamTF !== -1) {
                 // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
-                newUrl = currentUrl.replace(/searchType=[^&]+/, 'searchType=' + selectedSearchType);
+                newUrl = currentUrl.replace(/searchType=[^&]+/, 'searchType=' + selectedSearchType.value);
                 newUrl = newUrl.replace(/currentPageNo=[^&]+/, 'currentPageNo=1');
             } else {
                 // category 파라미터가 없으면 추가
-                newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'searchType=' + selectedSearchType;
+                newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'searchType=' + selectedSearchType.value;
             }
 
             // 새로운 URL로 이동

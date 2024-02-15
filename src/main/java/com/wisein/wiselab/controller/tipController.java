@@ -146,6 +146,7 @@ public class tipController {
     //단건 조회
     @GetMapping(value="/tipDetail")
     public String tipDetail (HttpSession session, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
+
         //meetLink
         String meetLink = tipBoardService.selectMeetLink(num);
 
@@ -180,6 +181,15 @@ public class tipController {
         //사이드바 설정
         String side_gubun = "Y";
 
+        //조회수 증가
+        System.out.println("전 model" + model);
+        System.out.println("전 dto" + dto);
+        System.out.println("전 tipBoardDTO" + TipBoardDTO);
+        tipBoardService.updateCount(TipBoardDTO);
+        System.out.println("후 model" + model);
+        System.out.println("후 dto" + dto);
+        System.out.println("후 tipBoardDTO" + TipBoardDTO);
+
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);
@@ -189,6 +199,7 @@ public class tipController {
         model.addAttribute("memberId", member.getId());
         model.addAttribute("meetLink", meetLink);
         model.addAttribute("side_gubun", side_gubun);
+
         return "cmn/tipDetail";
     }
 

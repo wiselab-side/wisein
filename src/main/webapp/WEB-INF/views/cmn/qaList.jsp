@@ -53,7 +53,7 @@
                     <span class="material-icons">expand_more</span>
                     -->
                 </div>
-                <div class="board-cell board-title" value="content" onClick="sort(event)">
+                <div class="board-cell board-title" value="subject" onClick="sort(event)">
                     제목(가나다)
                     <!--
                     <span class="material-icons">

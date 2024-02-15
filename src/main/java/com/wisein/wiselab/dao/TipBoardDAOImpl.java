@@ -86,5 +86,9 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         return sql.selectList(NS + ".categoryList");
     }
 
-
+    /* 조회수 증가 */
+    @Override
+    public void updateCount(TipBoardDTO dto) throws Exception {
+        sql.update(NS+ ".updateCount", dto);
+    }
 }

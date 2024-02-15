@@ -3,9 +3,6 @@
 <mapper namespace="com.wisein.wiselab.mapper.tipBoardMapper">
 
     <sql id="sort">
-        <if test="sort == null">
-            A.NUM DESC,
-        </if>
         <if test="sort == 'num'">
             A.NUM DESC,
         </if>
@@ -39,7 +36,6 @@
         </if>
         <if test="sort == 'regDate'">
             A.REG_DATE DESC,
-            A.NUM DESC,
         </if>
     </sql>
 
@@ -55,6 +51,7 @@
                   ,A.REG_DATE
                   ,A.UPD_DATE
                   ,A.DEL_YN
+                  ,A.COUNT
                   ,A.PARENT_NUM
                   ,A.LIKE_COUNT
                   ,A.SCRAP_COUNT
@@ -87,7 +84,7 @@
                   ORDER BY NUM DESC
                   ) AS A
         ]]>
-            ORDER BY <include refid='sort'/> A.SUBJECT DESC
+            ORDER BY <include refid='sort'/> A.NUM DESC
         <![CDATA[
             LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
@@ -270,5 +267,14 @@
         SELECT DISTINCT CATEGORY
         FROM TIP_BOARD
     </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateCount" parameterType="Integer">
+        UPDATE TIP_BOARD
+        SET COUNT = (SELECT COUNT
+                     FROM TIP_BOARD
+                     WHERE NUM = #{num})+1
+        WHERE NUM = #{num}
+    </update>
 
 </mapper>

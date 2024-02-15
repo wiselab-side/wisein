@@ -38,4 +38,7 @@ public interface TipBoardService {
     /* 카테고리 조회 */
     public List<TipBoardDTO> categoryList() throws Exception;
 
+    /* 조회수 증가 */
+    public void updateCount(TipBoardDTO dto) throws Exception;
+
 }

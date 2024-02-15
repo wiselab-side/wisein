@@ -3,9 +3,6 @@
 <mapper namespace="com.wisein.wiselab.mapper.qaListMapper">
 
     <sql id="sort">
-        <if test="sort == null">
-            A.NUM DESC,
-        </if>
         <if test="sort == 'num'">
             A.NUM DESC,
         </if>
@@ -39,7 +36,6 @@
         </if>
         <if test="sort == 'regDate'">
             A.REG_DATE DESC,
-            A.NUM DESC,
         </if>
     </sql>
 
@@ -88,7 +84,7 @@
                  ORDER BY NUM DESC
                 ) AS A
         ]]>
-            ORDER BY <include refid='sort'/> A.SUBJECT DESC
+            ORDER BY <include refid='sort'/> A.NUM DESC
         <![CDATA[
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>

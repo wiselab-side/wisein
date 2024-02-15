@@ -35,7 +35,7 @@
                     <div class="board-cell board-category purple2">
                         <p class="category-select">
                             <select id="selectOption" name="category" onchange="selectSearchType()">
-                                <option hidden="" disabled>카테고리</option>
+                                <option hidden="" selected>카테고리</option>
                                 <c:forEach items="${categoryList}" var="categoryList">
                                     <option value="${categoryList.category}"><c:out value="${categoryList.category}"/></option>
                                 </c:forEach>
@@ -52,8 +52,8 @@
                         </span>
                         -->
                     </div>
-                    <div class="board-cell board-title" onClick="sort(event)" id="content" value="content">
-                        <value="content">제목(가나다)
+                    <div class="board-cell board-title" onClick="sort(event)" id="subject" value="subject">
+                        <value="subject">제목(가나다)
                         <!--
                         <span class="material-icons">
                                 expand_more
@@ -75,6 +75,9 @@
                     </div>
                     <div class="board-cell board-date gray" onClick="sort(event)" value="regDate">
                         날짜
+                    </div>
+                    <div class="board-cell board-count gray" onClick="sort(event)" value="count">
+                        조회
                     </div>
                 </div>
 
@@ -131,6 +134,11 @@
                         </div>
                         <div class="board-cell board-date gray">
                             <fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd"/>
+                        </div>
+                        <div class="board-cell board-count gray">
+                            <div class="board-cell board-like gray">
+                                ${tip.count}
+                            </div>
                         </div>
                     </div>
                 </c:forEach>

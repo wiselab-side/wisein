@@ -85,9 +85,16 @@ public class TipBoardServiceImpl implements TipBoardService {
         return dao.selectMeetLink(num);
     }
 
+    /* 카테고리 조회 */
     @Override
     public List<TipBoardDTO> categoryList() throws Exception {
         return dao.categoryList();
+    }
+
+    /* 조회수 증가 */
+    @Override
+    public void updateCount(TipBoardDTO dto) throws Exception {
+        dao.updateCount(dto);
     }
 
 }
