@@ -361,3 +361,12 @@ function imgDel(delImgFileNm) {
     selector.parentElement.remove()
     delImgArr.push(delImgFileNm)
 }
+
+// 로그인시 엔터기능
+$('#login_id, #login_pw').on('keypress', function(e){
+    if(e.keyCode == '13'){
+        $('#login_btn').click();
+    }
+});
+
+
