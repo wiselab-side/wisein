@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<!--
-<c:if test="${empty questionsListWriter && empty commentListWriter}">
-<div class="content-wrap boardList">
-</c:if>
-<c:if test="${not empty questionsListWriter || not empty commentListWriter}">
-<div class="content-wrap boardList" style="max-width: 1300px;">
-</c:if>
--->
 
 <c:if test="${qaList == null}">
     <div class="content-wrap boardList">
@@ -70,8 +62,9 @@
                 <div class="board-cell board-like gray">
                     좋아요
                 </div>
+                <!-- 좋아요 정렬 버튼-->
                 <button id="sortButton">
-                   좋아요버튼
+                    ▼
                 </button>
 
                 <div class="board-cell board-scrap gray">
@@ -86,18 +79,7 @@
                 </div>
             </div>
 
-            <!--
-
-
-            좋아요수, 스크랩수, 작성자(문자열)
-            좋아요, 스크랩은 정수형이기 때문에 js로 처리?
-            버튼 누르면 오름차순, 내림차순으로 정렬되도록
-            화살표 표시로 효과주기?
-            click 효과로 js...
-
-
-            -->
-
+        <div class="board-qaList">
             <c:forEach var="qa" items="${qaList}">
                 <div class="board-line ">
                     <div class="board-cell board-no">
@@ -128,11 +110,9 @@
 
                         <div class="board-cell board-like gray">
                             <span class="material-icons">thumb_up</span>
+                            <!-- js에서 사용하기 위해 span 태그 생성-->
                             <span class="like-count">${qa.likeCount}</span>
                         </div>
-
-
-
                     </c:if>
 
                     <c:if test="${qa.scrapCount == 0}">
@@ -165,8 +145,8 @@
                     </div>
                 </div>
             </c:forEach>
-
         </div>
+      </div>
     </section>
     <ul class="pageno-group">
 	    <div class="pagination">
@@ -176,16 +156,37 @@
 </div>
 </c:if>
 
+<!-- 자바스크립트로 정렬 구현 (페이지 이동 시 적용은 안됨) -->
 <script>
+    var sortOrder = 'desc'; // 정렬 방식 기본값: 내림차순
+    // 버튼의 클릭 이벤트 처리
     document.getElementById("sortButton").addEventListener("click", function() {
-        var qaList = document.querySelectorAll('.board-list');
-        var sortedList = Array.from(qaList).sort(function(a, b) {
-            var likeCountA = parseInt(a.querySelector('.like-count'));
-            var likeCountB = parseInt(b.querySelector('.like-count'));
-            return likeCountA - likeCountB;
-        });
+        var boardList = document.querySelector('.board-qaList');
+        var qaItems = boardList.querySelectorAll('.board-line');
 
-        var boardList = document.querySelector('.board-list');
+        // 정렬 함수 정의
+        function sortFunction(a, b) {
+            var likeCountA = a.querySelector('.board-like .like-count');
+            var likeCountB = b.querySelector('.board-like .like-count');
+
+            // 좋아요 수를 가져오기 전에 null 체크
+            likeCountA = likeCountA ? parseInt(likeCountA.textContent.trim() || '0') : 0;
+            likeCountB = likeCountB ? parseInt(likeCountB.textContent.trim() || '0') : 0;
+
+            // 정렬 방식에 따라 순서 변경
+            if (sortOrder === 'asc') {
+                return likeCountA - likeCountB;
+            } else {
+                return likeCountB - likeCountA;
+            }
+        }
+
+        var sortedList = Array.from(qaItems).sort(sortFunction);
+
+        // 클릭할 때마다 정렬 방식 변경
+        sortOrder = (sortOrder === 'asc') ? 'desc' : 'asc';
+
+        // 기존 목록 초기화 후 정렬 목록 다시 추가
         boardList.innerHTML = '';
         sortedList.forEach(function(item) {
             boardList.appendChild(item);
