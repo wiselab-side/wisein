@@ -37,6 +37,9 @@
         <if test="sort == 'regDate'">
             A.REG_DATE DESC,
         </if>
+        <if test="sort == 'count'">
+            A.COUNT DESC,
+        </if>
     </sql>
 
     <!--TipBoard 다건조회-->

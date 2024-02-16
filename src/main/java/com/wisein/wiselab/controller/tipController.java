@@ -182,13 +182,7 @@ public class tipController {
         String side_gubun = "Y";
 
         //조회수 증가
-        System.out.println("전 model" + model);
-        System.out.println("전 dto" + dto);
-        System.out.println("전 tipBoardDTO" + TipBoardDTO);
         tipBoardService.updateCount(TipBoardDTO);
-        System.out.println("후 model" + model);
-        System.out.println("후 dto" + dto);
-        System.out.println("후 tipBoardDTO" + TipBoardDTO);
 
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());

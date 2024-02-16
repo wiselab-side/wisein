@@ -369,4 +369,16 @@ $('#login_id, #login_pw').on('keypress', function(e){
     }
 });
 
-
+// 비밀번호 보이게 하기
+$(document).ready(function(){
+    $('.signUp-input-wrap i').on('click', function(){
+        $('input').toggleClass('active');
+        if( $('input').hasClass('active') ){
+            $(this).attr('class', 'fa fa-eye-slash fa-lg')
+            .prev('input').attr('type', 'text');
+        } else {
+        $(this).attr('class', "fa fa-eye fa-lg")
+        .prev('input').attr('type', 'password');
+        }
+    });
+});

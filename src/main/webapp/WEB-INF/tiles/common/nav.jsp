@@ -151,6 +151,7 @@
             <div class="signUp-input-wrap">
                 <label for="" class="signUp-input-label">PASSWORD</label>
                 <input type="password" class="login-input" id="login_pw" name="pw" required="required" />
+                <i class="fa fa-eye fa-lg"></i>
             </div>
         </div>
         <div class="w30p">

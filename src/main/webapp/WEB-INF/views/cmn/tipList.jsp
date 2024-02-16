@@ -125,6 +125,7 @@
                                 <span class="material-icons" style="max-width:24px;">bookmarks</span>${tip.scrapCount}
                             </div>
                         </c:if>
+                        <!--작성자-->
                         <div class="board-cell board-writer gray">
                             <p class="writer"><c:out value="${tip.writer}" /><br></p>
                             <ul class="person-function list">
@@ -132,13 +133,13 @@
                                 <li><a onclick="gatherMemTip('${tip.writer}')">작성팁 모아보기</a></li>
                             </ul>
                         </div>
+                        <!--날짜-->
                         <div class="board-cell board-date gray">
                             <fmt:formatDate value="${tip.regDate}" pattern="yyyy-MM-dd"/>
                         </div>
+                        <!--조회수-->
                         <div class="board-cell board-count gray">
-                            <div class="board-cell board-like gray">
-                                ${tip.count}
-                            </div>
+                            ${tip.count}
                         </div>
                     </div>
                 </c:forEach>

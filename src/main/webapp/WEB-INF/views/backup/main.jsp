@@ -130,7 +130,7 @@
                 <input type="text" class="signUp-input">
             </div>
             <div class="signUp-input-wrap">
-                <label for="" class="signUp-input-label">PASSWROD</label>
+                <label for="" class="signUp-input-label">PASSWORD</label>
                 <input type="text" class="signUp-input">
             </div>
         </div>

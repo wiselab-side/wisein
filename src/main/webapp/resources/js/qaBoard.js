@@ -73,6 +73,7 @@
             if (searchTypeParamTF !== -1) {
                 // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
                 newUrl = currentUrl.replace(/searchType=[^&]+/, 'searchType=' + selectedSearchType);
+                newUrl = newUrl.replace(/currentPageNo=[^&]+/, 'currentPageNo=1');
             } else {
                 // category 파라미터가 없으면 추가
                 newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'searchType=' + selectedSearchType;

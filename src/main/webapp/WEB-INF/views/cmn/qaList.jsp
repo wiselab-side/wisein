@@ -76,6 +76,9 @@
                 <div class="board-cell board-date gray" value="regDate" onClick="sort(event)">
                     날짜
                 </div>
+                <div class="board-cell board-count gray" value="count" onClick="sort(event)">
+                    조회
+                </div>
             </div>
 
             <c:forEach var="qa" items="${qaList}">
@@ -131,6 +134,9 @@
                     </div>
                     <div class="board-cell board-date gray">
                         <c:out value="${qa.regDate}" />
+                    </div>
+                    <div class="board-cell board-count gray">
+                        0
                     </div>
                 </div>
             </c:forEach>

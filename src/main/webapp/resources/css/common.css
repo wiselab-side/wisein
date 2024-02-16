@@ -755,7 +755,7 @@ input, select {
 
 
 .signUp-popup-wrap .login-input {
-  width: calc(100% - 110px);
+  width: calc(100% - 130px);
   padding-left: 8px;
   border: 0px;
   position: relative;
@@ -1421,4 +1421,10 @@ body {
 
 .uploadcare--widget__button.uploadcare--widget__button_type_open {
     background-color: #7E57C2;
+}
+
+div.signUp-input-wrap i {
+    position: relative;
+    top: 7px;
+    color: gray;
 }
