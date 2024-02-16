@@ -45,7 +45,7 @@
                              </select>
                     </div>
                     <div class="board-cell board-title">
-                        <!--제목 정렬 -->
+                        <!--제목 정렬 옵션 -->
                              <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
                                  <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
                                  <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
