@@ -1,5 +1,6 @@
 package com.wisein.wiselab.common.paging;
 
+import lombok.Getter;
 import lombok.Setter;
 
 public class PaginationInfo {
@@ -20,6 +21,12 @@ public class PaginationInfo {
 	private String searchType;
 	private String keyword;
 
+	@Setter
+	private String likeOrder;
+	@Setter
+	@Getter
+	private String scrapOrder;
+
 	//=========== 추가 부분 ===========
 	public String getCategory() {
 		return category == null ? "all" : category;
@@ -29,6 +36,7 @@ public class PaginationInfo {
 		return subject == null ? "all" : subject;
 	}
 
+	public String getLikeOrder(){ return likeOrder == null ? "DESC" : likeOrder;}
 	public String getViewAddr() {
 		return viewAddr != null ? viewAddr.replace("/", "") : null;
 	}

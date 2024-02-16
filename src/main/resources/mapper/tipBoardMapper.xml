@@ -32,6 +32,16 @@
         </if>
     </sql>
 
+    <!-- 좋아요 수 정렬 -->
+    <sql id="tipListLike">
+        <if test="likeOrder == 'ASC'">
+            LIKE_COUNT ASC,
+        </if>
+        <if test="likeOrder =='DESC'">
+            LIKE_COUNT DESC,
+        </if>
+    </sql>
+
     <!--TipBoard 다건조회-->
     <select id="selectTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
             SELECT A.RNUM
@@ -75,7 +85,9 @@
                     ]]>
                     <include refid="tipListCategory"/>
                   GROUP BY TB.NUM
-                  ORDER BY <include refid="tipListSubject"/> NUM DESC
+                  ORDER BY <include refid="tipListSubject"/>
+                           <include refid="tipListLike"/>
+                           NUM DESC
                   ) AS A
            LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
 

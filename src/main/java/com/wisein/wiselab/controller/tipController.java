@@ -55,6 +55,7 @@ public class tipController {
                           , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
                           , @RequestParam(name="category", required = false) String category
                           , @RequestParam(name="subject", required = false) String subject
+                          , @RequestParam(name="likeOrder", required = false) String likeOrder
                           , Model model) throws Exception {
         /*
         카테고리 및 제목 정렬 처리
@@ -63,6 +64,8 @@ public class tipController {
          내용  : form을 통해 카테고리/제목 정렬 기준을 받아온다
                  두가지 옵션이 동시에 실행될 수 있도록 값을 저장한다
          */
+
+
 
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
@@ -76,12 +79,16 @@ public class tipController {
         if(tipList.isEmpty()){
             tipList = null;
         }
+        System.out.println("~~~~~~~~~~order값 확인 : " + likeOrder);
+
+
 
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
         // ============== 추가부분 ==============
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
+        model.addAttribute("likeOrder", likeOrder);
 
         return "cmn/tipList";
     }
@@ -97,6 +104,7 @@ public class tipController {
             , Model model
             ,@RequestParam(name="category", required = false) String category
             , @RequestParam(name="subject", required = false) String subject
+            , @RequestParam(name="likeOrder", required = false) String likeOrder
     ) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -160,6 +168,7 @@ public class tipController {
         model.addAttribute("pagination", pagination);
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
+        model.addAttribute("likeOrder", likeOrder);
         return "cmn/tipList";
     }
 

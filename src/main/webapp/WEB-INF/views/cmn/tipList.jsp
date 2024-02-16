@@ -51,16 +51,17 @@
                                  <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
                                  <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
                              </select>
-                        </form>
-                        <!-- controller 에 전해줄 form 끝-->
+
 
                     </div>
                     <div class="board-cell board-like gray">
                         댓글수
                     </div>
-                    <div class="board-cell board-like gray">
+                    <div class="board-cell board-like gray" onclick="changeOrder()">
                         좋아요
                     </div>
+                    </form>
+                     <!-- controller 에 전해줄 form 끝-->
                     <div class="board-cell board-like gray">
                         스크랩
                     </div>
@@ -94,7 +95,7 @@
                                 <span class="material-icons">comment</span>${tip.commCnt}
                             </div>
                         </c:if>
-                        <!--좋아요-->
+                        <!--좋아요 수-->
                         <c:if test="${tip.likeCount == 0}">
                             <div class="board-cell board-like gray">
                                 <span class="material-icons">thumb_up</span>${tip.likeCount}
@@ -141,15 +142,30 @@
 </c:if>
 
 <script>
-<!-- 함수로 처리? -->
-$(function(){
-    const sortOption = $('select[name="subject"]>option');
 
-
-
-
-});
-
-
+    function changeOrder() {
+        var orderInput = document.getElementById("likeOrder");
+        //asc라면 desc로 변경한 후 폼을 제출
+        //클릭이벤트로 해아하지않나?
+        //getter에서 처리?
+        if (orderInput.value === "DESC") {
+            orderInput.value = "ASC";
+        } else {
+            orderInput.value = "DESC";
+        }
+        document.getElementById("likeOrderForm ").submit(); // 폼 제출
+    }
 
 </script>
+
+<form id="likeOrderForm" action="/tipList" method="get">
+    <input type="hidden" id="likeOrder" name="likeOrder" value="asc">
+</form>
+<!--
+제목순, 좋아요순, 스크랩순은 and로 이으면 정렬 우선순위가 옳지 않음
+url 상 & 로 연결하지 말고 ORDER BY는 하나로만 해야함
+FORM을 따로 생성해야할듯
+
+null 값나옴..갑자기..
+
+-->
