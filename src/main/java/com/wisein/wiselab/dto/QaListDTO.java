@@ -22,5 +22,6 @@ public class QaListDTO extends PaginationInfo {
     private int likeCount;
     private int scrapCount;
     private int adpNum;
+    private int count;
 }
 

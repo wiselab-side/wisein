@@ -57,6 +57,7 @@
              , A.PARENT_NUM
              , A.LIKE_COUNT
              , A.SCRAP_COUNT
+             , A.COUNT
              ,(SELECT COUNT(*)
                       FROM QA_BOARD COM
                      WHERE COM.PARENT_NUM = A.NUM
@@ -75,6 +76,7 @@
                      , QB.PARENT_NUM
                      , QB.LIKE_COUNT
                      , QB.SCRAP_COUNT
+                     , QB.COUNT
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
                  WHERE 1=1
@@ -147,6 +149,7 @@
         ,LIKE_COUNT
         ,ADP_NUM
         ,SCRAP_COUNT
+        ,COUNT
         FROM
         qa_board
         WHERE NUM=#{num}
@@ -536,5 +539,14 @@
         DEL_YN = 'Y'
         WHERE BOARD_IDX = #{num}
     </delete>
+
+    <!-- 조회수 -->
+    <update id="updateCount" parameterType="int">
+        UPDATE
+        qa_board
+        SET
+        COUNT = COUNT+1
+        WHERE NUM = #{num}
+    </update>
 
 </mapper>

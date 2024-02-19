@@ -366,4 +366,10 @@ public class QaListDAOImpl implements QaListDAO {
     public void deleteScrapQaBoard(int num) throws Exception {
         sql.delete(NS + ".deleteScrapQaBoard", num);
     }
+
+    /* 조회수 증가 */
+    @Override
+    public void updateCount(int num) throws Exception {
+        sql.update(NS + ".updateCount", num);
+    }
 }

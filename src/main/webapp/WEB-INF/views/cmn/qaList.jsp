@@ -136,7 +136,7 @@
                         <c:out value="${qa.regDate}" />
                     </div>
                     <div class="board-cell board-count gray">
-                        0
+                        <c:out value="${qa.count}" />
                     </div>
                 </div>
             </c:forEach>

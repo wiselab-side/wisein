@@ -43,5 +43,5 @@ public interface TipBoardDAO {
     public List<TipBoardDTO> categoryList() throws Exception;
 
     /* 조회수 증가 */
-    public void updateCount(TipBoardDTO dto) throws Exception;
+    public void updateCount(int dto) throws Exception;
 }

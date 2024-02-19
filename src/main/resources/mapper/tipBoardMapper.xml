@@ -274,9 +274,7 @@
     <!-- 조회수 증가 -->
     <update id="updateCount" parameterType="Integer">
         UPDATE TIP_BOARD
-        SET COUNT = (SELECT COUNT
-                     FROM TIP_BOARD
-                     WHERE NUM = #{num})+1
+        SET COUNT = COUNT+1
         WHERE NUM = #{num}
     </update>
 

@@ -103,6 +103,7 @@ public class QaListServiceImpl implements QaListService {
      * */
     @Override
     public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception {
+        dao.updateCount(qaListDTO.getNum());
         return dao.selectQaOne(qaListDTO);
     }
 

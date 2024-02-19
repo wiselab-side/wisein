@@ -181,9 +181,6 @@ public class tipController {
         //사이드바 설정
         String side_gubun = "Y";
 
-        //조회수 증가
-        tipBoardService.updateCount(TipBoardDTO);
-
         model.addAttribute("tipBoardDTO", TipBoardDTO);
         model.addAttribute("content", TipBoardDTO.getContent());
         model.addAttribute("commentNum", commentNum);

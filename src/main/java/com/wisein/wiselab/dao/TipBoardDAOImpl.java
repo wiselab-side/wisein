@@ -88,7 +88,7 @@ public class TipBoardDAOImpl implements TipBoardDAO {
 
     /* 조회수 증가 */
     @Override
-    public void updateCount(TipBoardDTO dto) throws Exception {
-        sql.update(NS+ ".updateCount", dto);
+    public void updateCount(int num) throws Exception {
+        sql.update(NS+ ".updateCount", num);
     }
 }
