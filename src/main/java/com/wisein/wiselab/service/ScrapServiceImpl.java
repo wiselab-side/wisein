@@ -1,7 +1,9 @@
 package com.wisein.wiselab.service;
 
 import com.wisein.wiselab.dao.ScrapDAO;
+import com.wisein.wiselab.dao.TipBoardDAO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
+import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,9 @@ public class ScrapServiceImpl implements ScrapService {
 
     @Autowired
     private ScrapDAO dao;
+
+    @Autowired
+    private TipBoardDAO tipBoardDAO;
 
 
     /* Scrap 여부 조회 */
@@ -73,4 +78,9 @@ public class ScrapServiceImpl implements ScrapService {
         return dao.getScrapParentNum(num);
     }
 
+    /* TIP Scrap 모아보기 */
+//    @Override
+//    public TipBoardDTO selectTipScrap() throws Exception {
+//        return
+//    }
 }

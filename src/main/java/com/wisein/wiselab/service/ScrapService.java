@@ -1,6 +1,7 @@
 package com.wisein.wiselab.service;
 
 import com.wisein.wiselab.dto.ScrapBoardDTO;
+import com.wisein.wiselab.dto.TipBoardDTO;
 
 
 public interface ScrapService {
@@ -34,4 +35,7 @@ public interface ScrapService {
 
     /* Scrap 등록 시 원본 게시글 count 증가를 위한 parentNum 조회 */
     public int getScrapParentNum(int num) throws Exception;
+    
+//    /* TIP Scrap 모아보기 */
+//    public TipBoardDTO selectTipScrap() throws Exception;
 }

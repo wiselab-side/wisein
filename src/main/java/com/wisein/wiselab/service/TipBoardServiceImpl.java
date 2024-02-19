@@ -40,11 +40,7 @@ public class TipBoardServiceImpl implements TipBoardService {
     /* TipBoard 단건조회 */
     @Override
     public TipBoardDTO selectTipOne(TipBoardDTO dto) throws Exception {
-        System.out.println("dto @@@@@ " + dto);
-        System.out.println("dto.getnum @@@@@ " +dto.getNum());
-
         dao.updateCount(dto.getNum());
-        System.out.println("dto @@@@@ " + dto);
         return dao.selectTipOne(dto);
     }
 

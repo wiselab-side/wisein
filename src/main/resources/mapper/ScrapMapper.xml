@@ -109,4 +109,53 @@
             NUM = #{num}
     </select>
 
+    <!-- TIP Scrap 모아보기 -->
+    <select id="selectTipScrap">
+        SELECT *
+        FROM ( SELECT BOARD_IDX
+                    , BOARD_TYPE
+                 FROM SCRAP_BOARD
+                WHERE USER_ID = 'ohyk'
+                  AND DEL_YN = 'N' ) SB
+            , ( SELECT NUM
+                     , CATEGORY
+                     , WRITER
+                     , SUBJECT
+                     , CONTENT
+                     , REG_DATE
+                     , UPD_DATE
+                     , COUNT
+                     , PARENT_NUM
+                     , LIKE_COUNT
+                     , SCRAP_COUNT
+                  FROM TIP_BOARD
+                 WHERE DEL_YN = 'N' ) TB
+        WHERE SB.BOARD_TYPE = 'TIP'
+        AND SB.BOARD_IDX = TB.NUM
+    </select>
+
+    <!-- QA Scrap 모아보기 -->
+    <select id="selectQaScrap">
+        SELECT *
+        FROM ( SELECT BOARD_IDX
+                    , BOARD_TYPE
+                 FROM SCRAP_BOARD
+                WHERE USER_ID = 'ohyk'
+                  AND DEL_YN = 'N' ) SB
+           , ( SELECT NUM
+                    , CATEGORY
+                    , WRITER
+                    , SUBJECT
+                    , CONTENT
+                    , REG_DATE
+                    , UPD_DATE
+                    , LIKE_COUNT
+                    , SCRAP_COUNT
+                    , COUNT
+                 FROM QA_BOARD
+                WHERE DEL_YN = 'N' ) QB
+        WHERE SB.BOARD_TYPE = 'qa'
+        AND SB.BOARD_IDX = QB.NUM
+    </select>
+
 </mapper>
