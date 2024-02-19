@@ -35,7 +35,12 @@
                     <div class="board-cell board-category purple2">
                          <!-- controller 에 전해줄 form 생성,
                               카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄질 수 있기 때문에 하나의 form 태그로 진행-->
-                         <form action="/tipList" method="get">
+
+
+
+
+
+                         <form action="/tipList" method="get" id="tipOrderForm">
                             <!--카테고리 조회 -->
                              <select id="category" name="category" class="category-select" onchange="this.form.submit()">
                                  <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
@@ -51,26 +56,28 @@
                                  <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
                                  <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
                              </select>
+                    </div>
+                        <div class="board-cell board-like gray">
+                            댓글수
+                        </div>
 
+                        <div class="board-cell board-like gray" id="likeDiv" onclick="changeOrder()">
+                            좋아요
+                        </div>
+                        <!-- 값~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                        <input type="" id="likeOrder" name="likeOrder" value="${likeOrder}"/>
 
-                    </div>
-                    <div class="board-cell board-like gray">
-                        댓글수
-                    </div>
-                    <div class="board-cell board-like gray" onclick="changeOrder()">
-                        좋아요
-                    </div>
+                        <div class="board-cell board-like gray">
+                            스크랩
+                        </div>
+                        <div class="board-cell board-writer gray">
+                            작성자
+                        </div>
+                        <div class="board-cell board-date gray">
+                            날짜
+                        </div>
+
                     </form>
-                     <!-- controller 에 전해줄 form 끝-->
-                    <div class="board-cell board-like gray">
-                        스크랩
-                    </div>
-                    <div class="board-cell board-writer gray">
-                        작성자
-                    </div>
-                    <div class="board-cell board-date gray">
-                        날짜
-                    </div>
                 </div>
 
                 <c:forEach var="tip" items="${tipList}">
@@ -140,32 +147,59 @@
 
     </div>
 </c:if>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-
     function changeOrder() {
-        var orderInput = document.getElementById("likeOrder");
-        //asc라면 desc로 변경한 후 폼을 제출
-        //클릭이벤트로 해아하지않나?
-        //getter에서 처리?
-        if (orderInput.value === "DESC") {
-            orderInput.value = "ASC";
-        } else {
-            orderInput.value = "DESC";
-        }
-        document.getElementById("likeOrderForm ").submit(); // 폼 제출
-    }
+        const orderInput = document.getElementById("likeOrder");
+        var currentOrder = orderInput.value;
+        const subjectInput  = document.getElementById("selectedCategory");
 
+
+        // 현재 순서가 DESC이거나 값이 없는 경우 ASC로 설정하고,
+        // 그렇지 않으면 DESC로 설정
+        if (currentOrder === 'DESC' || !currentOrder) {
+            currentOrder = 'ASC';
+        } else {
+            currentOrder = 'DESC';
+        }
+
+        // 변경된 순서를 hidden input에 설정
+        orderInput.value = currentOrder;
+
+        console.log('최종변경 : ' + orderInput.value);
+
+        let form = document.getElementById('tipOrderForm');
+        form.submit();
+
+        // AJAX를 사용하여 변경된 순서를 서버로 전송
+        /*
+        $.ajax({
+            url: '/tipList',
+            type: 'POST',
+            data: { likeOrder: currentOrder },
+            success: function(response) {
+                console.log('좋아요 순서 변경 성공!');
+                console.log('변경된 값 : ' + currentOrder);
+                //location.href="/tipList?category="++""&subject=asc&likeOrder="+currentOrder;
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX 요청 실패', status, error);
+            }
+        });*/
+    }
 </script>
 
-<form id="likeOrderForm" action="/tipList" method="get">
-    <input type="hidden" id="likeOrder" name="likeOrder" value="asc">
-</form>
-<!--
-제목순, 좋아요순, 스크랩순은 and로 이으면 정렬 우선순위가 옳지 않음
-url 상 & 로 연결하지 말고 ORDER BY는 하나로만 해야함
-FORM을 따로 생성해야할듯
+ <!-- controller 에 전해줄 form 끝-->
 
-null 값나옴..갑자기..
+
+
+
+<!--
+클릭을 할때마다(폼을 제출할때마다) 새로고침이 되어 INPUT에서 설정한 초기 VALUE값으로 초기화가 된다
+이를 위해 submit 이벤트 동작을 막자 정상적으로 DESC > ASC > DESC >... 로 변경이 되었다
+폼을 제출하면 정상처리되지 않기 때문에 AJAX 통신으로 폼을 제출했다.
+하지만 페이지 util을 사용하기 위해서는 url이 category=&subject=&likeOrder=... 이와 같이 사용되어야하기 때문에
+폼 제출이 필수적인 것 같았다. (혹은 ajax통신으로 url 이동을 하면 되지만 page처리가 어려울 것..)
+option의 경우 선택된 값을 전송하면 되지만, 클릭의 경우 불가능하다
 
 -->

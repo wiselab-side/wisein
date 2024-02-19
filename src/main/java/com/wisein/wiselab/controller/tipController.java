@@ -52,11 +52,11 @@ public class tipController {
     //다건 조회
     @GetMapping(value="/tipList")
     public String tipList (HttpSession session
-                          , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
-                          , @RequestParam(name="category", required = false) String category
-                          , @RequestParam(name="subject", required = false) String subject
-                          , @RequestParam(name="likeOrder", required = false) String likeOrder
-                          , Model model) throws Exception {
+            , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
+            , @RequestParam(name="category", required = false) String category
+            , @RequestParam(name="subject", required = false) String subject
+            , @RequestParam(name="likeOrder", required = false) String likeOrder
+            , Model model) throws Exception {
         /*
         카테고리 및 제목 정렬 처리
         작성자 : 이영주
@@ -64,9 +64,10 @@ public class tipController {
          내용  : form을 통해 카테고리/제목 정렬 기준을 받아온다
                  두가지 옵션이 동시에 실행될 수 있도록 값을 저장한다
          */
-
-
-
+        /*if(likeOrder == null){
+            likeOrder = "DESC";
+            dto.setLikeOrder("DESC");
+        }*/
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
 
@@ -79,8 +80,8 @@ public class tipController {
         if(tipList.isEmpty()){
             tipList = null;
         }
-        System.out.println("~~~~~~~~~~order값 확인 : " + likeOrder);
-
+        System.out.println("~~~~~~~~~~CONTROLLER - likeOrder : " + likeOrder);
+        System.out.println("~~~~~~~~~~CONTROLLER - dto : " + dto.getLikeOrder());
 
 
         model.addAttribute("tipList", tipList);
@@ -92,6 +93,8 @@ public class tipController {
 
         return "cmn/tipList";
     }
+
+
 
     //작성글 모아보기
     @GetMapping(value="/gatherMemTip")

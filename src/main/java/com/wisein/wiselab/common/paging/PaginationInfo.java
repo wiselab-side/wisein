@@ -8,6 +8,7 @@ public class PaginationInfo {
 	@Setter
 	private String category;
 	@Setter
+	@Getter
 	private String subject;
 	private static int RECORDSPERPAGE = 10;
 	private static int PAGESIZE       = 10;
@@ -22,6 +23,7 @@ public class PaginationInfo {
 	private String keyword;
 
 	@Setter
+	@Getter
 	private String likeOrder;
 	@Setter
 	@Getter
@@ -32,11 +34,11 @@ public class PaginationInfo {
 		return category == null ? "all" : category;
 	}
 
-	public String getSubject() {
+	/*public String getSubject() {
 		return subject == null ? "all" : subject;
-	}
+	}*/
 
-	public String getLikeOrder(){ return likeOrder == null ? "DESC" : likeOrder;}
+	//public String getLikeOrder(){ return likeOrder == null ? "DESC" : likeOrder;}
 	public String getViewAddr() {
 		return viewAddr != null ? viewAddr.replace("/", "") : null;
 	}

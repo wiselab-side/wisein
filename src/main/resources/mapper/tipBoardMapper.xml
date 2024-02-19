@@ -85,8 +85,8 @@
                     ]]>
                     <include refid="tipListCategory"/>
                   GROUP BY TB.NUM
-                  ORDER BY <include refid="tipListSubject"/>
-                           <include refid="tipListLike"/>
+                  ORDER BY <include refid="tipListLike"/>
+                           <include refid="tipListSubject"/>
                            NUM DESC
                   ) AS A
            LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}

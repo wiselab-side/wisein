@@ -9,13 +9,14 @@ public abstract class AbstractPagingCustom {
 		페이지가 넘어갔을 때 옵션이 풀리는 오류를 해결했다
 	 */
 	public String render(PaginationInfo pageInfo) {
-			
-			StringBuilder sbuilder = new StringBuilder();
+
+
+		StringBuilder sbuilder = new StringBuilder();
 
 			if(pageInfo.isHasPreviousPage() == true) {
 				
 				Map<String, Object> map1 = new HashMap<String, Object>();
-				
+
 				map1.put("currentPageNo", 1);
 				map1.put("searchType", pageInfo.getSearchType());
 				map1.put("keyword", pageInfo.getKeyword());
@@ -23,6 +24,7 @@ public abstract class AbstractPagingCustom {
 				map1.put("category", pageInfo.getCategory());
 				map1.put("subject", pageInfo.getSubject());
 				map1.put("likeOrder", pageInfo.getLikeOrder());
+
 
 				sbuilder.append(replacesTag(getFirstPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map1)));
 			}
@@ -37,7 +39,8 @@ public abstract class AbstractPagingCustom {
 				map2.put("category", pageInfo.getCategory());
 				map2.put("subject", pageInfo.getSubject());
 				map2.put("likeOrder", pageInfo.getLikeOrder());
-					
+
+
 				sbuilder.append(replacesTag(getPreviousPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map2)));
 			}
 			
@@ -50,6 +53,8 @@ public abstract class AbstractPagingCustom {
 				map.put("category", pageInfo.getCategory());
 				map.put("subject", pageInfo.getSubject());
 				map.put("likeOrder", pageInfo.getLikeOrder());
+
+
 
 				sbuilder.append(replacesTag(getPageNumTag(), pageInfo.getViewAddr()+"?"+makeQueryString(map) , pageInfo.getCurrentPageNo()==idx ? "active":"", idx+""));
 			}
@@ -64,7 +69,7 @@ public abstract class AbstractPagingCustom {
 				map3.put("category", pageInfo.getCategory());
 				map3.put("subject", pageInfo.getSubject());
 				map3.put("likeOrder", pageInfo.getLikeOrder());
-					
+
 				sbuilder.append(replacesTag(getNextPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map3)));
 			}
 			
@@ -78,7 +83,6 @@ public abstract class AbstractPagingCustom {
 				map4.put("category", pageInfo.getCategory());
 				map4.put("subject", pageInfo.getSubject());
 				map4.put("likeOrder", pageInfo.getLikeOrder());
-				
 				sbuilder.append(replacesTag(getLastPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map4)));
 			}
 			
