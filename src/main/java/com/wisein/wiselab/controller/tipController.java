@@ -46,11 +46,11 @@ public class tipController {
 
     //다건 조회
     @GetMapping(value="/tipList")
-    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model
-            , @RequestParam(value="sort", required = false) String sort
-            , @RequestParam(value="category", required = false) String category) throws Exception {
+    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
+        System.out.println("@@@@@@@@@@ dto" + dto);
+        System.out.println("@@@@@@@@@@ model " + model);
 
         // 카테고리 목록 가져오기
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();

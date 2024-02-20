@@ -94,12 +94,6 @@
             let ParamTF = currentUrl.indexOf('sort=');
             let OrderParamTF = currentUrl.indexOf('order=');
 
-            // 이미 content 로 sort 된 경우 전체 조회
-//            if (sorted == "${sorted}") {
-//                window.location.href = "/tipList";
-//                return;
-//            }
-
             // sort param 여부
             let newUrl;
             if (ParamTF !== -1) { // sortParam O
