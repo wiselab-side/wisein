@@ -54,7 +54,7 @@ public class qaController {
                         //, @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
                         , Model model) throws Exception {
         List<QaListDTO> qaList = new ArrayList<>();
-        qaList = qaListservice.selectQaList(qaListDTO);
+//        qaList = qaListservice.selectQaList(qaListDTO);
 
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);

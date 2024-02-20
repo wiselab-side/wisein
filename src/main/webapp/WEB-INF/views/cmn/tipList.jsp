@@ -35,9 +35,9 @@
                     <div class="board-cell board-category purple2">
                         <p class="category-select">
                             <select id="selectOption" name="category" onchange="selectSearchType()">
-                                <option hidden="" selected>카테고리</option>
+                                <option hidden="">카테고리</option>
                                 <c:forEach items="${categoryList}" var="categoryList">
-                                    <option value="${categoryList.category}"><c:out value="${categoryList.category}"/></option>
+                                    <option value="${categoryList.category}" <c:if test="${param.searchType eq categoryList.category}">selected</c:if>><c:out value="${categoryList.category}"/></option>
                                 </c:forEach>
                             </select>
                         </p>

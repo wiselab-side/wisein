@@ -4,7 +4,7 @@
 
     <sql id="sort">
         <if test="sort == 'num'">
-            A.NUM DESC,
+            A.NUM
         </if>
         <if test="sort == 'subject'">
             <![CDATA[
@@ -20,25 +20,34 @@
                 END
                 ),
             ]]>
-            A.SUBJECT,
+            A.SUBJECT
         </if>
         <if test="sort == 'commCnt'">
-            COMM_CNT DESC,
+            COMM_CNT
         </if>
         <if test="sort == 'likeCount'">
-            A.LIKE_COUNT DESC,
+            A.LIKE_COUNT
         </if>
         <if test="sort == 'scrapCount'">
-            A.SCRAP_COUNT DESC,
+            A.SCRAP_COUNT
         </if>
         <if test="sort == 'writer'">
-            A.WRITER,
+            A.WRITER
         </if>
         <if test="sort == 'regDate'">
-            A.REG_DATE DESC,
+            A.REG_DATE
         </if>
         <if test="sort == 'count'">
-            A.COUNT DESC,
+            A.COUNT
+        </if>
+    </sql>
+
+    <sql id="order">
+        <if test="order == 'desc'">
+            DESC,
+        </if>
+        <if test="order == 'asc'">
+            ,
         </if>
     </sql>
 
@@ -89,7 +98,7 @@
                  ORDER BY NUM DESC
                 ) AS A
         ]]>
-            ORDER BY <include refid='sort'/> A.NUM DESC
+            ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
         <![CDATA[
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>

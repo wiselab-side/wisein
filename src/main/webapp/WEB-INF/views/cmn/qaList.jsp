@@ -42,11 +42,11 @@
                 <div class="board-cell board-category purple2">
                     <p class="category-select">
                         <select id="selectOption" name="category" onchange="selectSearchType()">
-                            <option hidden="" selected>카테고리</option>
-                            <option value="all">전체</option>
-                            <option value="FRONT">FRONT</option>
-                            <option value="BACK">BACK</option>
-                            <option value="DB">DB</option>
+                            <option hidden="">카테고리</option>
+                            <option value="all" <c:if test="${param.searchType eq 'all'}">selected</c:if>>전체</option>
+                            <option value="FRONT" <c:if test="${param.searchType eq 'FRONT'}">selected</c:if>>FRONT</option>
+                            <option value="BACK" <c:if test="${param.searchType eq 'BACK'}">selected</c:if>>BACK</option>
+                            <option value="DB" <c:if test="${param.searchType eq 'DB'}">selected</c:if>>DB</option>
                         </select>
                     </p>
                     <!--

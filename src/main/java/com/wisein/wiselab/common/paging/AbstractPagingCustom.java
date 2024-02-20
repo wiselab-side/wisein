@@ -21,6 +21,7 @@ public abstract class AbstractPagingCustom {
 				map1.put("keyword", pageInfo.getKeyword());
 
 				map1.put("sort", pageInfo.getSort());
+				map1.put("order", pageInfo.getOrder());
 				
 				sbuilder.append(replacesTag(getFirstPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map1)));
 			}
@@ -33,6 +34,7 @@ public abstract class AbstractPagingCustom {
 				map2.put("keyword", pageInfo.getKeyword());
 
 				map2.put("sort", pageInfo.getSort());
+				map2.put("order", pageInfo.getOrder());
 					
 				sbuilder.append(replacesTag(getPreviousPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map2)));
 			}
@@ -44,6 +46,7 @@ public abstract class AbstractPagingCustom {
 				map.put("keyword", pageInfo.getKeyword());
 
 				map.put("sort", pageInfo.getSort());
+				map.put("order", pageInfo.getOrder());
 
 				sbuilder.append(replacesTag(getPageNumTag(), pageInfo.getViewAddr()+"?"+makeQueryString(map) , pageInfo.getCurrentPageNo()==idx ? "active":"", idx+""));
 			}
@@ -56,6 +59,7 @@ public abstract class AbstractPagingCustom {
 				map3.put("keyword", pageInfo.getKeyword());
 
 				map3.put("sort", pageInfo.getSort());
+				map3.put("order", pageInfo.getOrder());
 					
 				sbuilder.append(replacesTag(getNextPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map3)));
 			}
@@ -68,6 +72,7 @@ public abstract class AbstractPagingCustom {
 				map4.put("keyword", pageInfo.getKeyword());
 
 				map4.put("sort", pageInfo.getSort());
+				map4.put("order", pageInfo.getOrder());
 				
 				sbuilder.append(replacesTag(getLastPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map4)));
 			}
