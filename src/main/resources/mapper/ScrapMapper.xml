@@ -2,6 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wisein.wiselab.mapper.scrapMapper">
 
+    <sql id="sort">
+        <if test="sort == 'num'">
+            A.NUM
+        </if>
+        <if test="sort == 'subject'">
+            <![CDATA[
+                (
+                CASE
+                    WHEN ASCII(SUBSTRING(UPPER(A.SUBJECT),1,1)) BETWEEN 65 AND 90 THEN 2 -- 영어
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 48 AND 57 THEN 3 -- 숫자
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 33 AND 47 THEN 4
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 58 AND 64 THEN 4
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 91 AND 96 THEN 4
+                    WHEN ASCII(SUBSTRING(A.SUBJECT,1,1)) BETWEEN 123 AND 126 THEN 4
+                    ELSE 1 -- 한글
+                END
+                ),
+            ]]>
+            A.SUBJECT
+        </if>
+        <if test="sort == 'commCnt'">
+            COMM_CNT
+        </if>
+        <if test="sort == 'likeCount'">
+            A.LIKE_COUNT
+        </if>
+        <if test="sort == 'scrapCount'">
+            A.SCRAP_COUNT
+        </if>
+        <if test="sort == 'writer'">
+            A.WRITER
+        </if>
+        <if test="sort == 'regDate'">
+            A.REG_DATE
+        </if>
+        <if test="sort == 'count'">
+            A.COUNT
+        </if>
+    </sql>
+
+    <sql id="order">
+        <if test="order == 'desc'">
+            DESC,
+        </if>
+        <if test="order == 'asc'">
+            ,
+        </if>
+    </sql>
+
     <!-- Scrap 여부 조회-->
     <select id="TipScrapYN" parameterType="ScrapBoardDTO" resultType="String">
         SELECT DEL_YN
@@ -110,12 +159,12 @@
     </select>
 
     <!-- TIP Scrap 모아보기 -->
-    <select id="selectTipScrap">
+    <select id="selectTipScrap" parameterType="ScrapBoardDTO" resultType="TipBoardDTO">
         SELECT *
         FROM ( SELECT BOARD_IDX
                     , BOARD_TYPE
                  FROM SCRAP_BOARD
-                WHERE USER_ID = 'ohyk'
+                WHERE USER_ID = #{userId}
                   AND DEL_YN = 'N' ) SB
             , ( SELECT NUM
                      , CATEGORY
@@ -129,18 +178,19 @@
                      , LIKE_COUNT
                      , SCRAP_COUNT
                   FROM TIP_BOARD
-                 WHERE DEL_YN = 'N' ) TB
+                 WHERE DEL_YN = 'N' ) A
         WHERE SB.BOARD_TYPE = 'TIP'
-        AND SB.BOARD_IDX = TB.NUM
+        AND SB.BOARD_IDX = A.NUM
+        ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
     </select>
 
     <!-- QA Scrap 모아보기 -->
-    <select id="selectQaScrap">
+    <select id="selectQaScrap" parameterType="ScrapBoardDTO" resultType="QaListDTO">
         SELECT *
         FROM ( SELECT BOARD_IDX
                     , BOARD_TYPE
                  FROM SCRAP_BOARD
-                WHERE USER_ID = 'ohyk'
+                WHERE USER_ID = #{userId}
                   AND DEL_YN = 'N' ) SB
            , ( SELECT NUM
                     , CATEGORY
@@ -153,9 +203,30 @@
                     , SCRAP_COUNT
                     , COUNT
                  FROM QA_BOARD
-                WHERE DEL_YN = 'N' ) QB
+                WHERE DEL_YN = 'N' ) A
         WHERE SB.BOARD_TYPE = 'qa'
-        AND SB.BOARD_IDX = QB.NUM
+        AND SB.BOARD_IDX = A.NUM
+        ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+    </select>
+
+    <!-- QA 모아보기 게시글 개수 조회 -->
+    <select id="selectQaTotalCount" parameterType="ScrapBoardDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(A.NUM)
+		  FROM QA_BOARD A
+		      , (SELECT BOARD_IDX
+                      , BOARD_TYPE
+                 FROM SCRAP_BOARD
+                 WHERE USER_ID = #{userId}
+                 AND DEL_YN = 'N' ) SB
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND SB.BOARD_TYPE = 'qa'
+           AND SB.BOARD_IDX = A.NUM
+           AND USER_ID = #{userId}
+		   AND NUM > 0
+		]]>
     </select>
 
 </mapper>

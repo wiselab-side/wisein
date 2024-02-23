@@ -49,8 +49,6 @@ public class tipController {
     public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
-        System.out.println("@@@@@@@@@@ dto" + dto);
-        System.out.println("@@@@@@@@@@ model " + model);
 
         // 카테고리 목록 가져오기
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();
@@ -86,6 +84,9 @@ public class tipController {
             , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+        // 카테고리 목록 가져오기
+        List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 
         if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
             questionsListWriter = questionsListWriter.substring(1);
@@ -133,9 +134,13 @@ public class tipController {
         List<TipBoardDTO> tipList = new ArrayList<>();
 
         tipList = tipBoardService.selectMemberTipList(dto);
+
+        System.out.println("tipList + @@@@@" + tipList);
+
         dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
 

@@ -373,6 +373,12 @@
              , A.PARENT_NUM
              , A.LIKE_COUNT
              , A.SCRAP_COUNT
+             , A.COUNT
+             , (SELECT COUNT(*)
+                     FROM QA_BOARD COM
+                     WHERE COM.PARENT_NUM = A.NUM
+                       AND COM.DEL_YN = 'N'
+                     ) AS COMM_CNT
           FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                      , QB.NUM
                      , QB.CATEGORY
@@ -386,6 +392,7 @@
                      , QB.PARENT_NUM
                      , QB.LIKE_COUNT
                      , QB.SCRAP_COUNT
+                     , QB.COUNT
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
                  WHERE 1=1
@@ -398,6 +405,9 @@
                  GROUP BY QB.NUM
                  ORDER BY NUM DESC
                 ) AS A
+        ]]>
+        ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+        <![CDATA[
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>

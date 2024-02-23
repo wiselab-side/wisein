@@ -114,6 +114,7 @@
                   ,A.REG_DATE
                   ,A.UPD_DATE
                   ,A.DEL_YN
+                  ,A.COUNT
                   ,A.PARENT_NUM
                   ,A.LIKE_COUNT
                   ,A.SCRAP_COUNT
@@ -146,8 +147,11 @@
                   GROUP BY TB.NUM
                   ORDER BY NUM DESC
                   ) AS A
-           LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
-           ]]>
+            ]]>
+            ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+            <![CDATA[
+            LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+            ]]>
         </select>
 
         <!--TipBoard 단건조회-->

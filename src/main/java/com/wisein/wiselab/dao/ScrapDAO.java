@@ -1,8 +1,11 @@
 package com.wisein.wiselab.dao;
 
 
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
+
+import java.util.List;
 
 public interface ScrapDAO {
 
@@ -36,6 +39,9 @@ public interface ScrapDAO {
     /* Scrap 등록 시 원본 게시글 count 증가를 위한 parentNum 조회 */
     public int getScrapParentNum(int num) throws Exception;
 
-//    /* TIP Scrap 모아보기 */
-//    public TipBoardDTO selectTipScrap() throws Exception;
+    /* TIP Scrap 모아보기 */
+    public List<TipBoardDTO> selectTipScrap(String userId) throws Exception;
+
+    /* QA Scrap 모아보기 */
+    public List<QaListDTO> selectQaScrap(String userId) throws Exception;
 }

@@ -1,9 +1,12 @@
 package com.wisein.wiselab.dao;
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ScrapDAOImpl implements ScrapDAO {
@@ -73,8 +76,13 @@ public class ScrapDAOImpl implements ScrapDAO {
     }
 
     /* TIP Scrap 모아보기 */
-//    @Override
-//    public TipBoardDTO selectTipScrap() throws Exception {
-//        return sql.select(NS + ".selectTipScrap");
-//    }
+    @Override
+    public List<TipBoardDTO> selectTipScrap(String userId) throws Exception {
+        return sql.selectList(NS + ".selectTipScrap", userId);
+    }
+
+    /* QA Scrap 모아보기 */
+    public List<QaListDTO> selectQaScrap(String userId) throws Exception {
+        return sql.selectList(NS + ".selectQaScrap", userId);
+    }
 }

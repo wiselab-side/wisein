@@ -2,10 +2,13 @@ package com.wisein.wiselab.service;
 
 import com.wisein.wiselab.dao.ScrapDAO;
 import com.wisein.wiselab.dao.TipBoardDAO;
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -79,8 +82,14 @@ public class ScrapServiceImpl implements ScrapService {
     }
 
     /* TIP Scrap 모아보기 */
-//    @Override
-//    public TipBoardDTO selectTipScrap() throws Exception {
-//        return
-//    }
+    @Override
+    public List<TipBoardDTO> selectTipScrap(String userId) throws Exception {
+        return dao.selectTipScrap(userId);
+    }
+
+    /* QA Scrap 모아보기 */
+    @Override
+    public List<QaListDTO> selectQaScrap(String userId) throws Exception {
+        return dao.selectQaScrap(userId);
+    }
 }
