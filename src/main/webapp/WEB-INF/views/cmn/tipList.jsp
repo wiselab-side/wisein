@@ -40,42 +40,63 @@
 
 
 
-                         <form action="/tipList" method="get" id="tipOrderForm">
-                            <!--카테고리 조회 -->
-                             <select id="category" name="category" class="category-select" onchange="this.form.submit()">
-                                 <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
-                                 <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
-                                 <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
-                                 <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
-                             </select>
-                    </div>
-                    <div class="board-cell board-title">
-                        <!--제목 정렬 옵션 -->
-                             <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
-                                 <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
-                                 <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
-                                 <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
-                             </select>
-                    </div>
-                        <div class="board-cell board-like gray">
-                            댓글수
+                    <form action="/tipList" method="get" id="tipOrderForm">
+                        <!--카테고리 조회 -->
+                         <select id="category" name="category" class="category-select" onchange="this.form.submit()">
+                             <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
+                             <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
+                             <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
+                             <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
+                         </select>
                         </div>
+                        <div class="board-cell board-title">
+                            <!--제목 정렬 옵션 -->
+                                 <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
+                                     <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
+                                     <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
+                                     <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
+                                 </select>
+                        </div>
+                            <!--
+                            같은 폼에서 전송하면
+                            -->
 
-                        <div class="board-cell board-like gray" id="likeDiv" onclick="changeOrder()">
-                            좋아요
-                        </div>
-                        <!-- 값~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                        <input type="" id="likeOrder" name="likeOrder" value="${likeOrder}"/>
+                            <div class="board-cell board-like gray">
+                                댓글수
+                            </div>
 
-                        <div class="board-cell board-like gray">
-                            스크랩
-                        </div>
-                        <div class="board-cell board-writer gray">
-                            작성자
-                        </div>
-                        <div class="board-cell board-date gray">
-                            날짜
-                        </div>
+                            <div class="board-cell board-like gray">
+                                좋아요
+
+                            </div>
+                             <!-- likeOrder를 선택할 수 있는 입력란 -->
+                             <input type="hidden" id="likeOrder" name="likeOrder" value="${likeOrder}">
+                             <!-- likeOrder 정렬 값을 변경할 때마다 폼을 자동으로 제출 -->
+                             <input type="button" id="likeOrderButton" value="${likeOrder}" onclick="changeOrder('likeOrder')">
+
+                            <div class="board-cell board-like gray">
+                             스크랩
+                            </div>
+
+                             <!-- scrapOrder를 선택할 수 있는 입력란 -->
+                             <input type="hidden" id="scrapOrder" name="scrapOrder" value="${scrapOrder}">
+                             <!-- scrapOrder 정렬 값을 변경할 때마다 폼을 자동으로 제출 -->
+                             <input type="button" id="scrapOrderButton" value="${scrapOrder}" onclick="changeOrder('scrapOrder')">
+                            <input type="text" id="orderValue" value=""> <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
+                            <div class="board-cell board-writer gray">
+                                작성자
+                            </div>
+                            <div class="board-cell board-date gray">
+                                날짜
+                            </div>
+
+                            <!-- 넘겨줄 정렬값들~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                            <!-- form을 넘겨주면서 value값이 항상 초기값으로 초기화 되었는데
+                                 value 자체에 jstl을 사용하여 Controller에서 받아온 model을 사용하면
+                                 정상적으로 처리할 수 있다.
+                             -->
+
+
 
                     </form>
                 </div>
@@ -147,46 +168,71 @@
 
     </div>
 </c:if>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<!--
+ [로직 정리]
+
+ 좋아요, 스크랩 순으로만 정렬 기능을 한다
+ 단, 좋아요 / 스크랩 따로 작동하도록 한다
+ 좋아요순&스크랩순이면 안됨
+
+ 클릭을 하면 ASC, DESC가 번갈아 출력되는 작동 방식은 동일하다
+ 대신 좋아요와 스크랩을 따로 넘겨줘야 하는 것이다
+
+ 클릭이 된 값을 넘겨주면 되는 것
+ MAPPER 에서 이를 CHOOSE~WHEN 절로 처리하면 된다
+-->
+
+
 <script>
-    function changeOrder() {
-        const orderInput = document.getElementById("likeOrder");
-        var currentOrder = orderInput.value;
-        const subjectInput  = document.getElementById("selectedCategory");
+    //인자값으로 ID를 받아올 수 있다!!!!!!
+    //ASC <-> DESC 변경해주는 함수
 
+    //+ 추가로 만들어야 할 함수? click 된 값을 새로운 변수에 넣어줘서 mapper 에서 하나로 처리할 수 있도록
+    function changeOrder(click_id) {
+        console.log('인자값으로 확인 ~~~~~ ' + click_id);
+        var selectValue = document.getElementById(click_id).value;
 
-        // 현재 순서가 DESC이거나 값이 없는 경우 ASC로 설정하고,
-        // 그렇지 않으면 DESC로 설정
-        if (currentOrder === 'DESC' || !currentOrder) {
-            currentOrder = 'ASC';
+        if (selectValue === 'ASC' || !selectValue) {
+            selectValue = 'DESC';
         } else {
-            currentOrder = 'DESC';
+            selectValue = 'ASC';
         }
 
-        // 변경된 순서를 hidden input에 설정
-        orderInput.value = currentOrder;
+        document.getElementById(click_id).value = selectValue;
 
-        console.log('최종변경 : ' + orderInput.value);
+        var orderValue = document.getElementById(orderValue);
+        orderValue.value = click_id;
 
+         console.log('-------넘어가는 값 확인 : ' + orderValue);
         let form = document.getElementById('tipOrderForm');
         form.submit();
 
-        // AJAX를 사용하여 변경된 순서를 서버로 전송
-        /*
-        $.ajax({
-            url: '/tipList',
-            type: 'POST',
-            data: { likeOrder: currentOrder },
-            success: function(response) {
-                console.log('좋아요 순서 변경 성공!');
-                console.log('변경된 값 : ' + currentOrder);
-                //location.href="/tipList?category="++""&subject=asc&likeOrder="+currentOrder;
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX 요청 실패', status, error);
-            }
-        });*/
+
+
     }
+
+    function changeScrap() {
+
+           const scrapInput = document.getElementById("scrapInput");
+            var currentScrap = scrapInput.value;
+
+
+            if (currentScrap === 'ASC' || !currentScrap) {
+                currentScrap = 'DESC';
+            } else {
+                currentScrap = 'ASC';
+            }
+
+            scrapInput.value = currentScrap;
+
+            console.log('최종변경값 SCRAP : ' + scrapInput.value);
+
+            let form = document.getElementById('tipOrderForm');
+            form.submit();
+
+        }
 </script>
 
  <!-- controller 에 전해줄 form 끝-->

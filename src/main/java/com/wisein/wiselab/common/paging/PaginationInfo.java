@@ -28,11 +28,16 @@ public class PaginationInfo {
 	@Setter
 	@Getter
 	private String scrapOrder;
+	@Getter
+	@Setter
+	private String sortOrder;
 
 	//=========== 추가 부분 ===========
 	public String getCategory() {
 		return category == null ? "all" : category;
 	}
+
+
 
 	/*public String getSubject() {
 		return subject == null ? "all" : subject;

@@ -56,6 +56,8 @@ public class tipController {
             , @RequestParam(name="category", required = false) String category
             , @RequestParam(name="subject", required = false) String subject
             , @RequestParam(name="likeOrder", required = false) String likeOrder
+            , @RequestParam(name="scrapOrder", required = false) String scrapOrder
+             ,@RequestParam(name="orderValue", required = false) String orderValue
             , Model model) throws Exception {
         /*
         카테고리 및 제목 정렬 처리
@@ -71,29 +73,49 @@ public class tipController {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
 
+
+
         List<TipBoardDTO> tipList = new ArrayList<>();
         tipList = tipBoardService.selectTipList(dto);
+
+        //likeOrder 값이 존재한다면
+        /*if(likeOrder != null){
+            dto.setLikeOrder(likeOrder);
+            dto.setScrapOrder("");
+        } else if(scrapOrder != null){
+            //scrapOrder 값이 존재한다면
+            dto.setScrapOrder(scrapOrder);
+            dto.setLikeOrder("");
+        } else if(likeOrder != null && scrapOrder != null){
+            dto.setScrapOrder("");
+            dto.setLikeOrder("");
+        }*/
+
+        System.out.println("~~~~~~~~~~CONTROLLER - likeOrder : " + likeOrder);
+        System.out.println("~~~~~~~~~~CONTROLLER - scrapOrder : " + scrapOrder);;
+        System.out.println("~~~~~~~~~~CONTROLLER - orderValue : " + orderValue);
 
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
+
         if(tipList.isEmpty()){
             tipList = null;
         }
-        System.out.println("~~~~~~~~~~CONTROLLER - likeOrder : " + likeOrder);
-        System.out.println("~~~~~~~~~~CONTROLLER - dto : " + dto.getLikeOrder());
+
 
 
         model.addAttribute("tipList", tipList);
-        model.addAttribute("pagination", pagination);
         // ============== 추가부분 ==============
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("orderValue", orderValue);
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
         model.addAttribute("likeOrder", likeOrder);
+        model.addAttribute("scrapOrder", scrapOrder);
 
         return "cmn/tipList";
     }
-
 
 
     //작성글 모아보기

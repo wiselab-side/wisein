@@ -32,15 +32,77 @@
         </if>
     </sql>
 
-    <!-- 좋아요 수 정렬 -->
-    <sql id="tipListLike">
+    <!-- 댓글 수 정렬 - 조인해서 가져온 것, db에 count없음
+    <sql id="tipListCommnet">
         <if test="likeOrder == 'ASC'">
             LIKE_COUNT ASC,
         </if>
         <if test="likeOrder =='DESC'">
             LIKE_COUNT DESC,
         </if>
+    </sql>-->
+    <!-- likeOrder | scrapOrder 가 존재하면 -->
+    <sql id = "sortBy">
+
+        <if test="orderValue =='DESC'">
+            #{orderValue}_COUNT DESC
+        </if>
+
+        <if test="orderValue =='ASC'">
+            #{orderValue}_COUNT ASC
+        </if>
+
+<!--        <if test="likeOrder == 'ASC'">-->
+<!--            LIKE_COUNT ASC,-->
+<!--        </if>-->
+<!--        <if test="likeOrder =='DESC'">-->
+<!--            LIKE_COUNT DESC,-->
+<!--        </if>-->
+
+<!--        <if test="scrapOrder == 'ASC'">-->
+<!--            SCRAP_COUNT ASC,-->
+<!--        </if>-->
+<!--        <if test="scrapOrder =='DESC'">-->
+<!--            SCRAP_COUNT DESC,-->
+<!--        </if>-->
+
     </sql>
+    <!-- 좋아요 수 정렬
+    <sql id="tipListLike">
+
+    </sql>
+
+     스트랩 수 정렬
+    <sql id="tipListScrap">
+        <if test="scrapOrder == 'ASC'">
+            SCRAP_COUNT ASC,
+        </if>
+        <if test="scrapOrder =='DESC'">
+            SCRAP_COUNT DESC,
+        </if>
+    </sql> -->
+
+    <!-- 날짜 정렬 -->
+    <!-- 업데이트 날짜가 있다면 업데이트로 처리, null이면 reg_date로 처리하면 됨
+    <sql id="tipListDate">
+        <if test = "upd_date != null">
+            <if test="upd_date == 'ASC'">
+                UPD_DATE ASC,
+            </if>
+            <if test="upd_date == 'DESC'">
+                UPD_DATE DESC,
+            </if>
+        </if>
+        <if test = "upd_date == null">
+            <if test="reg_date == 'ASC'">
+                REG_DATE ASC,
+            </if>
+            <if test="reg_date =='DESC'">
+                REG_DATE DESC,
+            </if>
+        </if>
+    </sql>-->
+
 
     <!--TipBoard 다건조회-->
     <select id="selectTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
@@ -85,7 +147,7 @@
                     ]]>
                     <include refid="tipListCategory"/>
                   GROUP BY TB.NUM
-                  ORDER BY <include refid="tipListLike"/>
+                  ORDER BY <include refid="sortBy"/>
                            <include refid="tipListSubject"/>
                            NUM DESC
                   ) AS A
