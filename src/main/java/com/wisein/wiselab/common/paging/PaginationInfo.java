@@ -22,28 +22,19 @@ public class PaginationInfo {
 	private String searchType;
 	private String keyword;
 
-	@Setter
-	@Getter
-	private String likeOrder;
-	@Setter
-	@Getter
-	private String scrapOrder;
+
 	@Getter
 	@Setter
-	private String sortOrder;
+	private String sortValue;
+	@Setter
+	@Getter
+	private String orderValue;
 
 	//=========== 추가 부분 ===========
 	public String getCategory() {
 		return category == null ? "all" : category;
 	}
 
-
-
-	/*public String getSubject() {
-		return subject == null ? "all" : subject;
-	}*/
-
-	//public String getLikeOrder(){ return likeOrder == null ? "DESC" : likeOrder;}
 	public String getViewAddr() {
 		return viewAddr != null ? viewAddr.replace("/", "") : null;
 	}

@@ -55,9 +55,11 @@ public class tipController {
             , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
             , @RequestParam(name="category", required = false) String category
             , @RequestParam(name="subject", required = false) String subject
-            , @RequestParam(name="likeOrder", required = false) String likeOrder
-            , @RequestParam(name="scrapOrder", required = false) String scrapOrder
-             ,@RequestParam(name="orderValue", required = false) String orderValue
+            , @RequestParam(name="sortValue", required = false) String sortValue
+            , @RequestParam(name="orderValue", required = false) String orderValue
+            /*, @RequestParam(name="likeOrder", required = false) String likeOrder
+            , @RequestParam(name="scrapOrder", required = false) String scrapOrder*/
+
             , Model model) throws Exception {
         /*
         카테고리 및 제목 정렬 처리
@@ -66,34 +68,34 @@ public class tipController {
          내용  : form을 통해 카테고리/제목 정렬 기준을 받아온다
                  두가지 옵션이 동시에 실행될 수 있도록 값을 저장한다
          */
-        /*if(likeOrder == null){
-            likeOrder = "DESC";
-            dto.setLikeOrder("DESC");
-        }*/
+
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
 
 
+        //클릭된(likeOrder | scrapOrder) 변수의 값을 가져온다
+
+        //asc <-> desc 변환작업
+        if ("DESC".equals(sortValue) || sortValue == null || sortValue.isEmpty()) {
+            sortValue = "ASC";
+        }
+        //컨트롤러에서 처리하기 때문에 URL에서는 반대로 표현됨
+        //성공!
+
+        else {
+            sortValue = "DESC";
+        }
+
+        if(orderValue==null || orderValue.isEmpty()){
+            orderValue = "LIKE_COUNT";
+        }
+
+
+        dto.setSortValue(sortValue);
+        dto.setOrderValue(orderValue);
 
         List<TipBoardDTO> tipList = new ArrayList<>();
         tipList = tipBoardService.selectTipList(dto);
-
-        //likeOrder 값이 존재한다면
-        /*if(likeOrder != null){
-            dto.setLikeOrder(likeOrder);
-            dto.setScrapOrder("");
-        } else if(scrapOrder != null){
-            //scrapOrder 값이 존재한다면
-            dto.setScrapOrder(scrapOrder);
-            dto.setLikeOrder("");
-        } else if(likeOrder != null && scrapOrder != null){
-            dto.setScrapOrder("");
-            dto.setLikeOrder("");
-        }*/
-
-        System.out.println("~~~~~~~~~~CONTROLLER - likeOrder : " + likeOrder);
-        System.out.println("~~~~~~~~~~CONTROLLER - scrapOrder : " + scrapOrder);;
-        System.out.println("~~~~~~~~~~CONTROLLER - orderValue : " + orderValue);
 
         dto.setTotalRecordCount(tipBoardService.selectBoardTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
@@ -105,14 +107,19 @@ public class tipController {
 
 
 
+
+        System.out.println("Controller - sortValue : " + sortValue);
+        System.out.println("Controller - orderValue : " + orderValue);
+
         model.addAttribute("tipList", tipList);
         // ============== 추가부분 ==============
         model.addAttribute("pagination", pagination);
         model.addAttribute("orderValue", orderValue);
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
-        model.addAttribute("likeOrder", likeOrder);
-        model.addAttribute("scrapOrder", scrapOrder);
+        model.addAttribute("sortValue", sortValue);
+       /* model.addAttribute("likeOrder", likeOrder);
+        model.addAttribute("scrapOrder", scrapOrder);*/
 
         return "cmn/tipList";
     }

@@ -65,24 +65,43 @@
                                 댓글수
                             </div>
 
-                            <div class="board-cell board-like gray">
+                            <div class="board-cell board-like gray" id="likeOrder" value="${sortValue}" onclick="changeOrder('likeOrder')">
                                 좋아요
-
                             </div>
-                             <!-- likeOrder를 선택할 수 있는 입력란 -->
-                             <input type="hidden" id="likeOrder" name="likeOrder" value="${likeOrder}">
-                             <!-- likeOrder 정렬 값을 변경할 때마다 폼을 자동으로 제출 -->
-                             <input type="button" id="likeOrderButton" value="${likeOrder}" onclick="changeOrder('likeOrder')">
 
-                            <div class="board-cell board-like gray">
+
+
+                            <!-- <input type="" name="likeOrder" id="likeOrder" value="${likeOrder}" onclick="changeOrder('likeOrder')">
+                            <input type="" name="scrapOrder" id="scrapOrder" value="${scrapOrder}" onclick="changeOrder('scrapOrder')"> -->
+
+
+
+                            <div class="board-cell board-like gray" id="scrapOrder" value="${sortValue}" onclick="changeOrder('scrapOrder')">
                              스크랩
                             </div>
 
                              <!-- scrapOrder를 선택할 수 있는 입력란 -->
-                             <input type="hidden" id="scrapOrder" name="scrapOrder" value="${scrapOrder}">
-                             <!-- scrapOrder 정렬 값을 변경할 때마다 폼을 자동으로 제출 -->
-                             <input type="button" id="scrapOrderButton" value="${scrapOrder}" onclick="changeOrder('scrapOrder')">
-                            <input type="text" id="orderValue" value=""> <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                             <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
+                             <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
+
+                             <!-- asc 혹은 desc -->
+                             <input type="hidden" name= "sortValue" id="sortValue" value="${sortValue}">
+
                             <div class="board-cell board-writer gray">
                                 작성자
                             </div>
@@ -186,57 +205,21 @@
 
 
 <script>
-    //인자값으로 ID를 받아올 수 있다!!!!!!
-    //ASC <-> DESC 변경해주는 함수
+function changeOrder(click_id) {
 
-    //+ 추가로 만들어야 할 함수? click 된 값을 새로운 변수에 넣어줘서 mapper 에서 하나로 처리할 수 있도록
-    function changeOrder(click_id) {
-        console.log('인자값으로 확인 ~~~~~ ' + click_id);
-        var selectValue = document.getElementById(click_id).value;
+    console.log("~~~~~~~" + click_id);
 
-        if (selectValue === 'ASC' || !selectValue) {
-            selectValue = 'DESC';
-        } else {
-            selectValue = 'ASC';
-        }
+    // 클릭된 버튼이 좋아요인지 스크랩인지 확인하여 orderValue에 저장
+    var orderValue = click_id === 'likeOrder' ? 'LIKE_COUNT' : 'SCRAP_COUNT';
+    document.getElementById('orderValue').value = orderValue;
 
-        document.getElementById(click_id).value = selectValue;
+    let form = document.getElementById('tipOrderForm');
+    form.submit();
+}
 
-        var orderValue = document.getElementById(orderValue);
-        orderValue.value = click_id;
-
-         console.log('-------넘어가는 값 확인 : ' + orderValue);
-        let form = document.getElementById('tipOrderForm');
-        form.submit();
-
-
-
-    }
-
-    function changeScrap() {
-
-           const scrapInput = document.getElementById("scrapInput");
-            var currentScrap = scrapInput.value;
-
-
-            if (currentScrap === 'ASC' || !currentScrap) {
-                currentScrap = 'DESC';
-            } else {
-                currentScrap = 'ASC';
-            }
-
-            scrapInput.value = currentScrap;
-
-            console.log('최종변경값 SCRAP : ' + scrapInput.value);
-
-            let form = document.getElementById('tipOrderForm');
-            form.submit();
-
-        }
-</script>
 
  <!-- controller 에 전해줄 form 끝-->
-
+</script>
 
 
 

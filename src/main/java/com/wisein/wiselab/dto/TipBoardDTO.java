@@ -27,8 +27,7 @@ public class TipBoardDTO extends PaginationInfo  {
     private int scrapCount;
 
     // 정렬 기능을 위해 추가한 변수 - 이영주
-    private String likeOrder;
-    private String scrapOrder;
+    private String sortValue;
     private String orderValue;
 
 }
