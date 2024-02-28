@@ -39,4 +39,28 @@ public interface TipBoardDAO {
     /* 작성자 meetLink */
     public String selectMeetLink(int num) throws Exception;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto);
 }

@@ -106,11 +106,6 @@ public class tipController {
         }
 
 
-
-
-        System.out.println("Controller - sortValue : " + sortValue);
-        System.out.println("Controller - orderValue : " + orderValue);
-
         model.addAttribute("tipList", tipList);
         // ============== 추가부분 ==============
         model.addAttribute("pagination", pagination);
@@ -123,6 +118,190 @@ public class tipController {
 
         return "cmn/tipList";
     }
+
+
+    //====================
+
+    //작성글 모아보기
+    @GetMapping(value="/scrapTipList")
+    public String gatherScrapTip (HttpServletRequest request
+            , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
+            , @RequestParam(value="commentListWriter", required = false) String commentListWriter
+            , @RequestParam(value="tipWriter", required = false) String tipWriter
+            , Model model
+            ,@RequestParam(name="category", required = false) String category
+            , @RequestParam(name="subject", required = false) String subject
+            , @RequestParam(name="likeOrder", required = false) String likeOrder
+    ) throws Exception {
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        if(category != null && !category.isEmpty()){
+            dto.setCategory(category);
+        }
+        if(subject != null && !subject.isEmpty()){
+            dto.setSubject(subject);
+        }
+
+        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
+            questionsListWriter = questionsListWriter.substring(1);
+            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
+            dto.setWriter(questionsListWriter);
+        }
+        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
+            commentListWriter = commentListWriter.substring(1);
+            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
+            dto.setWriter(commentListWriter);
+        }
+        if(tipWriter != null && !tipWriter.equals("\"\"")){
+            tipWriter = tipWriter.substring(1);
+
+
+            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
+            dto.setWriter(tipWriter);
+        }
+
+        //석삼 모아보기 첫진입
+        if(dto.getWriter() == null && sideCheck.equals("Y")) {
+            String check = (String)session.getAttribute("tipWriter");
+            if(check != null) {session.removeAttribute("tipWriter");}
+            session.setAttribute("tipWriter", member.getId());
+        }
+
+        //모아보기 첫진입
+        if(dto.getWriter() != null) {
+            String check = (String)session.getAttribute("tipWriter");
+            if(check != null) {session.removeAttribute("tipWriter");}
+            session.setAttribute("tipWriter",dto.getWriter());
+        }
+
+        dto.setWriter((String)session.getAttribute("tipWriter"));
+        session.setAttribute("tipWriter",dto.getWriter());
+
+        if(null != session.getAttribute("questionsListWriter")){
+            session.removeAttribute("questionsListWriter");
+        }
+        if(null != session.getAttribute("commentListWriter")){
+            session.removeAttribute("commentListWriter");
+        }
+
+        String side_gubun = "Y";
+        model.addAttribute("side_gubun", side_gubun);
+
+        List<TipBoardDTO> tipList = new ArrayList<>();
+
+        tipList = tipBoardService.selectMemberTipList(dto);
+        dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
+        String pagination = PagingTagCustom.render(dto);
+
+        model.addAttribute("tipList", tipList);
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("selectedSubject", subject);
+        model.addAttribute("likeOrder", likeOrder);
+        return "cmn/scrapTipList";
+    }
+
+// =================================================== 스크랩 한 게시글
+    //writer = 로그인 한 회원이기 때문에 mapper에 writer로 넘겨줬다
+@GetMapping(value="/scrapMemTip")
+public String scrapMemTip (HttpServletRequest request
+        , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
+        , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+        , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
+        , @RequestParam(value="commentListWriter", required = false) String commentListWriter
+        , @RequestParam(value="tipWriter", required = false) String tipWriter
+        , Model model
+        , @RequestParam(name="category", required = false) String category
+        , @RequestParam(name="subject", required = false) String subject
+        , @RequestParam(name="likeOrder", required = false) String likeOrder
+) throws Exception {
+    HttpSession session= request.getSession();
+    MemberDTO member = (MemberDTO) session.getAttribute("member");
+
+
+    if(category != null && !category.isEmpty()){
+        dto.setCategory(category);
+    }
+    if(subject != null && !subject.isEmpty()){
+        dto.setSubject(subject);
+    }
+
+    if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
+        questionsListWriter = questionsListWriter.substring(1);
+        questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
+        dto.setWriter(questionsListWriter);
+    }
+    if(commentListWriter != null && !commentListWriter.equals("\"\"")){
+        commentListWriter = commentListWriter.substring(1);
+        commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
+        dto.setWriter(commentListWriter);
+    }
+    if(tipWriter != null && !tipWriter.equals("\"\"")){
+        tipWriter = tipWriter.substring(1);
+        tipWriter = tipWriter.substring(0, tipWriter.length()-1);
+        dto.setWriter(tipWriter);
+    }
+
+    //석삼 모아보기 첫진입
+    if(dto.getWriter() == null && sideCheck.equals("Y")) {
+        String check = (String)session.getAttribute("tipWriter");
+        if(check != null) {session.removeAttribute("tipWriter");}
+        session.setAttribute("tipWriter", member.getId());
+    }
+
+    //모아보기 첫진입
+    if(dto.getWriter() != null) {
+        String check = (String)session.getAttribute("tipWriter");
+        if(check != null) {session.removeAttribute("tipWriter");}
+        session.setAttribute("tipWriter",dto.getWriter());
+    }
+
+    dto.setWriter((String)session.getAttribute("tipWriter"));
+    session.setAttribute("tipWriter",dto.getWriter());
+
+    if(null != session.getAttribute("questionsListWriter")){
+        session.removeAttribute("questionsListWriter");
+    }
+    if(null != session.getAttribute("commentListWriter")){
+        session.removeAttribute("commentListWriter");
+    }
+
+    String side_gubun = "Y";
+    model.addAttribute("side_gubun", side_gubun);
+
+    List<TipBoardDTO> tipList = new ArrayList<>();
+
+    //회원이 스크랩 한 팁게시판을 가져오자
+
+    tipList = tipBoardService.selectScrapTipList(dto);
+    dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
+    String pagination = PagingTagCustom.render(dto);
+
+    model.addAttribute("tipList", tipList);
+    model.addAttribute("pagination", pagination);
+    model.addAttribute("selectedCategory", category);
+    model.addAttribute("selectedSubject", subject);
+    model.addAttribute("likeOrder", likeOrder);
+    return "cmn/tipList";
+}
+
+
+
+// ==================================================
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //작성글 모아보기

@@ -3,6 +3,8 @@ package com.wisein.wiselab.dao;
 
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 
+import java.util.List;
+
 public interface ScrapDAO {
 
     /* Scrap 여부 조회 */
@@ -34,4 +36,22 @@ public interface ScrapDAO {
 
     /* Scrap 등록 시 원본 게시글 count 증가를 위한 parentNum 조회 */
     public int getScrapParentNum(int num) throws Exception;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public int selectBoardTotalCount(ScrapBoardDTO scrapBoardDTO) throws Exception;
+
+    public List<ScrapBoardDTO> selectScrapList(ScrapBoardDTO scrapBoardDTO) throws Exception;
+
+    public int selectMemberScrapTotalCount(ScrapBoardDTO dto) throws Exception;
 }

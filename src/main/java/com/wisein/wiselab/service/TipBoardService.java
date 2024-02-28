@@ -11,6 +11,29 @@ public interface TipBoardService {
     /* TipBoard 작성글 모아보기 */
     public List<TipBoardDTO> selectMemberTipList(TipBoardDTO dto)  throws Exception;
 
+
+
+
+
+
+
+
+
+
+
+    /* TipBoard 스크랩글 모아보기 */
+    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto)  throws Exception;
+
+
+
+
+
+
+
+
+
+
+
     /* TipBoard 단건조회 */
     public TipBoardDTO selectTipOne(TipBoardDTO dto) throws Exception;
 

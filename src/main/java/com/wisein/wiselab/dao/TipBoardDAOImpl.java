@@ -80,5 +80,10 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         return sql.selectOne(NS + ".selectMeetLink", num);
     }
 
+    @Override
+    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto) {
+        return sql.selectList(NS + ".selectScrapTipList", dto);
+    }
+
 
 }

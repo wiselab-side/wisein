@@ -37,6 +37,11 @@ public class TipBoardServiceImpl implements TipBoardService {
         return tipList;
     }
 
+    @Override
+    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto) throws Exception {
+        return dao.selectScrapTipList(dto);
+    }
+
     /* TipBoard 단건조회 */
     @Override
     public TipBoardDTO selectTipOne(TipBoardDTO dto) throws Exception {

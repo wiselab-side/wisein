@@ -109,4 +109,111 @@
             NUM = #{num}
     </select>
 
+
+
+    <!--QaBoard 작성글 모아보기-->
+    <select id="selectBoardTotalCount" parameterType="ScrapBoardDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM TIP_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
+		   AND DEL_YN = 'N'
+		   AND NUM > 0]]>
+        AND PARENT_NUM is NULL
+    </select>
+
+    <!--QaBoard 작성글 모아보기-->
+    <select id="selectMemberQaCommentTotalCount" parameterType="ScrapBoardDTO" resultType="int">
+        <![CDATA[
+		SELECT COUNT(NUM)
+		  FROM TIP_BOARD
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           AND WRITER = #{writer}
+		   AND DEL_YN = 'N'
+		   AND NUM > 0]]>
+        AND PARENT_NUM is NOT NULL
+    </select>
+
+
+    <select id="selectScrapList" parameterType="ScrapBoardDTO" resultType="ScrapBoardDTO">
+        <![CDATA[
+            SELECT A.RNUM
+                  ,A.NUM
+                  ,A.CATEGORY
+                  ,A.WRITER
+                  ,A.SUBJECT
+                  ,A.CONTENT
+                  ,A.REG_DATE
+                  ,A.UPD_DATE
+                  ,A.DEL_YN
+                  ,A.PARENT_NUM
+                  ,A.LIKE_COUNT
+                  ,A.SCRAP_COUNT
+                  ,(SELECT COUNT(*)
+                      FROM COMMENT COM
+                     WHERE COM.BOARD_IDX = A.NUM
+                       AND COM.DEL_YN = 'n'
+                       AND COM.BOARD_TYPE ='tip') AS COMM_CNT
+            FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
+                        ,TB.NUM
+                        ,TB.CATEGORY
+                        ,TB.WRITER
+                        ,TB.SUBJECT
+                        ,TB.CONTENT
+                        ,TB.REG_DATE
+                        ,TB.UPD_DATE
+                        ,TB.DEL_YN
+                        ,TB.COUNT
+                        ,TB.PARENT_NUM
+                        ,TB.LIKE_COUNT
+                        ,TB.SCRAP_COUNT
+                   FROM TIP_BOARD TB
+                       ,(SELECT @ROWNUM:=0) R
+                       ,(SELECT SB.BOARD_TYPE FROM SCRAP_BOARD) SB
+                  WHERE TB.WRITER = SB.USER_ID
+                    AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+                    AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+                    AND TB.WRITER = #{writer}
+                    AND SB.BOARD_TYPE = 'tip'
+                    AND TB.DEL_YN = 'N'
+                    AND TB.NUM > 0]]>
+        GROUP BY TB.NUM
+        ORDER BY NUM DESC
+        ) AS A
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

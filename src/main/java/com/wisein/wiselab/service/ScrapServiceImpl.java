@@ -5,6 +5,9 @@ import com.wisein.wiselab.dto.ScrapBoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class ScrapServiceImpl implements ScrapService {
@@ -72,5 +75,37 @@ public class ScrapServiceImpl implements ScrapService {
     public int getScrapParentNum(int num) throws Exception {
         return dao.getScrapParentNum(num);
     }
+
+
+
+
+
+    // ====================================================
+
+    @Override
+    public int selectBoardTotalCount(ScrapBoardDTO scrapBoardDTO) throws Exception {
+        return dao.selectBoardTotalCount(scrapBoardDTO);
+    }
+
+
+    //글리스트
+    @Override
+    public List<ScrapBoardDTO> selectScrapList(ScrapBoardDTO scrapBoardDTO) throws Exception {
+        List<ScrapBoardDTO> scrapList = new ArrayList<>();
+        int boardTotalCount = dao.selectBoardTotalCount(scrapBoardDTO);
+
+        if(boardTotalCount > 0) {
+            scrapList = (List<ScrapBoardDTO>) dao.selectScrapList(scrapBoardDTO);
+        }
+
+        return scrapList;
+    }
+
+    // 모아보기 페이징
+    @Override
+    public int selectMemberQaTotalCount(ScrapBoardDTO dto) throws Exception {
+        return dao.selectMemberScrapTotalCount(dto);
+    }
+
 
 }

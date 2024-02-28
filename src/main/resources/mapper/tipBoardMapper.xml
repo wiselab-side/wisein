@@ -141,6 +141,69 @@
 
         </select>
 
+
+
+
+
+
+    <!-- TIP 스크랩 모아보기 -->
+    <select id="selectScrapTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
+
+        SELECT ROW_NUMBER() OVER (ORDER BY TB.NUM DESC) AS RNUM
+             , TB.NUM
+             , TB.CATEGORY
+             , TB.WRITER
+             , TB.SUBJECT
+             , TB.CONTENT
+             , TB.REG_DATE
+             , TB.UPD_DATE
+             , TB.DEL_YN
+             , TB.PARENT_NUM
+             , TB.LIKE_COUNT
+             , TB.SCRAP_COUNT
+             , COUNT(COM.BOARD_IDX)                     AS COMM_CNT
+          FROM TIP_BOARD TB
+        LEFT JOIN COMMENT COM
+               ON TB.NUM = COM.BOARD_IDX
+              AND COM.DEL_YN = 'n'
+              AND COM.BOARD_TYPE = 'tip'
+        INNER JOIN SCRAP_BOARD SB
+                ON TB.NUM = SB.BOARD_IDX
+        WHERE SB.USER_ID = #{writer}
+          AND SB.BOARD_TYPE = 'tip'
+          AND TB.DEL_YN = 'N'
+          <![CDATA[AND TB.NUM > 0]]>
+          AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType}
+                          ELSE CATEGORY
+                         END
+          AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+        GROUP BY TB.NUM
+        ORDER BY TB.NUM DESC
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!--TipBoard 단건조회-->
         <select id="selectTipOne" parameterType="TipBoardDTO" resultType="TipBoardDTO">
             SELECT NUM

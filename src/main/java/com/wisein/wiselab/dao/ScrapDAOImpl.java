@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ScrapDAOImpl implements ScrapDAO {
 
@@ -69,5 +71,20 @@ public class ScrapDAOImpl implements ScrapDAO {
     @Override
     public int getScrapParentNum(int num) throws Exception {
         return sql.selectOne(NS + ".getScrapParentNum", num);
+    }
+
+    @Override
+    public int selectBoardTotalCount(ScrapBoardDTO scrapBoardDTO) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public List<ScrapBoardDTO> selectScrapList(ScrapBoardDTO scrapBoardDTO) throws Exception {
+        return null;
+    }
+
+    @Override
+    public int selectMemberScrapTotalCount(ScrapBoardDTO dto) throws Exception {
+        return 0;
     }
 }
