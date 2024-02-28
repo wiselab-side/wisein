@@ -125,7 +125,7 @@ public class qaController {
             , @RequestParam("num") int num) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-
+        
         //meetLink
         String meetLink = qaListservice.selectMeetLink(num);
         //System.out.println("meetLink = " + meetLink);
@@ -149,13 +149,13 @@ public class qaController {
         if(dto.getParentNum()!= 0){
             dto.setNum(dto.getParentNum());
         }
+
         // 해당 게시글에대한 조회 및 댓글 목록 조회
         if (dto.getNum() != 0){
 //            System.out.println("/qaDetail dto.getNum() : " + dto.getNum());
             qaListDTO = qaListservice.selectQaOne(dto);
             // 댓글 목록 조회
             commentQaList = (List<QaListDTO>) qaListservice.selectCommentQaList(qaListDTO.getNum());
-
             int commentQalistSize = commentQaList.size();
 
             if(commentQalistSize != 0){
@@ -167,7 +167,6 @@ public class qaController {
                 }
                 model.addAttribute("commentMeetLinkList", commentMeetLinkList);
             }
-
 
         } else {
 //            System.out.println("/qaDetail num : " + num);
@@ -204,7 +203,6 @@ public class qaController {
             commentContent.add(commentQaList.get(i).getContent());
         }
         model.addAttribute("commentContent", commentContent);
-
         String check =(String)session.getAttribute("side_gubun");
 //System.out.println("check :" + check);
         if(check == null){
@@ -212,7 +210,6 @@ public class qaController {
             model.addAttribute("side_gubun", side_gubun);
         }
         model.addAttribute("meetLink", meetLink);
-
         return "cmn/qaDetail";
     }
 

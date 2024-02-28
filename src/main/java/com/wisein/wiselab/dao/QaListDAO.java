@@ -253,7 +253,13 @@ public interface QaListDAO {
 
     /* 댓글 삭제 시 스크랩 삭제*/
     public void deleteScrapQaBoard(int num) throws  Exception;
-    
-    /* 조회수 증가 */
+
+    /*
+     * 작성자 : 오연경
+     * 조회수 증가
+     * param : num
+     * return : -
+     * 날짜 : 2024-02-14
+     * */
     public void updateCount(int num) throws Exception;
 }

@@ -15,7 +15,7 @@ console.log(tipWriter);
 
 var pathName = window.location.pathname
 //console.log(pathName);
-if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip"){
+if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip" && pathName !== "/gatherQaScrap" && pathName !== "/gatherTipScrap"){
     var title = document.querySelector(".title").getInnerHTML().trim()
 
 //console.log(title);
@@ -39,7 +39,10 @@ if(pathName === "/questionsList" || pathName === "/commentList" || pathName === 
 //    console.log(text);
 }
 
-
+if(pathName === "/gatherQaScrap" || pathName === "/gatherTipScrap") {
+    leftSideBar.innerHTML +="<li class='gatherQaScrap' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherQaScrap?>QA 스크랩 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='gatherTipScrap' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherTipScrap?>TIP 스크랩 모아보기</a></li>";
+}
 
 
 

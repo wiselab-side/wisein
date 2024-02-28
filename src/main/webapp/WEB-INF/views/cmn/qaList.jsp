@@ -55,29 +55,131 @@
                 </div>
                 <div class="board-cell board-title" value="subject" onClick="sort(event)">
                     제목(가나다)
-                    <!--
-                    <span class="material-icons">
-                        expand_more
-                    </span>
-                    -->
+                    <c:if test="${param.sort eq 'subject' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'subject' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'subject'}">
+                        <span id="no-order">
+                                -
+                        </span>
+                    </c:if>
                 </div>
+
                 <div class="board-cell board-answer gray" value="commCnt" onClick="sort(event)">
                     답변
+                    <c:if test="${param.sort eq 'commCnt' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'commCnt' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'commCnt'}">
+                        <span id="no-order">
+                                -
+                        </span>
+                    </c:if>
                 </div>
+
                 <div class="board-cell board-like gray" value="likeCount" onClick="sort(event)">
                     좋아요
+                    <c:if test="${param.sort eq 'likeCount' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'likeCount' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'likeCount'}">
+                        <span id="no-order">
+                                -
+                        </span>
+                    </c:if>
                 </div>
                 <div class="board-cell board-scrap gray" value="scrapCount" onClick="sort(event)">
                     스크랩
+                    <c:if test="${param.sort eq 'scrapCount' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'scrapCount' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'scrapCount'}">
+                    <span id="no-order">
+                            -
+                    </span>
+                </c:if>
                 </div>
                 <div class="board-cell board-writer gray" value="writer" onClick="sort(event)">
                     작성자
+                    <c:if test="${param.sort eq 'writer' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'writer' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'writer'}">
+                        <span id="no-order">
+                                -
+                        </span>
+                    </c:if>
                 </div>
                 <div class="board-cell board-date gray" value="regDate" onClick="sort(event)">
                     날짜
+                    <c:if test="${param.sort eq 'regDate' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'regDate' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'regDate'}">
+                        <span id="no-order">
+                                -
+                        </span>
+                    </c:if>
                 </div>
                 <div class="board-cell board-count gray" value="count" onClick="sort(event)">
                     조회
+                    <c:if test="${param.sort eq 'count' && param.order eq 'desc'}">
+                        <span class="material-icons" id="order-icons-desc">
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort eq 'count' && param.order eq 'asc'}">
+                        <span class="material-icons" id="order-icons" >
+                                expand_more
+                        </span>
+                    </c:if>
+                    <c:if test="${param.sort ne 'count'}">
+                        <span id="no-order">
+                                -
+                        </span>
+                    </c:if>
                 </div>
             </div>
 
@@ -94,10 +196,14 @@
                     </div>
                     <div class="board-cell board-answer gray">
                         <c:if test="${qa.adpYn eq 'Y'}">
-                            <span class="material-icons" style="color:purple;">check_circle</span>${qa.commCnt}
+                            <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}">
+                                <span class="material-icons" style="color:purple;">check_circle</span>${qa.commCnt}
+                            </a>
                         </c:if>
                         <c:if test="${qa.adpYn eq 'N'}">
-                            <span class="material-icons purple2">help_outline</span>${qa.commCnt}
+                            <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}">
+                                <span class="material-icons purple2">help_outline</span>${qa.commCnt}
+                            </a>
                         </c:if>
                     </div>
 

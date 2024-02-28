@@ -51,6 +51,13 @@
             }
         }
 
+        /*
+         * 작성자 : 오연경
+         * QA 게시판 카테고리 선택
+         * param : searchType
+         * return : URL 이동
+         * 날짜 : 2024-02-20
+         * */
         // 카테고리 선택
         function selectSearchType(){
             let selectedSearchType = document.querySelector("#selectOption").value;
@@ -83,6 +90,14 @@
             window.location.href = newUrl;
         };
 
+
+        /*
+         * 작성자 : 오연경
+         * QA 게시판 목록 정렬
+         * param : event
+         * return : URL 이동
+         * 날짜 : 2024-02-20
+         * */
         function sort(event){
             let sorted = event.target.closest('.board-cell').getAttribute('value');
             let order;
@@ -114,7 +129,6 @@
                 // 파라미터가 없으면 추가
                 newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'sort=' + sorted + '&order=desc';
             }
-
 
             // 새로운 URL로 이동
             window.location.href = newUrl;

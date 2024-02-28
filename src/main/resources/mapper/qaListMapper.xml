@@ -76,7 +76,7 @@
                      , QB.NUM
                      , QB.CATEGORY
                      , QB.WRITER
-                     , QB.SUBJECT
+                     , TRIM(QB.SUBJECT) SUBJECT
                      , QB.CONTENT
                      , QB.REG_DATE
                      , QB.UPD_DATE
@@ -240,7 +240,7 @@
     </insert>
 
     <!-- 댓글 조회 -->
-    <select id="selectCommentQaList" resultType="QaListDTO">
+    <select id="selectCommentQaList" parameterType="Integer" resultType="QaListDTO">
         SELECT
         NUM
         ,CATEGORY
@@ -255,10 +255,12 @@
         ,LIKE_COUNT
         ,ADP_NUM
         ,SCRAP_COUNT
+        ,COUNT
         FROM
-        qa_board
+        qa_board A
         WHERE PARENT_NUM = #{num}
         AND DEL_YN = 'N'
+        ORDER BY A.NUM DESC
     </select>
 
     <!-- 게시글 총 개수 -->
@@ -383,7 +385,7 @@
                      , QB.NUM
                      , QB.CATEGORY
                      , QB.WRITER
-                     , QB.SUBJECT
+                     , TRIM(QB.SUBJECT) SUBJECT
                      , QB.CONTENT
                      , QB.REG_DATE
                      , QB.UPD_DATE
@@ -431,7 +433,7 @@
                      , QB.NUM
                      , QB.CATEGORY
                      , QB.WRITER
-                     , QB.SUBJECT
+                     , TRIM(QB.SUBJECT) SUBJECT
                      , QB.CONTENT
                      , QB.REG_DATE
                      , QB.UPD_DATE
@@ -452,6 +454,9 @@
                  GROUP BY QB.NUM
                  ORDER BY NUM DESC
                 ) AS A
+        ]]>
+        ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+        <![CDATA[
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
         ]]>
     </select>

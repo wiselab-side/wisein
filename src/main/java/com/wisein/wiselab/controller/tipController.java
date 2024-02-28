@@ -135,8 +135,6 @@ public class tipController {
 
         tipList = tipBoardService.selectMemberTipList(dto);
 
-        System.out.println("tipList + @@@@@" + tipList);
-
         dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 

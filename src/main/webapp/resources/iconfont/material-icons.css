@@ -39,6 +39,25 @@
   color: #7102a5;
 }
 
+#order-icons {
+  font-size: 20px;
+  font-weight: bold;
+  transform: rotate(180deg);
+  position: relative;
+}
+
+#order-icons-desc {
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+}
+
+#no-order {
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+  top: 3px;
+}
 
 /* fallback */
 @font-face {

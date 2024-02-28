@@ -76,7 +76,7 @@
                         ,TB.NUM
                         ,TB.CATEGORY
                         ,TB.WRITER
-                        ,TB.SUBJECT
+                        ,TRIM(TB.SUBJECT) AS SUBJECT
                         ,TB.CONTENT
                         ,TB.REG_DATE
                         ,TB.UPD_DATE
@@ -127,7 +127,7 @@
                         ,TB.NUM
                         ,TB.CATEGORY
                         ,TB.WRITER
-                        ,TB.SUBJECT
+                        ,TRIM(TB.SUBJECT) AS SUBJECT
                         ,TB.CONTENT
                         ,TB.REG_DATE
                         ,TB.UPD_DATE
