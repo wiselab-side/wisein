@@ -4,7 +4,10 @@ import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public interface ScrapService {
@@ -40,8 +43,14 @@ public interface ScrapService {
     public int getScrapParentNum(int num) throws Exception;
     
     /* TIP Scrap 모아보기 */
-    public List<TipBoardDTO> selectTipScrap(String userId) throws Exception;
+    public List<TipBoardDTO> selectTipScrap(TipBoardDTO tipBoardDTO, String userId, HttpServletRequest request) throws Exception;
+
+    /* TIP Scrap Cnt */
+    public int selectTipTotalCount(TipBoardDTO tipBoardDTO, String userId, HttpServletRequest request) throws Exception;
 
     /* QA Scrap 모아보기 */
     public List<QaListDTO> selectQaScrap(String userId) throws Exception;
+
+    /* QA Scrap Cnt */
+    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception;
 }

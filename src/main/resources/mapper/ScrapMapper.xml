@@ -3,6 +3,7 @@
 <mapper namespace="com.wisein.wiselab.mapper.scrapMapper">
 
     <sql id="sort">
+        <if test="sort == null"></if>
         <if test="sort == 'num'">
             A.NUM
         </if>
@@ -43,6 +44,7 @@
     </sql>
 
     <sql id="order">
+        <if test="order == null"></if>
         <if test="order == 'desc'">
             DESC,
         </if>
@@ -159,8 +161,19 @@
     </select>
 
     <!-- TIP Scrap 모아보기 -->
-    <select id="selectTipScrap" parameterType="ScrapBoardDTO" resultType="TipBoardDTO">
-        SELECT *
+    <select id="selectTipScrap" parameterType="Map" resultType="TipBoardDTO">
+        <![CDATA[
+        SELECT A.NUM
+              ,A.CATEGORY
+              ,A.WRITER
+              ,A.SUBJECT
+              ,A.CONTENT
+              ,A.REG_DATE
+              ,A.UPD_DATE
+              ,A.COUNT
+              ,A.PARENT_NUM
+              ,A.LIKE_COUNT
+              ,A.SCRAP_COUNT
         FROM ( SELECT BOARD_IDX
                     , BOARD_TYPE
                  FROM SCRAP_BOARD
@@ -169,7 +182,7 @@
             , ( SELECT NUM
                      , CATEGORY
                      , WRITER
-                     , SUBJECT
+                     , TRIM(SUBJECT) AS SUBJECT
                      , CONTENT
                      , REG_DATE
                      , UPD_DATE
@@ -179,9 +192,31 @@
                      , SCRAP_COUNT
                   FROM TIP_BOARD
                  WHERE DEL_YN = 'N' ) A
-        WHERE SB.BOARD_TYPE = 'TIP'
-        AND SB.BOARD_IDX = A.NUM
+        WHERE 1=1
+          AND SB.BOARD_TYPE = 'tip'
+          AND SB.BOARD_IDX = A.NUM
+          AND A.CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+        ]]>
         ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+    </select>
+
+    <!-- Tip Scrap 게시글 개수 조회 -->
+    <select id="selectTipTotalCount" parameterType="Map" resultType="int">
+        <![CDATA[
+		SELECT COUNT(A.NUM)
+		  FROM TIP_BOARD A
+		      , (SELECT BOARD_IDX
+                      , BOARD_TYPE
+                      , USER_ID
+                 FROM SCRAP_BOARD
+                 WHERE USER_ID = #{userId}
+                 AND DEL_YN = 'N' ) SB
+	     WHERE 1=1
+		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+           AND SB.BOARD_TYPE = 'tip'
+           AND SB.BOARD_IDX = A.NUM
+		   AND A.NUM > 0
+		]]>
     </select>
 
     <!-- QA Scrap 모아보기 -->
@@ -209,7 +244,7 @@
         ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
     </select>
 
-    <!-- QA 모아보기 게시글 개수 조회 -->
+    <!-- QA Scrap 게시글 개수 조회 -->
     <select id="selectQaTotalCount" parameterType="ScrapBoardDTO" resultType="int">
         <![CDATA[
 		SELECT COUNT(A.NUM)

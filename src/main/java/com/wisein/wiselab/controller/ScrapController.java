@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,19 +58,20 @@ public class ScrapController {
 
     // TIP Scrap 모아보기
     @GetMapping("/gatherTipScrap")
-    public String gatherMemScrap(HttpSession session, MemberDTO dto
-                                , TipBoardDTO tipBoardDTO
+    public String gatherMemScrap(HttpSession session
+                                , HttpServletRequest request
+                                , @ModelAttribute("TipBoardDTO") TipBoardDTO tipBoardDTO
                                 , Model model) throws Exception {
-
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         String userId = member.getId();
 
-        List<TipBoardDTO> tipList = scrapService.selectTipScrap(userId);
+        List<TipBoardDTO> tipList = scrapService.selectTipScrap(tipBoardDTO, userId, request);
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 
-        /* 게시글 총 개수 */
-        tipBoardDTO.setTotalRecordCount(tipBoardService.selectBoardTotalCount(tipBoardDTO));
+        /* 스크랩 총 개수 */
+        tipBoardDTO.setTotalRecordCount(scrapService.selectTipTotalCount(tipBoardDTO, userId, request));
         String pagination = PagingTagCustom.render(tipBoardDTO);
+        System.out.println("pagination 은 ?????? " + pagination);
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);

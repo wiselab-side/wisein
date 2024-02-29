@@ -1,5 +1,6 @@
 package com.wisein.wiselab.dto;
 
+import com.wisein.wiselab.common.paging.PaginationInfo;
 import lombok.Data;
 
 @Data

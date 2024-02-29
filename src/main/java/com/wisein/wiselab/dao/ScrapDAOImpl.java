@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ScrapDAOImpl implements ScrapDAO {
@@ -77,12 +79,25 @@ public class ScrapDAOImpl implements ScrapDAO {
 
     /* TIP Scrap 모아보기 */
     @Override
-    public List<TipBoardDTO> selectTipScrap(String userId) throws Exception {
-        return sql.selectList(NS + ".selectTipScrap", userId);
+    public List<TipBoardDTO> selectTipScrap(Map<String, Object> tipMap) throws Exception {
+        return sql.selectList(NS + ".selectTipScrap", tipMap);
+    }
+
+    /* TIP Scrap Cnt */
+    @Override
+    public int selectTipTotalCount(Map<String, Object> tipMap) throws Exception {
+        return sql.selectOne(NS + ".selectTipTotalCount", tipMap);
     }
 
     /* QA Scrap 모아보기 */
+    @Override
     public List<QaListDTO> selectQaScrap(String userId) throws Exception {
         return sql.selectList(NS + ".selectQaScrap", userId);
+    }
+
+    /* QA Scrap Cnt */
+    @Override
+    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception {
+        return sql.selectOne(NS + ".selectTipTotalCount", qaListDTO);
     }
 }

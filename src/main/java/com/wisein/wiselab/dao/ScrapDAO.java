@@ -6,6 +6,7 @@ import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ScrapDAO {
 
@@ -40,8 +41,15 @@ public interface ScrapDAO {
     public int getScrapParentNum(int num) throws Exception;
 
     /* TIP Scrap 모아보기 */
-    public List<TipBoardDTO> selectTipScrap(String userId) throws Exception;
+    public List<TipBoardDTO> selectTipScrap(Map<String, Object> tipMap) throws Exception;
+
+    /* TIP Scrap Cnt */
+    public int selectTipTotalCount(Map<String, Object> tipMap) throws Exception;
 
     /* QA Scrap 모아보기 */
     public List<QaListDTO> selectQaScrap(String userId) throws Exception;
+
+    /* QA Scrap Cnt */
+    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception;
+
 }
