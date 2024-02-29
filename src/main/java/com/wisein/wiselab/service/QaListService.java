@@ -1,9 +1,6 @@
 package com.wisein.wiselab.service;
 
-import com.wisein.wiselab.dto.LikeBoardDTO;
-import com.wisein.wiselab.dto.MemberDTO;
-import com.wisein.wiselab.dto.QaListDTO;
-import com.wisein.wiselab.dto.ScrapBoardDTO;
+import com.wisein.wiselab.dto.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -262,4 +259,17 @@ public interface QaListService {
     public void deleteScrapQaBoard(int num) throws Exception;
 
 
+
+
+
+
+
+
+
+
+
+
+    // ========================================= 스크랩 - 이영주
+    /* TipBoard 스크랩글 모아보기 */
+    public List<QaListDTO> selectScrapQaList(QaListDTO dto)  throws Exception;
 }

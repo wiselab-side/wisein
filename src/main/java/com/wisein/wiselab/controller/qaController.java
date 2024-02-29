@@ -776,7 +776,7 @@ public class qaController {
 
         return "redirect:/qaDetail";
     }
-    // =====================================
+    // ===================================== 스크랩한 qna 게시물 - 원글을 보여주기!!
     @GetMapping(value="/scrapMemQna")
     public String scrapMemQna (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
@@ -804,31 +804,28 @@ public class qaController {
             qaListDTO.setWriter(tipWriter);
         }
 
-        // 사이드모아보기 처음일경우
-        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
-            String temp = (String)session.getAttribute("questionsListWriter");
-            if(temp != null){
-                session.removeAttribute("questionsListWriter");
-            }
-            qaListDTO.setWriter(member.getId());
+        //석삼 모아보기 첫진입
+        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")) {
+            String check = (String)session.getAttribute("tipWriter");
+            if(check != null) {session.removeAttribute("tipWriter");}
+            session.setAttribute("tipWriter", member.getId());
         }
 
-        // 사이드모아보기 아니면서 모아보기
-        if(qaListDTO.getWriter() != null){
-            String temp = (String)session.getAttribute("questionsListWriter");
-            if(temp != null){
-                session.removeAttribute("questionsListWriter");
-            }
-            session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+        //모아보기 첫진입
+        if(qaListDTO.getWriter() != null) {
+            String check = (String)session.getAttribute("tipWriter");
+            if(check != null) {session.removeAttribute("tipWriter");}
+            session.setAttribute("tipWriter",qaListDTO.getWriter());
         }
 
-        session.setAttribute("questionsListWriter", qaListDTO.getWriter());
+        qaListDTO.setWriter((String)session.getAttribute("tipWriter"));
+        session.setAttribute("tipWriter",qaListDTO.getWriter());
 
+        if(null != session.getAttribute("questionsListWriter")){
+            session.removeAttribute("questionsListWriter");
+        }
         if(null != session.getAttribute("commentListWriter")){
             session.removeAttribute("commentListWriter");
-        }
-        if(null != session.getAttribute("tipWriter")){
-            session.removeAttribute("tipWriter");
         }
 
         String side_gubun = "Y";
@@ -836,7 +833,7 @@ public class qaController {
 
         List<QaListDTO> qaList = new ArrayList<>();
 
-        qaList = qaListservice.selectQuestionsList(qaListDTO);
+        qaList = qaListservice.selectScrapQaList(qaListDTO);
         qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
 

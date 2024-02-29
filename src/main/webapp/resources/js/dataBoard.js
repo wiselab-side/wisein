@@ -15,7 +15,7 @@ console.log(tipWriter);
 
 var pathName = window.location.pathname
 //console.log(pathName);
-if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip" && pathName !== "/scrapMemTip"){
+if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip" && pathName !== "/scrapMemTip" && pathName !== "/scrapMemQna"){
     var title = document.querySelector(".title").getInnerHTML().trim()
 
 console.log(title);
@@ -39,17 +39,12 @@ if(pathName === "/questionsList" || pathName === "/commentList" || pathName === 
 }
 
 // ======================================스크랩 모아보기 추가 - 이영주====================================================
-if(pathName = "/scrapMemTip" || pathName="/scrapMemQna") {
-    leftSideBar.innerHTML +="<li class='scrapMemTip' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/scrapMemTip?questionsListWriter="
-                          + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter
-                          + "\"&tipWriter=" + "\"" + tipWriter + "\">Tip 스크랩 모아보기</a></li>";
-    leftSideBar.innerHTML +="<li class='scrapMemTip' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/scrapMemQna?questionsListWriter="
-                              + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter
-                              + "\"&tipWriter=" + "\"" + tipWriter + "\">Qna 스크랩 모아보기</a></li>";
+if(pathName == "/scrapMemTip" || pathName == "/scrapMemQna") {
 
+    leftSideBar.innerHTML +="<li class='scrapMemTip' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/scrapMemTip?questionsListWriter=" + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter + "\"&tipWriter=" + "\"" + tipWriter + "\">Tip스크랩 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='scrapMemQna' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/scrapMemQna?questionsListWriter=" + "\"" + questionsListWriter + "\"&commentListWriter=" + "\"" + commentListWriter + "\"&tipWriter=" + "\"" + tipWriter + "\">QnA스크랩 모아보기</a></li>";
     const temp = document.querySelector(".scrapMemTip");
     temp.style="color: #949494; margin: 1em 0; cursor: pointer; padding-left: 10px; padding-bottom: 5px; font-weight: 300;";
-
     const text = document.querySelector("."+classVar);
     text.style="color: #7102a5; font-weight: 600;";
 }

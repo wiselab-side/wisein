@@ -533,10 +533,10 @@
            <include refid="qaListCategory"/>
     </select>
 
-    <!-- Qna 스크랩 -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Qna 스크랩 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-    <select id="selectScrapTipList" parameterType="QaListDTO" resultType="QaListDTO">
-        SELECT ROW_NUMBER() OVER (ORDER BY TB.NUM DESC) AS RNUM
+    <select id="selectScrapQaList" parameterType="QaListDTO" resultType="QaListDTO">
+        SELECT ROW_NUMBER() OVER (ORDER BY QA.NUM DESC) AS RNUM
              , QA.NUM
              , QA.CATEGORY
              , QA.WRITER
@@ -559,7 +559,7 @@
         WHERE SB.USER_ID = #{writer}
           AND SB.BOARD_TYPE = 'qa'
           AND QA.DEL_YN = 'N'
-          <![CDATA[AND TB.NUM > 0]]>
+        <![CDATA[AND QA.NUM > 0]]>
           AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType}
                             ELSE CATEGORY
                           END

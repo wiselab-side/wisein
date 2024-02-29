@@ -445,4 +445,20 @@ public class QaListServiceImpl implements QaListService {
     public void deleteScrapQaBoard(int num) throws Exception {
         dao.deleteScrapQaBoard(num);
     }
+
+
+
+
+
+
+
+
+
+
+    //스크랩
+
+    @Override
+    public List<QaListDTO> selectScrapQaList(QaListDTO dto) throws Exception {
+        return dao.selectScrapQaList(dto);
+    }
 }

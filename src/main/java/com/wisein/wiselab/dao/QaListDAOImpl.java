@@ -366,4 +366,11 @@ public class QaListDAOImpl implements QaListDAO {
     public void deleteScrapQaBoard(int num) throws Exception {
         sql.delete(NS + ".deleteScrapQaBoard", num);
     }
+
+
+    //스크랩~~~~
+    @Override
+    public List<QaListDTO> selectScrapQaList(QaListDTO dto) {
+        return sql.selectList(NS + ".selectScrapQaList", dto);
+    }
 }

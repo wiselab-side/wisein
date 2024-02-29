@@ -1,9 +1,6 @@
 package com.wisein.wiselab.dao;
 
-import com.wisein.wiselab.dto.LikeBoardDTO;
-import com.wisein.wiselab.dto.MemberDTO;
-import com.wisein.wiselab.dto.QaListDTO;
-import com.wisein.wiselab.dto.ScrapBoardDTO;
+import com.wisein.wiselab.dto.*;
 
 import java.util.List;
 
@@ -253,4 +250,12 @@ public interface QaListDAO {
 
     /* 댓글 삭제 시 스크랩 삭제*/
     public void deleteScrapQaBoard(int num) throws  Exception;
+
+
+
+
+
+
+    //스크랩 한 qna 게시글(원문) 모아보기
+    public List<QaListDTO> selectScrapQaList(QaListDTO dto);
 }
