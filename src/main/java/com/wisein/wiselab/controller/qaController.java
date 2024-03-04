@@ -777,32 +777,26 @@ public class qaController {
         return "redirect:/qaDetail";
     }
     // ===================================== 스크랩한 qna 게시물 - 원글을 보여주기!!
+
+    //카테고리는 form이 다르기 때문에 처리하기 어렵다
     @GetMapping(value="/scrapMemQna")
     public String scrapMemQna (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
             , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
-            , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
-            , @RequestParam(value="commentListWriter", required = false) String commentListWriter
-            , @RequestParam(value="tipWriter", required = false) String tipWriter
+            , @RequestParam(name="category", required = false) String category
+            , @RequestParam(name="subject", required = false) String subject
+            , @RequestParam(name="orderValue", required = false) String orderValue
+            , @RequestParam(name="sortValue", required = false) String sortValue
             , Model model) throws Exception {
+
+        System.out.println("처음 SortValue~~~~~~~ : " + sortValue);
+        System.out.println("처음 orderValue~~~~~~~ : " + orderValue);
+
+
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
-            questionsListWriter = questionsListWriter.substring(1);
-            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
-            qaListDTO.setWriter(questionsListWriter);
-        }
-        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
-            commentListWriter = commentListWriter.substring(1);
-            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
-            qaListDTO.setWriter(commentListWriter);
-        }
-        if(tipWriter != null && !tipWriter.equals("\"\"")){
-            tipWriter = tipWriter.substring(1);
-            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
-            qaListDTO.setWriter(tipWriter);
-        }
+        session.removeAttribute("qaListDTO");
 
         //석삼 모아보기 첫진입
         if(qaListDTO.getWriter() == null && sideCheck.equals("Y")) {
@@ -821,15 +815,34 @@ public class qaController {
         qaListDTO.setWriter((String)session.getAttribute("tipWriter"));
         session.setAttribute("tipWriter",qaListDTO.getWriter());
 
-        if(null != session.getAttribute("questionsListWriter")){
-            session.removeAttribute("questionsListWriter");
-        }
-        if(null != session.getAttribute("commentListWriter")){
-            session.removeAttribute("commentListWriter");
-        }
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
+
+
+
+        //asc <-> desc 변환작업
+        if ("DESC".equals(sortValue) || sortValue == null || sortValue.isEmpty()) {
+            sortValue = "ASC";
+        }
+        //컨트롤러에서 처리하기 때문에 URL에서는 반대로 표현됨
+        //성공!
+
+        else {
+            sortValue = "DESC";
+        }
+
+
+        if(orderValue==null || orderValue.isEmpty()){
+            orderValue = "LIKE_COUNT";
+        }
+
+        qaListDTO.setSortValue(sortValue);
+        qaListDTO.setOrderValue(orderValue);
+
+        System.out.println("SortValue~~~~~~~ : " + sortValue);
+        System.out.println("orderValue~~~~~~~ : " + orderValue);
+
 
         List<QaListDTO> qaList = new ArrayList<>();
 
@@ -837,10 +850,14 @@ public class qaController {
         qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
 
+
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
-
-        return "cmn/qaList";
+        model.addAttribute("orderValue", orderValue);
+        model.addAttribute("sortValue", sortValue);
+        model.addAttribute("category", category);
+        model.addAttribute("subject", subject);
+        return "cmn/scrapQaList";
     }
 
     // ====================================

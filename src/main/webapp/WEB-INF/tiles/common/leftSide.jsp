@@ -11,4 +11,3 @@
 <input type="hidden" id="questionsListWriter" name="boardNum" value="${questionsListWriter}" />
 <input type="hidden" id="commentListWriter" name="boardNum" value="${commentListWriter}" />
 <input type="hidden" id="tipWriter" name="tipWriter" value="${tipWriter}" />
-

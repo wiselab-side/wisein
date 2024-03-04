@@ -9,9 +9,8 @@ var questionsListWriter = document.querySelector("#questionsListWriter").value;
 var commentListWriter = document.querySelector("#commentListWriter").value;
 var tipWriter = document.querySelector("#tipWriter").value;
 
-console.log(questionsListWriter);
-console.log(commentListWriter);
-console.log(tipWriter);
+
+console.log(category);
 
 var pathName = window.location.pathname
 //console.log(pathName);

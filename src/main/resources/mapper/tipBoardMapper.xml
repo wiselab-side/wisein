@@ -36,7 +36,6 @@
         ${orderValue} ${sortValue},
     </sql>-->
     <sql id="sortOrder">
-
         <if test="sortValue != null and orderValue != null">
             ${orderValue} ${sortValue},
         </if>

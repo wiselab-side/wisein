@@ -57,9 +57,6 @@ public class tipController {
             , @RequestParam(name="subject", required = false) String subject
             , @RequestParam(name="sortValue", required = false) String sortValue
             , @RequestParam(name="orderValue", required = false) String orderValue
-            /*, @RequestParam(name="likeOrder", required = false) String likeOrder
-            , @RequestParam(name="scrapOrder", required = false) String scrapOrder*/
-
             , Model model) throws Exception {
         /*
         카테고리 및 제목 정렬 처리
@@ -113,8 +110,6 @@ public class tipController {
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedSubject", subject);
         model.addAttribute("sortValue", sortValue);
-       /* model.addAttribute("likeOrder", likeOrder);
-        model.addAttribute("scrapOrder", scrapOrder);*/
 
         return "cmn/tipList";
     }

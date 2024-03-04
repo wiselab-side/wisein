@@ -36,46 +36,40 @@
                 <div class="board-cell board-category purple2">
                      <!-- controller 에 전해줄 form 생성,
                           카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄질 수 있기 때문에 하나의 form 태그로 진행-->
-                     <form action="/qalist" method="get">
+                     <form action="/scrapMemQna" method="get" id="scrapMemQna">
                         <!--카테고리 조회 -->
                          <select id="category" name="category" class="category-select" onchange="this.form.submit()">
-                             <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
-                             <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
-                             <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
-                             <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
+                             <option value="" ${empty category ? 'selected' : ''}>카테고리</option>
+                             <option value="FRONT" ${category eq 'FRONT' ? 'selected' : ''}>FRONT</option>
+                             <option value="BACK" ${category eq 'BACK' ? 'selected' : ''}>BACK</option>
+                             <option value="DB" ${category eq 'DB' ? 'selected' : ''}>DB</option>
                          </select>
                 </div>
                 <div class="board-cell board-title">
                     <!--제목 정렬 -->
                      <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
-                         <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
-                         <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
-                         <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
+                         <option value="" ${empty subject ? 'selected' : ''}>제목(가나다)</option>
+                         <option value="ASC" ${subject eq 'ASC' ? 'selected' : ''}>오름차순</option>
+                         <option value="DESC" ${subject eq 'DESC' ? 'selected' : ''}>내림차순</option>
                      </select>
-                    </form>
-                    <!-- controller 에 전해줄 form 끝-->
+
                 </div>
 
 
-                <div class="board-cell board-answer  gray" id="board-answer">
-                    답변
-                </div>
+                 <div class="board-cell board-like gray" id="likeOrder" value="${sortValue}" onclick="changeOrder('likeOrder')">
+                                                좋아요
+                                            </div>
 
+                                            <div class="board-cell board-like gray" id="scrapOrder" value="${sortValue}" onclick="changeOrder('scrapOrder')">
+                                             스크랩
+                                            </div>
 
-
-
-
-                <div class="board-cell board-like gray">
-                    좋아요
-                </div>
-                <!-- 좋아요 정렬 버튼-->
-                <button id="sortButton">
-                    ▼
-                </button>
-
-                <div class="board-cell board-scrap gray">
-                    스크랩
-                </div>
+                <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
+                                             <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
+                <!-- asc 혹은 desc -->
+                <input type="hidden" name= "sortValue" id="sortValue" value="${sortValue}">
+                </form>
+               <!-- controller 에 전해줄 form 끝-->
 
                 <div class="board-cell board-writer gray">
                     작성자
@@ -96,14 +90,6 @@
                     </div>
                     <div class="board-cell board-title">
                         <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}"><c:out value="${qa.subject}" /></a>
-                    </div>
-                    <div class="board-cell board-answer gray">
-                        <c:if test="${qa.adpYn eq 'Y'}">
-                            <span class="material-icons" style="color:purple;">check_circle</span>${qa.commCnt}
-                        </c:if>
-                        <c:if test="${qa.adpYn eq 'N'}">
-                            <span class="material-icons purple2">help_outline</span>${qa.commCnt}
-                        </c:if>
                     </div>
 
                     <c:if test="${qa.likeCount == 0}">
@@ -164,56 +150,19 @@
 
 <!-- 자바스크립트로 정렬 구현 (페이지 이동 시 적용은 안됨) -->
 <script>
-    // QA 스크랩 모아보기의 경우 답변 개수가 필요없기 때문에 스크랩 모아보기로 진입 시 숨겨준다
+   function changeOrder(click_id) {
 
-     // 현재 URL 가져오기
-     const url = window.location.href;
-     console.log(url);
-     // 만약 URL이 스크랩 모아보기인 경우에만 해당 div를 숨김
-     if (url.indexOf("/scrapMemQna") !== -1) {
-         document.querySelector("#board-answer").style.display = "none";
-     }
+       // 클릭된 버튼이 좋아요인지 스크랩인지 확인하여 orderValue에 저장
+       var orderValue = click_id === 'likeOrder' ? 'LIKE_COUNT' : 'SCRAP_COUNT';
+       document.getElementById('orderValue').value = orderValue;
 
 
+       console.log("~~~~최종 전송 값 : " + orderValue);
 
 
-    var sortOrder = 'desc'; // 정렬 방식 기본값: 내림차순
-    // 버튼의 클릭 이벤트 처리
-    document.getElementById("sortButton").addEventListener("click", function() {
-        var boardList = document.querySelector('.board-qaList');
-        var qaItems = boardList.querySelectorAll('.board-line');
-
-        // 정렬 함수 정의
-        function sortFunction(a, b) {
-            var likeCountA = a.querySelector('.board-like .like-count');
-            var likeCountB = b.querySelector('.board-like .like-count');
-
-            // 좋아요 수를 가져오기 전에 null 체크
-            likeCountA = likeCountA ? parseInt(likeCountA.textContent.trim() || '0') : 0;
-            likeCountB = likeCountB ? parseInt(likeCountB.textContent.trim() || '0') : 0;
-
-            // 정렬 방식에 따라 순서 변경
-            if (sortOrder === 'asc') {
-                return likeCountA - likeCountB;
-            } else {
-                return likeCountB - likeCountA;
-            }
-        }
-
-        var sortedList = Array.from(qaItems).sort(sortFunction);
-
-        // 클릭할 때마다 정렬 방식 변경
-        sortOrder = (sortOrder === 'asc') ? 'desc' : 'asc';
-
-        // 기존 목록 초기화 후 정렬 목록 다시 추가
-        boardList.innerHTML = '';
-        sortedList.forEach(function(item) {
-            boardList.appendChild(item);
-        });
-    });
-
-
-
+       let form = document.getElementById('scrapMemQna');
+       form.submit();
+   }
 
 
 </script>

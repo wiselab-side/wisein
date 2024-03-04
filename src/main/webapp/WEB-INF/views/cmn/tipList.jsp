@@ -69,32 +69,11 @@
                                 좋아요
                             </div>
 
-
-
-                            <!-- <input type="" name="likeOrder" id="likeOrder" value="${likeOrder}" onclick="changeOrder('likeOrder')">
-                            <input type="" name="scrapOrder" id="scrapOrder" value="${scrapOrder}" onclick="changeOrder('scrapOrder')"> -->
-
-
-
                             <div class="board-cell board-like gray" id="scrapOrder" value="${sortValue}" onclick="changeOrder('scrapOrder')">
                              스크랩
                             </div>
 
                              <!-- scrapOrder를 선택할 수 있는 입력란 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                              <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
                              <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
@@ -207,8 +186,6 @@
 <script>
 function changeOrder(click_id) {
 
-    console.log("~~~~~~~" + click_id);
-
     // 클릭된 버튼이 좋아요인지 스크랩인지 확인하여 orderValue에 저장
     var orderValue = click_id === 'likeOrder' ? 'LIKE_COUNT' : 'SCRAP_COUNT';
     document.getElementById('orderValue').value = orderValue;
@@ -219,6 +196,7 @@ function changeOrder(click_id) {
 
 
  <!-- controller 에 전해줄 form 끝-->
+
 </script>
 
 

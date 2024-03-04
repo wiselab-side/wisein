@@ -25,32 +25,9 @@
     </sql>
 
     <!-- 좋아요 순 정렬 -->
-    <sql id="likeSort">
-        <if test = "like_count == 'ASC'">
-            LIKE_COUNT ASC,
-        </if>
-
-        <if test = "like_count == 'DESC'">
-            LIKE_COUNT DESC,
-        </if>
-    </sql>
-
-    <!-- 스크랩 순 정렬 -->
-    <sql id="scrapSort">
-        <if test = "scrap_count == 'ASC'">
-            SCRAP_COUNT ASC,
-        </if>
-        <if test = "scrap_count == 'DESC'">
-            SCRAP_COUNT DESC,
-        </if>
-    </sql>
-    <!-- 작성자 -->
-    <sql id="writerSort">
-        <if test = "writer == 'ASC'">
-            WRITER ASC,
-        </if>
-        <if test = "writer == 'DESC'">
-            WRITER DESC,
+    <sql id="sortOrder">
+        <if test="sortValue != null and orderValue != null">
+            ${orderValue} ${sortValue},
         </if>
     </sql>
 
@@ -100,7 +77,8 @@
                    AND PARENT_NUM is NULL
                    <include refid="qaListCategory"/>
                  GROUP BY QB.NUM
-                 ORDER BY <include refid="qaListSubject"/> NUM DESC
+        ORDER BY <include refid="sortOrder"/>
+        <include refid="qaListSubject"/> NUM DESC
                 ) AS A
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
 
@@ -564,20 +542,12 @@
                             ELSE CATEGORY
                           END
           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+         <include refid="qaListCategory"/>
         GROUP BY QA.NUM
-        ORDER BY QA.NUM DESC
+        ORDER BY <include refid="sortOrder"/>
+        <include refid="qaListSubject"/> QA.NUM DESC
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
     </select>
-
-
-
-
-
-
-
-
-
-
 
 
 
