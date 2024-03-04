@@ -3,6 +3,7 @@ package com.wisein.wiselab.service;
 import com.wisein.wiselab.common.FileUtils;
 import com.wisein.wiselab.dao.MemberDAO;
 import com.wisein.wiselab.dao.TipBoardDAO;
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,10 @@ public class TipBoardServiceImpl implements TipBoardService {
     }
 
     @Override
-    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto) throws Exception {
-        return dao.selectScrapTipList(dto);
+    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO tipListDTO) throws Exception {
+        return dao.selectScrapTipList(tipListDTO);
     }
+
 
     /* TipBoard 단건조회 */
     @Override

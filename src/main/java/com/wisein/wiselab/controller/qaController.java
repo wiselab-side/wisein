@@ -778,7 +778,6 @@ public class qaController {
     }
     // ===================================== 스크랩한 qna 게시물 - 원글을 보여주기!!
 
-    //카테고리는 form이 다르기 때문에 처리하기 어렵다
     @GetMapping(value="/scrapMemQna")
     public String scrapMemQna (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
@@ -788,10 +787,6 @@ public class qaController {
             , @RequestParam(name="orderValue", required = false) String orderValue
             , @RequestParam(name="sortValue", required = false) String sortValue
             , Model model) throws Exception {
-
-        System.out.println("처음 SortValue~~~~~~~ : " + sortValue);
-        System.out.println("처음 orderValue~~~~~~~ : " + orderValue);
-
 
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -840,16 +835,11 @@ public class qaController {
         qaListDTO.setSortValue(sortValue);
         qaListDTO.setOrderValue(orderValue);
 
-        System.out.println("SortValue~~~~~~~ : " + sortValue);
-        System.out.println("orderValue~~~~~~~ : " + orderValue);
-
-
         List<QaListDTO> qaList = new ArrayList<>();
 
         qaList = qaListservice.selectScrapQaList(qaListDTO);
         qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
-
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);

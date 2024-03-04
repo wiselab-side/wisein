@@ -202,85 +202,74 @@ public class tipController {
     //writer = 로그인 한 회원이기 때문에 mapper에 writer로 넘겨줬다
 @GetMapping(value="/scrapMemTip")
 public String scrapMemTip (HttpServletRequest request
-        , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
+        , @ModelAttribute("tipListDTO") TipBoardDTO tipListDTO
         , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
-        , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
-        , @RequestParam(value="commentListWriter", required = false) String commentListWriter
-        , @RequestParam(value="tipWriter", required = false) String tipWriter
-        , Model model
         , @RequestParam(name="category", required = false) String category
         , @RequestParam(name="subject", required = false) String subject
-        , @RequestParam(name="likeOrder", required = false) String likeOrder
-) throws Exception {
+        , @RequestParam(name="orderValue", required = false) String orderValue
+        , @RequestParam(name="sortValue", required = false) String sortValue
+        , Model model) throws Exception {
+
     HttpSession session= request.getSession();
     MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-
-    if(category != null && !category.isEmpty()){
-        dto.setCategory(category);
-    }
-    if(subject != null && !subject.isEmpty()){
-        dto.setSubject(subject);
-    }
-
-    if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
-        questionsListWriter = questionsListWriter.substring(1);
-        questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
-        dto.setWriter(questionsListWriter);
-    }
-    if(commentListWriter != null && !commentListWriter.equals("\"\"")){
-        commentListWriter = commentListWriter.substring(1);
-        commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
-        dto.setWriter(commentListWriter);
-    }
-    if(tipWriter != null && !tipWriter.equals("\"\"")){
-        tipWriter = tipWriter.substring(1);
-        tipWriter = tipWriter.substring(0, tipWriter.length()-1);
-        dto.setWriter(tipWriter);
-    }
+    session.removeAttribute("tipListDTO");
 
     //석삼 모아보기 첫진입
-    if(dto.getWriter() == null && sideCheck.equals("Y")) {
+    if(tipListDTO.getWriter() == null && sideCheck.equals("Y")) {
         String check = (String)session.getAttribute("tipWriter");
         if(check != null) {session.removeAttribute("tipWriter");}
         session.setAttribute("tipWriter", member.getId());
     }
 
     //모아보기 첫진입
-    if(dto.getWriter() != null) {
+    if(tipListDTO.getWriter() != null) {
         String check = (String)session.getAttribute("tipWriter");
         if(check != null) {session.removeAttribute("tipWriter");}
-        session.setAttribute("tipWriter",dto.getWriter());
+        session.setAttribute("tipWriter",tipListDTO.getWriter());
     }
 
-    dto.setWriter((String)session.getAttribute("tipWriter"));
-    session.setAttribute("tipWriter",dto.getWriter());
+    tipListDTO.setWriter((String)session.getAttribute("tipWriter"));
+    session.setAttribute("tipWriter",tipListDTO.getWriter());
 
-    if(null != session.getAttribute("questionsListWriter")){
-        session.removeAttribute("questionsListWriter");
-    }
-    if(null != session.getAttribute("commentListWriter")){
-        session.removeAttribute("commentListWriter");
-    }
 
     String side_gubun = "Y";
     model.addAttribute("side_gubun", side_gubun);
 
+    //asc <-> desc 변환작업
+    if ("DESC".equals(sortValue) || sortValue == null || sortValue.isEmpty()) {
+        sortValue = "ASC";
+    }
+    //컨트롤러에서 처리하기 때문에 URL에서는 반대로 표현됨
+    //성공!
+
+    else {
+        sortValue = "DESC";
+    }
+
+
+    if(orderValue==null || orderValue.isEmpty()){
+        orderValue = "LIKE_COUNT";
+    }
+
+    tipListDTO.setSortValue(sortValue);
+    tipListDTO.setOrderValue(orderValue);
+
     List<TipBoardDTO> tipList = new ArrayList<>();
 
-    //회원이 스크랩 한 팁게시판을 가져오자
-
-    tipList = tipBoardService.selectScrapTipList(dto);
-    dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
-    String pagination = PagingTagCustom.render(dto);
+    tipList = tipBoardService.selectScrapTipList(tipListDTO);
+    tipListDTO.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(tipListDTO));
+    String pagination = PagingTagCustom.render(tipListDTO);
 
     model.addAttribute("tipList", tipList);
     model.addAttribute("pagination", pagination);
-    model.addAttribute("selectedCategory", category);
-    model.addAttribute("selectedSubject", subject);
-    model.addAttribute("likeOrder", likeOrder);
-    return "cmn/tipList";
+    model.addAttribute("orderValue", orderValue);
+    model.addAttribute("sortValue", sortValue);
+    model.addAttribute("category", category);
+    model.addAttribute("subject", subject);
+    return "cmn/scrapTipList";
 }
+
 
 
 

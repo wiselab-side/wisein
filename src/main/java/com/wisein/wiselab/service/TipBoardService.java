@@ -1,5 +1,6 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 import java.util.List;
 
@@ -22,8 +23,7 @@ public interface TipBoardService {
 
 
     /* TipBoard 스크랩글 모아보기 */
-    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto)  throws Exception;
-
+    public List<TipBoardDTO> selectScrapTipList(TipBoardDTO tipListDTO) throws Exception;
 
 
 

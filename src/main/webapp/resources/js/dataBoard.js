@@ -10,8 +10,6 @@ var commentListWriter = document.querySelector("#commentListWriter").value;
 var tipWriter = document.querySelector("#tipWriter").value;
 
 
-console.log(category);
-
 var pathName = window.location.pathname
 //console.log(pathName);
 if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip" && pathName !== "/scrapMemTip" && pathName !== "/scrapMemQna"){

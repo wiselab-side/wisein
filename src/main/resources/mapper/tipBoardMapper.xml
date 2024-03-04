@@ -141,10 +141,6 @@
         </select>
 
 
-
-
-
-
     <!-- TIP 스크랩 모아보기 -->
     <select id="selectScrapTipList" parameterType="TipBoardDTO" resultType="TipBoardDTO">
 
@@ -176,8 +172,10 @@
                           ELSE CATEGORY
                          END
           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+        <include refid="tipListCategory"/>
         GROUP BY TB.NUM
-        ORDER BY TB.NUM DESC
+        ORDER BY <include refid="sortOrder"/>
+        <include refid="tipListSubject"/> TB.NUM DESC
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
     </select>
 
