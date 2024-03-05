@@ -258,4 +258,6 @@ public interface QaListDAO {
 
     //스크랩 한 qna 게시글(원문) 모아보기
     public List<QaListDTO> selectScrapQaList(QaListDTO dto);
+    public int selectMemberQaScrapTotalCount(QaListDTO dto) throws  Exception;
+
 }

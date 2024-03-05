@@ -85,5 +85,10 @@ public class TipBoardDAOImpl implements TipBoardDAO {
         return sql.selectList(NS + ".selectScrapTipList", dto);
     }
 
+    @Override
+    public int selectMemberTipScrapTotalCount(TipBoardDTO dto) {
+        return sql.selectOne(NS + ".selectMemberTipScrapTotalCount", dto);
+    }
+
 
 }

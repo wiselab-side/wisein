@@ -17,10 +17,8 @@ public abstract class AbstractPagingCustom {
 				map1.put("currentPageNo", 1);
 				map1.put("searchType", pageInfo.getSearchType());
 				map1.put("keyword", pageInfo.getKeyword());
-				// ============== 추가부분 ==============
 				map1.put("category", pageInfo.getCategory());
 				map1.put("subject", pageInfo.getSubject());
-
 				map1.put("orderValue", pageInfo.getOrderValue());
 				map1.put("sortValue", pageInfo.getSortValue());
 
@@ -47,7 +45,6 @@ public abstract class AbstractPagingCustom {
 				map.put("currentPageNo", idx);
 				map.put("searchType", pageInfo.getSearchType()); 
 				map.put("keyword", pageInfo.getKeyword());
-				// ============== 추가부분 ==============
 				map.put("category", pageInfo.getCategory());
 				map.put("subject", pageInfo.getSubject());
 				map.put("sortValue", pageInfo.getSortValue());
@@ -62,7 +59,6 @@ public abstract class AbstractPagingCustom {
 				map3.put("currentPageNo", pageInfo.getLastPage()+1);
 				map3.put("searchType", pageInfo.getSearchType()); 
 				map3.put("keyword", pageInfo.getKeyword());
-				// ============== 추가부분 ==============
 				map3.put("category", pageInfo.getCategory());
 				map3.put("subject", pageInfo.getSubject());
 				map3.put("sortValue", pageInfo.getSortValue());
@@ -78,7 +74,6 @@ public abstract class AbstractPagingCustom {
 				map4.put("currentPageNo", pageInfo.getTotalPageCount());
 				map4.put("searchType", pageInfo.getSearchType()); 
 				map4.put("keyword", pageInfo.getKeyword());
-				// ============== 추가부분 ==============
 				map4.put("category", pageInfo.getCategory());
 				map4.put("subject", pageInfo.getSubject());
 				map4.put("sortValue", pageInfo.getSortValue());

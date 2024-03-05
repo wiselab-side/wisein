@@ -92,4 +92,9 @@ public class TipBoardServiceImpl implements TipBoardService {
         return dao.selectMeetLink(num);
     }
 
+    @Override
+    public int selectMemberTipScrapTotalCount(TipBoardDTO dto) throws Exception {
+        return dao.selectMemberTipScrapTotalCount(dto);
+    }
+
 }

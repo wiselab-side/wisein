@@ -31,7 +31,53 @@
         </if>
     </sql>
 
-    <!-- 날짜 -->
+    <!-- 스크랩 모아보기-->
+    <select id="selectScrapQaList" parameterType="QaListDTO" resultType="QaListDTO">
+        SELECT ROW_NUMBER() OVER (ORDER BY QA.NUM DESC) AS RNUM
+             , QA.NUM
+             , QA.CATEGORY
+             , QA.WRITER
+             , QA.SUBJECT
+             , QA.CONTENT
+             , QA.REG_DATE
+             , QA.UPD_DATE
+             , QA.DEL_YN
+             , QA.PARENT_NUM
+             , QA.LIKE_COUNT
+             , QA.SCRAP_COUNT
+             , COUNT(COM.BOARD_IDX)                     AS COMM_CNT
+          FROM QA_BOARD QA
+        LEFT JOIN COMMENT COM
+               ON QA.NUM = COM.BOARD_IDX
+              AND COM.DEL_YN = 'n'
+              AND COM.BOARD_TYPE = 'tip'
+        INNER JOIN SCRAP_BOARD SB
+                ON QA.NUM = SB.BOARD_IDX
+         WHERE SB.USER_ID = #{writer}
+           AND SB.BOARD_TYPE = 'qa'
+           AND QA.DEL_YN = 'N'
+           <![CDATA[AND QA.NUM > 0]]>
+           AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType}
+                           ELSE CATEGORY
+                          END
+           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+           <include refid="qaListCategory"/>
+        GROUP BY QA.NUM
+        ORDER BY <include refid="sortOrder"/> <include refid="qaListSubject"/> QA.NUM DESC
+        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
+    </select>
+    <!-- 카테고리 조건식을 넣지 않으면 페이징 처리 오류! -->
+    <select id="selectMemberQaScrapTotalCount" parameterType="QaListDTO" resultType="int">
+        SELECT COUNT(NUM)
+          FROM QA_BOARD QB
+        INNER JOIN SCRAP_BOARD SB
+                ON QB.NUM = SB.BOARD_IDX
+         WHERE SB.USER_ID = #{writer}
+           AND SB.BOARD_TYPE = 'qa';
+          <include refid="qaListCategory"/>
+    </select>
+
+
 
     <select id="selectQaList" parameterType="QaListDTO" resultType="QaListDTO">
         <![CDATA[
@@ -76,9 +122,8 @@
                     ]]>
                    AND PARENT_NUM is NULL
                    <include refid="qaListCategory"/>
-                 GROUP BY QB.NUM
-        ORDER BY <include refid="sortOrder"/>
-        <include refid="qaListSubject"/> NUM DESC
+        GROUP BY QB.NUM
+        ORDER BY <include refid="sortOrder"/> <include refid="qaListSubject"/> NUM DESC
                 ) AS A
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
 
@@ -511,43 +556,7 @@
            <include refid="qaListCategory"/>
     </select>
 
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Qna 스크랩 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-    <select id="selectScrapQaList" parameterType="QaListDTO" resultType="QaListDTO">
-        SELECT ROW_NUMBER() OVER (ORDER BY QA.NUM DESC) AS RNUM
-             , QA.NUM
-             , QA.CATEGORY
-             , QA.WRITER
-             , QA.SUBJECT
-             , QA.CONTENT
-             , QA.REG_DATE
-             , QA.UPD_DATE
-             , QA.DEL_YN
-             , QA.PARENT_NUM
-             , QA.LIKE_COUNT
-             , QA.SCRAP_COUNT
-             , COUNT(COM.BOARD_IDX)                     AS COMM_CNT
-          FROM QA_BOARD QA
-        LEFT JOIN COMMENT COM
-               ON QA.NUM = COM.BOARD_IDX
-              AND COM.DEL_YN = 'n'
-              AND COM.BOARD_TYPE = 'tip'
-        INNER JOIN SCRAP_BOARD SB
-                ON QA.NUM = SB.BOARD_IDX
-        WHERE SB.USER_ID = #{writer}
-          AND SB.BOARD_TYPE = 'qa'
-          AND QA.DEL_YN = 'N'
-        <![CDATA[AND QA.NUM > 0]]>
-          AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType}
-                            ELSE CATEGORY
-                          END
-          AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
-         <include refid="qaListCategory"/>
-        GROUP BY QA.NUM
-        ORDER BY <include refid="sortOrder"/>
-        <include refid="qaListSubject"/> QA.NUM DESC
-        LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
-    </select>
 
 
 

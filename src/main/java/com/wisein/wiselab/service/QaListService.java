@@ -269,7 +269,14 @@ public interface QaListService {
 
 
 
-    // ========================================= 스크랩 - 이영주
-    /* TipBoard 스크랩글 모아보기 */
+    /*
+      날짜 : 2024-03-05
+      이름 : 이영주
+      내용 : 스크랩 Qna와 페이지 처리를 위한 스크랩 count 추가
+   */
+
+    /* QnABoard 스크랩글 모아보기 */
     public List<QaListDTO> selectScrapQaList(QaListDTO dto)  throws Exception;
+    /* QnABoard 스크랩 카운트 */
+    public int selectMemberQaScrapTotalCount(QaListDTO dto)  throws Exception;
 }

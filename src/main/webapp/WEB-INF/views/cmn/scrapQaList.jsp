@@ -57,16 +57,17 @@
 
 
                  <div class="board-cell board-like gray" id="likeOrder" value="${sortValue}" onclick="changeOrder('likeOrder')">
-                                                좋아요
-                                            </div>
+                    좋아요
+                </div>
 
-                                            <div class="board-cell board-like gray" id="scrapOrder" value="${sortValue}" onclick="changeOrder('scrapOrder')">
-                                             스크랩
-                                            </div>
-
-                <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
-                                             <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
-                <!-- asc 혹은 desc -->
+                <div class="board-cell board-like gray" id="scrapOrder" value="${sortValue}" onclick="changeOrder('scrapOrder')">
+                 스크랩
+                </div>
+                 <!--
+                 orderValue : 클릭이 된 인자 즉, likeOrder / scrapOrder 둘 중 하나를 넘겨준다
+                 sortValue  : 정렬기준 ASC 혹은 DESC를 넘겨준다
+                 -->
+                <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
                 <input type="hidden" name= "sortValue" id="sortValue" value="${sortValue}">
                 </form>
                <!-- controller 에 전해줄 form 끝-->
@@ -99,7 +100,6 @@
                     </c:if>
                     <!-- 좋아요 수 -->
                     <c:if test="${qa.likeCount != 0}">
-
                         <div class="board-cell board-like gray">
                             <span class="material-icons">thumb_up</span>
                             <!-- js에서 사용하기 위해 span 태그 생성-->
@@ -116,8 +116,6 @@
                     <c:if test="${qa.scrapCount != 0}">
                         <div class="board-cell board-scrap purple2">
                             <span class="material-icons" style="max-width:24px;">bookmarks</span>${qa.scrapCount}
-
-
                         </div>
                     </c:if>
 
@@ -151,20 +149,12 @@
 <!-- 자바스크립트로 정렬 구현 (페이지 이동 시 적용은 안됨) -->
 <script>
    function changeOrder(click_id) {
-
-       // 클릭된 버튼이 좋아요인지 스크랩인지 확인하여 orderValue에 저장
+       // 클릭된 버튼이 좋아요인지 스크랩인지 확인한 후 orderValue에 저장
        var orderValue = click_id === 'likeOrder' ? 'LIKE_COUNT' : 'SCRAP_COUNT';
        document.getElementById('orderValue').value = orderValue;
-
-
-       console.log("~~~~최종 전송 값 : " + orderValue);
-
-
        let form = document.getElementById('scrapMemQna');
        form.submit();
    }
-
-
 </script>
 
 

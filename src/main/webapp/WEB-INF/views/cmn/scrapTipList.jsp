@@ -36,26 +36,24 @@
                          <!-- controller 에 전해줄 form 생성,
                               카테고리 옵션과 제목 정렬 옵션이 동시에 이뤄질 수 있기 때문에 하나의 form 태그로 진행-->
 
+
                     <form action="/scrapMemTip" method="get" id="scrapMemTip">
                         <!--카테고리 조회 -->
                          <select id="category" name="category" class="category-select" onchange="this.form.submit()">
-                             <option value="" ${empty selectedCategory ? 'selected' : ''}>카테고리</option>
-                             <option value="FRONT" ${selectedCategory eq 'FRONT' ? 'selected' : ''}>FRONT</option>
-                             <option value="BACK" ${selectedCategory eq 'BACK' ? 'selected' : ''}>BACK</option>
-                             <option value="DB" ${selectedCategory eq 'DB' ? 'selected' : ''}>DB</option>
+                             <option value="" ${empty category ? 'selected' : ''}>카테고리</option>
+                             <option value="FRONT" ${category eq 'FRONT' ? 'selected' : ''}>FRONT</option>
+                             <option value="BACK" ${category eq 'BACK' ? 'selected' : ''}>BACK</option>
+                             <option value="DB" ${category eq 'DB' ? 'selected' : ''}>DB</option>
                          </select>
                         </div>
                         <div class="board-cell board-title">
                             <!--제목 정렬 옵션 -->
                                  <select id="subject" name="subject" class="subject-select" onchange="this.form.submit()">
-                                     <option value="" ${empty selectedSubject ? 'selected' : ''}>제목(가나다)</option>
-                                     <option value="ASC" ${selectedSubject eq 'ASC' ? 'selected' : ''}>오름차순</option>
-                                     <option value="DESC" ${selectedSubject eq 'DESC' ? 'selected' : ''}>내림차순</option>
+                                     <option value="" ${empty subject ? 'selected' : ''}>제목(가나다)</option>
+                                     <option value="ASC" ${subject eq 'ASC' ? 'selected' : ''}>오름차순</option>
+                                     <option value="DESC" ${subject eq 'DESC' ? 'selected' : ''}>내림차순</option>
                                  </select>
                         </div>
-                            <!--
-                            같은 폼에서 전송하면
-                            -->
 
                             <div class="board-cell board-like gray">
                                 댓글수
@@ -69,13 +67,12 @@
                              스크랩
                             </div>
 
-                             <!-- scrapOrder를 선택할 수 있는 입력란 -->
-
-                             <!-- 클릭이 된 인자 넘겨주기 likeOrder / scrapOrder 둘 중 하나-->
-                             <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
-
-                             <!-- asc 혹은 desc -->
-                             <input type="hidden" name= "sortValue" id="sortValue" value="${sortValue}">
+                           <!--
+                            orderValue : 클릭이 된 인자 즉, likeOrder / scrapOrder 둘 중 하나를 넘겨준다
+                            sortValue  : 정렬기준 ASC 혹은 DESC를 넘겨준다
+                            -->
+                           <input type="hidden" name= "orderValue" id="orderValue" value="${orderValue}">
+                           <input type="hidden" name= "sortValue" id="sortValue" value="${sortValue}">
 
                             <div class="board-cell board-writer gray">
                                 작성자
@@ -83,14 +80,6 @@
                             <div class="board-cell board-date gray">
                                 날짜
                             </div>
-
-                            <!-- 넘겨줄 정렬값들~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                            <!-- form을 넘겨주면서 value값이 항상 초기값으로 초기화 되었는데
-                                 value 자체에 jstl을 사용하여 Controller에서 받아온 model을 사용하면
-                                 정상적으로 처리할 수 있다.
-                             -->
-
-
                     </form>
                 </div>
 
@@ -194,3 +183,14 @@ function changeOrder(click_id) {
 
 </script>
 
+
+
+<!--
+클릭을 할때마다(폼을 제출할때마다) 새로고침이 되어 INPUT에서 설정한 초기 VALUE값으로 초기화가 된다
+이를 위해 submit 이벤트 동작을 막자 정상적으로 DESC > ASC > DESC >... 로 변경이 되었다
+폼을 제출하면 정상처리되지 않기 때문에 AJAX 통신으로 폼을 제출했다.
+하지만 페이지 util을 사용하기 위해서는 url이 category=&subject=&likeOrder=... 이와 같이 사용되어야하기 때문에
+폼 제출이 필수적인 것 같았다. (혹은 ajax통신으로 url 이동을 하면 되지만 page처리가 어려울 것..)
+option의 경우 선택된 값을 전송하면 되지만, 클릭의 경우 불가능하다
+
+-->

@@ -56,17 +56,30 @@ public class qaController {
        */
     @GetMapping(value="/qalist")
     public String qaList (@ModelAttribute("qaListDTO") QaListDTO qaListDTO
-                        //, HttpSession session
-                        //, @RequestParam(value="sideCheck", required = false, defaultValue = "false") String sideCheck
                         , @RequestParam(name="category", required = false) String category
                         , @RequestParam(name="subject", required = false) String subject
-                        //, @RequestParam(name="like_count", required = false) int like_count
-                       // , @RequestParam(name="scrap_count", required = false) int scrap_count
-                       // , @RequestParam(name="writer", required = false) String writer
+                        , @RequestParam(name="sortValue", required = false) String sortValue
+                        , @RequestParam(name="orderValue", required = false) String orderValue
                         , Model model) throws Exception {
+
+        //ASC <-> DESC 변환작업
+        //컨트롤러에서 값을 받아온 후 처리하기 때문에 URL에서는 반대로 표현된다
+        if ("DESC".equals(sortValue) || sortValue == null || sortValue.isEmpty()) {
+            sortValue = "ASC";
+        } else {
+            sortValue = "DESC";
+        }
+        //정렬 기준이 없다면 기본은 좋아요 순으로 한다
+        if(orderValue==null || orderValue.isEmpty()){
+            orderValue = "LIKE_COUNT";
+        }
+
+        //가공한 값을 DTO에 넣어준다
+        qaListDTO.setSortValue(sortValue);
+        qaListDTO.setOrderValue(orderValue);
+
         List<QaListDTO> qaList = new ArrayList<>();
         qaList = qaListservice.selectQaList(qaListDTO);
-
         qaListDTO.setTotalRecordCount(qaListservice.selectBoardTotalCount(qaListDTO));
         String pagination = PagingTagCustom.render(qaListDTO);
         qaList = qaListservice.selectQaList(qaListDTO);
@@ -77,14 +90,80 @@ public class qaController {
 
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
-        // ============== 추가부분 ==============
-        model.addAttribute("selectedCategory", category);
-        model.addAttribute("selectedSubject", subject);
-       // model.addAttribute("selectedLikecount", like_count);
-       // model.addAttribute("selectedScrapcount", scrap_count);
-       // model.addAttribute("selectedWriter", writer);
+        model.addAttribute("category", category);
+        model.addAttribute("subject", subject);
+        model.addAttribute("sortValue", sortValue);
+        model.addAttribute("orderValue", orderValue);
+
         return "cmn/qaList";
     }
+
+   /*
+     스크랩 조회
+     스크랩 한 Qna 답변을 화면에 보여주고 답변 클릭 시 QnA 원글로 돌아간다
+    */
+    @GetMapping(value="/scrapMemQna")
+    public String scrapMemQna (HttpServletRequest request
+            , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , @RequestParam(name="category", required = false) String category
+            , @RequestParam(name="subject", required = false) String subject
+            , @RequestParam(name="orderValue", required = false) String orderValue
+            , @RequestParam(name="sortValue", required = false) String sortValue
+            , Model model) throws Exception {
+
+        HttpSession session= request.getSession();
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        session.removeAttribute("qaListDTO");
+
+        //석삼 모아보기 첫진입
+        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")) {
+            String check = (String)session.getAttribute("tipWriter");
+            if(check != null) {session.removeAttribute("tipWriter");}
+            session.setAttribute("tipWriter", member.getId());
+        }
+        //모아보기 첫진입
+        if(qaListDTO.getWriter() != null) {
+            String check = (String)session.getAttribute("tipWriter");
+            if(check != null) {session.removeAttribute("tipWriter");}
+            session.setAttribute("tipWriter",qaListDTO.getWriter());
+        }
+        qaListDTO.setWriter((String)session.getAttribute("tipWriter"));
+        session.setAttribute("tipWriter",qaListDTO.getWriter());
+
+        String side_gubun = "Y";
+        model.addAttribute("side_gubun", side_gubun);
+
+        //ASC <-> DESC 변환작업
+        if ("DESC".equals(sortValue) || sortValue == null || sortValue.isEmpty()) {
+            sortValue = "ASC";
+        } else {
+            sortValue = "DESC";
+        }
+
+        if(orderValue==null || orderValue.isEmpty()){
+            orderValue = "LIKE_COUNT";
+        }
+
+        qaListDTO.setSortValue(sortValue);
+        qaListDTO.setOrderValue(orderValue);
+
+        List<QaListDTO> qaList = new ArrayList<>();
+
+        qaList = qaListservice.selectScrapQaList(qaListDTO);
+        qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaScrapTotalCount(qaListDTO));
+        String pagination = PagingTagCustom.render(qaListDTO);
+
+        model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("orderValue", orderValue);
+        model.addAttribute("sortValue", sortValue);
+        model.addAttribute("category", category);
+        model.addAttribute("subject", subject);
+
+        return "cmn/scrapQaList";
+    }
+
 
     @GetMapping(value="/qaBoard")
     public String qaBoard (QaListDTO qaListDTO, HttpSession session) throws Exception {
@@ -776,81 +855,7 @@ public class qaController {
 
         return "redirect:/qaDetail";
     }
-    // ===================================== 스크랩한 qna 게시물 - 원글을 보여주기!!
 
-    @GetMapping(value="/scrapMemQna")
-    public String scrapMemQna (HttpServletRequest request
-            , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
-            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
-            , @RequestParam(name="category", required = false) String category
-            , @RequestParam(name="subject", required = false) String subject
-            , @RequestParam(name="orderValue", required = false) String orderValue
-            , @RequestParam(name="sortValue", required = false) String sortValue
-            , Model model) throws Exception {
-
-        HttpSession session= request.getSession();
-        MemberDTO member = (MemberDTO) session.getAttribute("member");
-
-        session.removeAttribute("qaListDTO");
-
-        //석삼 모아보기 첫진입
-        if(qaListDTO.getWriter() == null && sideCheck.equals("Y")) {
-            String check = (String)session.getAttribute("tipWriter");
-            if(check != null) {session.removeAttribute("tipWriter");}
-            session.setAttribute("tipWriter", member.getId());
-        }
-
-        //모아보기 첫진입
-        if(qaListDTO.getWriter() != null) {
-            String check = (String)session.getAttribute("tipWriter");
-            if(check != null) {session.removeAttribute("tipWriter");}
-            session.setAttribute("tipWriter",qaListDTO.getWriter());
-        }
-
-        qaListDTO.setWriter((String)session.getAttribute("tipWriter"));
-        session.setAttribute("tipWriter",qaListDTO.getWriter());
-
-
-        String side_gubun = "Y";
-        model.addAttribute("side_gubun", side_gubun);
-
-
-
-        //asc <-> desc 변환작업
-        if ("DESC".equals(sortValue) || sortValue == null || sortValue.isEmpty()) {
-            sortValue = "ASC";
-        }
-        //컨트롤러에서 처리하기 때문에 URL에서는 반대로 표현됨
-        //성공!
-
-        else {
-            sortValue = "DESC";
-        }
-
-
-        if(orderValue==null || orderValue.isEmpty()){
-            orderValue = "LIKE_COUNT";
-        }
-
-        qaListDTO.setSortValue(sortValue);
-        qaListDTO.setOrderValue(orderValue);
-
-        List<QaListDTO> qaList = new ArrayList<>();
-
-        qaList = qaListservice.selectScrapQaList(qaListDTO);
-        qaListDTO.setTotalRecordCount(qaListservice.selectMemberQaTotalCount(qaListDTO));
-        String pagination = PagingTagCustom.render(qaListDTO);
-
-        model.addAttribute("qaList", qaList);
-        model.addAttribute("pagination", pagination);
-        model.addAttribute("orderValue", orderValue);
-        model.addAttribute("sortValue", sortValue);
-        model.addAttribute("category", category);
-        model.addAttribute("subject", subject);
-        return "cmn/scrapQaList";
-    }
-
-    // ====================================
 
     @GetMapping(value="/questionsList")
     public String questionsList (HttpServletRequest request

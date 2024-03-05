@@ -373,4 +373,9 @@ public class QaListDAOImpl implements QaListDAO {
     public List<QaListDTO> selectScrapQaList(QaListDTO dto) {
         return sql.selectList(NS + ".selectScrapQaList", dto);
     }
+
+    @Override
+    public int selectMemberQaScrapTotalCount(QaListDTO dto) throws Exception {
+        return sql.selectOne(NS + ".selectMemberQaScrapTotalCount", dto);
+    }
 }

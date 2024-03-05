@@ -58,4 +58,6 @@ public interface TipBoardService {
     /* 작성자 meetLink */
     public String selectMeetLink(int num) throws Exception;
 
+    public int selectMemberTipScrapTotalCount(TipBoardDTO dto) throws Exception;
+
 }

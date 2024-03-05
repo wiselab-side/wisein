@@ -63,4 +63,5 @@ public interface TipBoardDAO {
 
 
     public List<TipBoardDTO> selectScrapTipList(TipBoardDTO dto);
+    public int selectMemberTipScrapTotalCount(TipBoardDTO dto);
 }

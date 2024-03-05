@@ -447,18 +447,19 @@ public class QaListServiceImpl implements QaListService {
     }
 
 
-
-
-
-
-
-
-
-
-    //스크랩
+    /*
+        날짜 : 2024-03-05
+        이름 : 이영주
+        내용 : 스크랩 Qna와 페이지 처리를 위한 스크랩 count 추가
+     */
 
     @Override
     public List<QaListDTO> selectScrapQaList(QaListDTO dto) throws Exception {
         return dao.selectScrapQaList(dto);
+    }
+
+    @Override
+    public int selectMemberQaScrapTotalCount(QaListDTO dto) throws Exception {
+        return dao.selectMemberQaScrapTotalCount(dto);
     }
 }
