@@ -71,24 +71,28 @@
                         </c:if>
                     </div>
 
-                    <div class="board-cell board-like gray" onClick="sort(event)" value="commCnt">
-                        댓글수
-                        <c:if test="${param.sort eq 'commCnt' && param.order eq 'desc'}">
-                            <span class="material-icons" id="order-icons-desc">
-                                    expand_more
-                            </span>
-                        </c:if>
-                        <c:if test="${param.sort eq 'commCnt' && param.order eq 'asc'}">
-                            <span class="material-icons" id="order-icons">
-                                    expand_more
-                            </span>
-                        </c:if>
-                        <c:if test="${param.sort ne 'commCnt'}">
-                            <span id="no-order">
-                                    -
-                            </span>
-                        </c:if>
-                    </div>
+                    <c:if test="${param.reply eq 'Y'}">
+                        <div class="board-cell board-like gray" onClick="sort(event)" value="commCnt">
+                            댓글수
+                            <c:if test="${param.sort eq 'commCnt' && param.order eq 'desc'}">
+                                <span class="material-icons" id="order-icons-desc">
+                                        expand_more
+                                </span>
+                            </c:if>
+                            <c:if test="${param.sort eq 'commCnt' && param.order eq 'asc'}">
+                                <span class="material-icons" id="order-icons">
+                                        expand_more
+                                </span>
+                            </c:if>
+                            <c:if test="${param.sort ne 'commCnt'}">
+                                <span id="no-order">
+                                        -
+                                </span>
+                            </c:if>
+                        </div>
+                    </c:if>
+                    <c:if test="${param.reply ne 'Y'}"></c:if>
+
                     <div class="board-cell board-like gray" onClick="sort(event)" value="likeCount">
                         좋아요
                         <c:if test="${param.sort eq 'likeCount' && param.order eq 'desc'}">
@@ -193,16 +197,19 @@
                             <a href="/tipDetail?num=${tip.num}"><c:out value="${tip.subject}" /></a>
                         </div>
                         <!--댓글수-->
-                        <c:if test="${tip.commCnt == 0}">
-                            <div class="board-cell board-like gray">
-                                <span class="material-icons">comment</span>${tip.commCnt}
-                            </div>
+                        <c:if test="${param.reply eq 'Y'}">
+                            <c:if test="${tip.commCnt == 0}">
+                                <div class="board-cell board-like gray">
+                                    <span class="material-icons">comment</span>${tip.commCnt}
+                                </div>
+                            </c:if>
+                            <c:if test="${tip.commCnt != 0}">
+                                <div class="board-cell board-like purple2">
+                                    <span class="material-icons">comment</span>${tip.commCnt}
+                                </div>
+                            </c:if>
                         </c:if>
-                        <c:if test="${tip.commCnt != 0}">
-                            <div class="board-cell board-like purple2">
-                                <span class="material-icons">comment</span>${tip.commCnt}
-                            </div>
-                        </c:if>
+                        <c:if test="${param.reply ne 'Y'}"></c:if>
                         <!--좋아요-->
                         <c:if test="${tip.likeCount == 0}">
                             <div class="board-cell board-like gray">

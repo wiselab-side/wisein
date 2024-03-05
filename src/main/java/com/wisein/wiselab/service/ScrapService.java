@@ -49,8 +49,8 @@ public interface ScrapService {
     public int selectTipTotalCount(TipBoardDTO tipBoardDTO, String userId, HttpServletRequest request) throws Exception;
 
     /* QA Scrap 모아보기 */
-    public List<QaListDTO> selectQaScrap(String userId) throws Exception;
+    public List<QaListDTO> selectQaScrap(QaListDTO qaListDTO, String userId, HttpServletRequest request) throws Exception;
 
     /* QA Scrap Cnt */
-    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception;
+    public int selectQaTotalCount(QaListDTO qaListDTO, String userId, HttpServletRequest request) throws Exception;
 }

@@ -198,68 +198,114 @@
           AND A.CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
         ]]>
         ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+        <![CDATA[
+        LIMIT #{tipBoardDTO.firstRecordIndex}, #{tipBoardDTO.RECORDSPERPAGE}
+        ]]>
     </select>
 
     <!-- Tip Scrap 게시글 개수 조회 -->
     <select id="selectTipTotalCount" parameterType="Map" resultType="int">
         <![CDATA[
-		SELECT COUNT(A.NUM)
-		  FROM TIP_BOARD A
-		      , (SELECT BOARD_IDX
-                      , BOARD_TYPE
-                      , USER_ID
-                 FROM SCRAP_BOARD
-                 WHERE USER_ID = #{userId}
-                 AND DEL_YN = 'N' ) SB
-	     WHERE 1=1
-		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
-           AND SB.BOARD_TYPE = 'tip'
-           AND SB.BOARD_IDX = A.NUM
-		   AND A.NUM > 0
-		]]>
-    </select>
-
-    <!-- QA Scrap 모아보기 -->
-    <select id="selectQaScrap" parameterType="ScrapBoardDTO" resultType="QaListDTO">
-        SELECT *
+        SELECT COUNT(A.NUM)
         FROM ( SELECT BOARD_IDX
-                    , BOARD_TYPE
                  FROM SCRAP_BOARD
                 WHERE USER_ID = #{userId}
+                  AND BOARD_TYPE = 'tip'
                   AND DEL_YN = 'N' ) SB
-           , ( SELECT NUM
-                    , CATEGORY
-                    , WRITER
-                    , SUBJECT
-                    , CONTENT
-                    , REG_DATE
-                    , UPD_DATE
-                    , LIKE_COUNT
-                    , SCRAP_COUNT
-                    , COUNT
-                 FROM QA_BOARD
-                WHERE DEL_YN = 'N' ) A
-        WHERE SB.BOARD_TYPE = 'qa'
-        AND SB.BOARD_IDX = A.NUM
+            , ( SELECT NUM
+                     , CATEGORY
+                     , WRITER
+                     , TRIM(SUBJECT) AS SUBJECT
+                     , CONTENT
+                     , REG_DATE
+                     , UPD_DATE
+                     , COUNT
+                     , PARENT_NUM
+                     , LIKE_COUNT
+                     , SCRAP_COUNT
+                  FROM TIP_BOARD
+                 WHERE DEL_YN = 'N' ) A
+        WHERE 1=1
+          AND SB.BOARD_IDX = A.NUM
+          AND A.CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+        ]]>
         ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
     </select>
 
+    <!-- QA Scrap 모아보기 -->
+    <select id="selectQaScrap" parameterType="Map" resultType="QaListDTO">
+        SELECT A.NUM
+              ,A.CATEGORY
+              ,A.WRITER
+              ,A.SUBJECT
+              ,A.CONTENT
+              ,A.REG_DATE
+              ,A.UPD_DATE
+              ,A.PARENT_NUM
+              ,A.LIKE_COUNT
+              ,A.SCRAP_COUNT
+              ,B.COUNT
+        FROM (
+                  SELECT A.NUM
+                        ,A.CATEGORY
+                        ,A.WRITER
+                        ,A.SUBJECT
+                        ,A.CONTENT
+                        ,A.REG_DATE
+                        ,A.UPD_DATE
+                        ,A.PARENT_NUM
+                        ,A.LIKE_COUNT
+                        ,A.SCRAP_COUNT
+                        ,A.COUNT
+                  FROM ( SELECT BOARD_IDX
+                                , BOARD_TYPE
+                             FROM SCRAP_BOARD
+                            WHERE USER_ID = #{userId}
+                              AND DEL_YN = 'N' ) SB
+                        , ( SELECT NUM
+                                 , CATEGORY
+                                 , WRITER
+                                 , TRIM(SUBJECT) AS SUBJECT
+                                 , CONTENT
+                                 , REG_DATE
+                                 , UPD_DATE
+                                 , PARENT_NUM
+                                 , LIKE_COUNT
+                                 , SCRAP_COUNT
+                                 , COUNT
+                              FROM QA_BOARD
+                             WHERE DEL_YN = 'N' ) A
+                  WHERE 1=1
+                  AND SB.BOARD_TYPE = 'qa'
+                  AND SB.BOARD_IDX = A.NUM
+                  AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
+              ) A
+             , (
+                   SELECT *
+                   FROM QA_BOARD
+               ) B
+        WHERE 1=1
+        AND A.PARENT_NUM = B.NUM
+        ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
+        <![CDATA[
+        LIMIT #{qaListDTO.firstRecordIndex}, #{qaListDTO.RECORDSPERPAGE}
+        ]]>
+    </select>
+
     <!-- QA Scrap 게시글 개수 조회 -->
-    <select id="selectQaTotalCount" parameterType="ScrapBoardDTO" resultType="int">
+    <select id="selectQaTotalCount" parameterType="Map" resultType="int">
         <![CDATA[
 		SELECT COUNT(A.NUM)
 		  FROM QA_BOARD A
 		      , (SELECT BOARD_IDX
-                      , BOARD_TYPE
-                 FROM SCRAP_BOARD
-                 WHERE USER_ID = #{userId}
-                 AND DEL_YN = 'N' ) SB
+                   FROM SCRAP_BOARD
+                  WHERE USER_ID = #{userId}
+                    AND BOARD_TYPE = 'qa'
+                    AND DEL_YN = 'N' ) SB
 	     WHERE 1=1
+		   AND SB.BOARD_IDX = A.NUM
+		   AND A.DELYN = 'N'
 		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
-           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
-           AND SB.BOARD_TYPE = 'qa'
-           AND SB.BOARD_IDX = A.NUM
-           AND USER_ID = #{userId}
 		   AND NUM > 0
 		]]>
     </select>

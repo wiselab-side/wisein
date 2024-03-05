@@ -36,22 +36,23 @@ public class ScrapController {
     // QA Scrap 모아보기
     @GetMapping("/gatherQaScrap")
     public String gatherMemScrap(HttpSession session
-                                , QaListDTO qaListDTO
+                                , HttpServletRequest request
+                                , @RequestParam(defaultValue = "N") String reply
+                                , @ModelAttribute("QaListDTO") QaListDTO qaListDTO
                                 , Model model) throws Exception {
-
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         String userId = member.getId();
 
-        List<QaListDTO> qaList = scrapService.selectQaScrap(userId);
+        /* 스크랩 총 개수 */
+        qaListDTO.setTotalRecordCount(scrapService.selectQaTotalCount(qaListDTO, userId, request));
+        String pagination = PagingTagCustom.render(qaListDTO);
 
-        /* 게시글 총 개수 */
-//        tipBoardDTO.setTotalRecordCount(tipBoardService.selectBoardTotalCount(tipBoardDTO));
-//        String pagination = PagingTagCustom.render(tipBoardDTO);
+        List<QaListDTO> qaList = scrapService.selectQaScrap(qaListDTO, userId, request);
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
-//        model.addAttribute("pagination", pagination);
         model.addAttribute("qaList", qaList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/QaScrapList";
     }
@@ -60,24 +61,24 @@ public class ScrapController {
     @GetMapping("/gatherTipScrap")
     public String gatherMemScrap(HttpSession session
                                 , HttpServletRequest request
+                                , @RequestParam(defaultValue = "N") String reply
                                 , @ModelAttribute("TipBoardDTO") TipBoardDTO tipBoardDTO
                                 , Model model) throws Exception {
         MemberDTO member = (MemberDTO) session.getAttribute("member");
         String userId = member.getId();
 
-        List<TipBoardDTO> tipList = scrapService.selectTipScrap(tipBoardDTO, userId, request);
-        List<TipBoardDTO> categoryList = tipBoardService.categoryList();
-
         /* 스크랩 총 개수 */
         tipBoardDTO.setTotalRecordCount(scrapService.selectTipTotalCount(tipBoardDTO, userId, request));
         String pagination = PagingTagCustom.render(tipBoardDTO);
-        System.out.println("pagination 은 ?????? " + pagination);
+
+        List<TipBoardDTO> tipList = scrapService.selectTipScrap(tipBoardDTO, userId, request);
+        List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
-        model.addAttribute("pagination", pagination);
         model.addAttribute("tipList", tipList);
         model.addAttribute("categoryList", categoryList);
+        model.addAttribute("pagination", pagination);
 
         return "cmn/TipScrapList";
     }

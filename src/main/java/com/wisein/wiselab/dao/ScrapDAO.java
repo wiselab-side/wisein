@@ -5,6 +5,7 @@ import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 import com.wisein.wiselab.dto.TipBoardDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -47,9 +48,9 @@ public interface ScrapDAO {
     public int selectTipTotalCount(Map<String, Object> tipMap) throws Exception;
 
     /* QA Scrap 모아보기 */
-    public List<QaListDTO> selectQaScrap(String userId) throws Exception;
+    public List<QaListDTO> selectQaScrap(Map<String, Object> qaMap) throws Exception;
 
     /* QA Scrap Cnt */
-    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception;
+    public int selectQaTotalCount(Map<String, Object> qaMap) throws Exception;
 
 }

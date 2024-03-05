@@ -72,24 +72,27 @@
                     </c:if>
                 </div>
 
-                <div class="board-cell board-answer gray" value="commCnt" onClick="sort(event)">
-                    답변
-                    <c:if test="${param.sort eq 'commCnt' && param.order eq 'desc'}">
-                        <span class="material-icons" id="order-icons-desc">
-                                expand_more
-                        </span>
-                    </c:if>
-                    <c:if test="${param.sort eq 'commCnt' && param.order eq 'asc'}">
-                        <span class="material-icons" id="order-icons">
-                                expand_more
-                        </span>
-                    </c:if>
-                    <c:if test="${param.sort ne 'commCnt'}">
-                        <span id="no-order">
-                                -
-                        </span>
-                    </c:if>
-                </div>
+                <c:if test="${param.reply eq 'N'}"></c:if>
+                <c:if test="${param.reply ne 'N'}">
+                    <div class="board-cell board-answer gray" value="commCnt" onClick="sort(event)">
+                        답변
+                        <c:if test="${param.sort eq 'commCnt' && param.order eq 'desc'}">
+                            <span class="material-icons" id="order-icons-desc">
+                                    expand_more
+                            </span>
+                        </c:if>
+                        <c:if test="${param.sort eq 'commCnt' && param.order eq 'asc'}">
+                            <span class="material-icons" id="order-icons">
+                                    expand_more
+                            </span>
+                        </c:if>
+                        <c:if test="${param.sort ne 'commCnt'}">
+                            <span id="no-order">
+                                    -
+                            </span>
+                        </c:if>
+                    </div>
+                </c:if>
 
                 <div class="board-cell board-like gray" value="likeCount" onClick="sort(event)">
                     좋아요
@@ -194,18 +197,21 @@
                     <div class="board-cell board-title">
                         <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}"><c:out value="${qa.subject}" /></a>
                     </div>
-                    <div class="board-cell board-answer gray">
-                        <c:if test="${qa.adpYn eq 'Y'}">
-                            <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}">
-                                <span class="material-icons" style="color:purple;">check_circle</span>${qa.commCnt}
-                            </a>
-                        </c:if>
-                        <c:if test="${qa.adpYn eq 'N'}">
-                            <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}">
-                                <span class="material-icons purple2">help_outline</span>${qa.commCnt}
-                            </a>
-                        </c:if>
-                    </div>
+                    <c:if test="${param.reply eq 'N'}"></c:if>
+                    <c:if test="${param.reply ne 'N'}">
+                        <div class="board-cell board-answer gray">
+                            <c:if test="${qa.adpYn eq 'Y'}">
+                                <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}">
+                                    <span class="material-icons" style="color:purple;">check_circle</span>${qa.commCnt}
+                                </a>
+                            </c:if>
+                            <c:if test="${qa.adpYn eq 'N'}">
+                                <a href="/qaDetail?num=${qa.num}&parentNum=${qa.parentNum}">
+                                    <span class="material-icons purple2">help_outline</span>${qa.commCnt}
+                                </a>
+                            </c:if>
+                        </div>
+                    </c:if>
 
                     <c:if test="${qa.likeCount == 0}">
                         <div class="board-cell board-like gray">

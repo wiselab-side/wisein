@@ -46,7 +46,10 @@ public class tipController {
 
     //다건 조회
     @GetMapping(value="/tipList")
-    public String tipList (HttpSession session,  @ModelAttribute("TipBoardDTO") TipBoardDTO dto, Model model) throws Exception {
+    public String tipList (HttpSession session
+                        , @RequestParam(defaultValue = "Y") String reply
+                        , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
+                        , Model model) throws Exception {
         //수정때문에 세션저장해둔것 지움
         session.removeAttribute("TipBoardDTO");
 

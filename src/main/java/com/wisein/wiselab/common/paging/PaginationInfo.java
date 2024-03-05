@@ -20,6 +20,16 @@ public class PaginationInfo {
 
 	private String order;
 
+	private String reply;
+
+	public String getReply() {
+		return reply;
+	}
+
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+
 	public String getOrder() {
 		return order;
 	}

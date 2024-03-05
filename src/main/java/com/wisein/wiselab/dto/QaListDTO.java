@@ -6,6 +6,7 @@ import java.util.Date;
 import com.wisein.wiselab.common.paging.PaginationInfo;
 import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper=false)
 @Data
 public class QaListDTO extends PaginationInfo {
     private int num;

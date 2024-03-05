@@ -1,6 +1,7 @@
 package com.wisein.wiselab.controller;
 
 import com.wisein.wiselab.common.paging.AbstractPagingCustom;
+import com.wisein.wiselab.dao.ScrapDAO;
 import com.wisein.wiselab.dto.LikeBoardDTO;
 import com.wisein.wiselab.dto.MemberDTO;
 import com.wisein.wiselab.dto.QaListDTO;
@@ -519,7 +520,7 @@ public class qaController {
 
         String scrapDelYn = scrapService.TipScrapYN(dto);
 
-        if(scrapDelYn.equals("N")){ //해제
+        if("N".equals(scrapDelYn)){ //해제
             scrapService.undoScrap(dto);
             scrapService.delQaScrapCount(num);
             qaListservice.delQaScrapCount(parentNum); // 원본게시글 전체 ScrapCount 값 감소

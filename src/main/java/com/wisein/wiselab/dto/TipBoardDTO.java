@@ -2,10 +2,12 @@ package com.wisein.wiselab.dto;
 
 import com.wisein.wiselab.common.paging.PaginationInfo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+@EqualsAndHashCode(callSuper=false)
 @Data
 public class TipBoardDTO extends PaginationInfo  {
     private int num;

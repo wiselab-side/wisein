@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,13 +92,13 @@ public class ScrapDAOImpl implements ScrapDAO {
 
     /* QA Scrap 모아보기 */
     @Override
-    public List<QaListDTO> selectQaScrap(String userId) throws Exception {
-        return sql.selectList(NS + ".selectQaScrap", userId);
+    public List<QaListDTO> selectQaScrap(Map<String, Object> qaMap) throws Exception {
+        return sql.selectList(NS + ".selectQaScrap", qaMap);
     }
 
     /* QA Scrap Cnt */
     @Override
-    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception {
-        return sql.selectOne(NS + ".selectTipTotalCount", qaListDTO);
+    public int selectQaTotalCount(Map<String, Object> qaMap) throws Exception {
+        return sql.selectOne(NS + ".selectTipTotalCount", qaMap);
     }
 }

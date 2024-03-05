@@ -40,8 +40,8 @@ if(pathName === "/questionsList" || pathName === "/commentList" || pathName === 
 }
 
 if(pathName === "/gatherQaScrap" || pathName === "/gatherTipScrap") {
-    leftSideBar.innerHTML +="<li class='gatherQaScrap' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherQaScrap?>QA 스크랩 모아보기</a></li>";
-    leftSideBar.innerHTML +="<li class='gatherTipScrap' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherTipScrap?>TIP 스크랩 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='gatherQaScrap' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherQaScrap?reply=N>QA 스크랩 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='gatherTipScrap' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherTipScrap?reply=N>TIP 스크랩 모아보기</a></li>";
 
     const temp = document.querySelector(".gatherQaScrap");
         temp.style="color: #949494; margin: 1em 0; cursor: pointer; padding-left: 10px; padding-bottom: 5px; font-weight: 300;";

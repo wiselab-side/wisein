@@ -1,5 +1,6 @@
 package com.wisein.wiselab.service;
 
+import com.wisein.wiselab.common.paging.PaginationInfo;
 import com.wisein.wiselab.dao.ScrapDAO;
 import com.wisein.wiselab.dao.TipBoardDAO;
 import com.wisein.wiselab.dto.QaListDTO;
@@ -87,6 +88,7 @@ public class ScrapServiceImpl implements ScrapService {
     /* TIP Scrap 모아보기 */
     @Override
     public List<TipBoardDTO> selectTipScrap(TipBoardDTO tipBoardDTO, String userId, HttpServletRequest request) throws Exception {
+
         Map<String, Object> tipMap = new HashMap<String, Object>();
         String searchTypeParam = request.getParameter("searchType");
         String sortParam = request.getParameter("sort");
@@ -104,12 +106,10 @@ public class ScrapServiceImpl implements ScrapService {
             tipMap.put("sort", sortParam);
             tipMap.put("order", orderParam);
         }
-        System.out.println("sort 랑 order 랑 값이 있니? " + sortParam + orderParam);
 
         tipMap.put("userId", userId);
         tipMap.put("tipBoardDTO", tipBoardDTO);
 
-        System.out.println("@@@@@ 여기는 serviceImpl .. tipMap 의 tipBoardDTO ??? " + tipMap.get("tipBoardDTO"));
         return dao.selectTipScrap(tipMap);
     }
 
@@ -129,20 +129,54 @@ public class ScrapServiceImpl implements ScrapService {
 
         tipMap.put("userId", userId);
         tipMap.put("tipBoardDTO", tipBoardDTO);
-        System.out.println("@@@@@ tipMap 의 tipBoardDTO ??? " + tipMap.get("tipBoardDTO"));
+
         return dao.selectTipTotalCount(tipMap);
     }
 
     /* QA Scrap 모아보기 */
     @Override
-    public List<QaListDTO> selectQaScrap(String userId) throws Exception {
-        return dao.selectQaScrap(userId);
+    public List<QaListDTO> selectQaScrap(QaListDTO qaListDTO, String userId, HttpServletRequest request) throws Exception {
+
+        Map<String, Object> qaMap = new HashMap<String, Object>();
+        String searchTypeParam = request.getParameter("searchType");
+        String sortParam = request.getParameter("sort");
+        String orderParam = request.getParameter("order");
+
+        if(searchTypeParam == null) {
+            qaListDTO.setCategory("all");
+            qaMap.put("searchType", "all");
+        } else {
+            qaListDTO.setCategory(searchTypeParam);
+            qaMap.put("searchType", searchTypeParam);
+        }
+
+        if(sortParam != null && orderParam != null) {
+            qaMap.put("sort", sortParam);
+            qaMap.put("order", orderParam);
+        }
+
+        qaMap.put("userId", userId);
+        qaMap.put("qaListDTO", qaListDTO);
+
+        return dao.selectQaScrap(qaMap);
     }
 
     /* QA Scrap Cnt */
     @Override
-    public int selectQaTotalCount(QaListDTO qaListDTO) throws Exception {
-        return dao.selectQaTotalCount(qaListDTO);
-    }
+    public int selectQaTotalCount(QaListDTO qaListDTO, String userId, HttpServletRequest request) throws Exception {
+        Map<String, Object> qaMap = new HashMap<String, Object>();
+        String searchTypeParam = request.getParameter("searchType");
 
+        if(searchTypeParam == null) {
+            qaListDTO.setCategory("all");
+            qaMap.put("searchType", "all");
+        } else {
+            qaListDTO.setCategory(searchTypeParam);
+            qaMap.put("searchType", searchTypeParam);
+        }
+
+        qaMap.put("userId", userId);
+        qaMap.put("qaListDTO", qaListDTO);
+        return dao.selectQaTotalCount(qaMap);
+    }
 }
