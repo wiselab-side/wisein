@@ -30,22 +30,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Controller
 public class tipController {
-
     @Autowired
     TipBoardService tipBoardService;
-
     @Autowired
     CommentService commentService;
-
     @Autowired
     LikeService likeService;
-
     @Autowired
     ScrapService scrapService;
-
     @Autowired
     CommonService commonService;
-
 
     private final AbstractPagingCustom PagingTagCustom;
 

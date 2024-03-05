@@ -24,9 +24,7 @@
     </sql>
     <!-- 제목 정렬 -->
     <sql id="tipListSubject">
-        <if test="subject == 'ASC'">
-            SUBJECT ASC,
-        </if>
+
         <if test="subject =='DESC'">
             SUBJECT DESC,
         </if>
@@ -78,7 +76,17 @@
           AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
           <include refid="tipListCategory"/>
         GROUP BY TB.NUM
-        ORDER BY <include refid="sortOrder"/> <include refid="tipListSubject"/> TB.NUM DESC
+        ORDER BY
+        <include refid="sortOrder"/>
+        <![CDATA[
+            CASE
+                WHEN TRIM(REGEXP_REPLACE(SUBJECT, '<[^>]+>', '')) = '' THEN 1
+                WHEN SUBJECT REGEXP '^[가-힣ㄱ-ㅎㅏ-ㅣ]' THEN 2
+                WHEN SUBJECT REGEXP '^[A-Za-z]' THEN 3
+                WHEN SUBJECT REGEXP '^[0-9]' THEN 4
+                ELSE 5
+            END,]]>
+         <include refid="tipListSubject"/> TB.NUM DESC
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
     </select>
 

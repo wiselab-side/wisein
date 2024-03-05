@@ -15,11 +15,15 @@
         </if>
     </sql>
     <!-- 제목 정렬 -->
+    <!--
+    1 공백만 있는 경우
+    2 한글, 자음, 모음인 경우
+    3 영어
+    4 숫자
+    5 특수문자 등
+    -->
     <sql id="qaListSubject">
-        <if test="subject == 'ASC'">
-            SUBJECT ASC,
-        </if>
-        <if test="subject =='DESC'">
+        <if test="subject == 'DESC'">
             SUBJECT DESC,
         </if>
     </sql>
@@ -63,7 +67,15 @@
            AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
            <include refid="qaListCategory"/>
         GROUP BY QA.NUM
-        ORDER BY <include refid="sortOrder"/> <include refid="qaListSubject"/> QA.NUM DESC
+        ORDER BY <include refid="sortOrder"/>
+            <![CDATA[
+            CASE
+                WHEN TRIM(REGEXP_REPLACE(SUBJECT, '<[^>]+>', '')) = '' THEN 1
+                WHEN SUBJECT REGEXP '^[가-힣ㄱ-ㅎㅏ-ㅣ]' THEN 2
+                WHEN SUBJECT REGEXP '^[A-Za-z]' THEN 3
+                WHEN SUBJECT REGEXP '^[0-9]' THEN 4
+                ELSE 5
+            END,]]> <include refid="qaListSubject"/> QA.NUM DESC
         LIMIT #{firstRecordIndex}, #{RECORDSPERPAGE}
     </select>
     <!-- 카테고리 조건식을 넣지 않으면 페이징 처리 오류! -->
@@ -73,7 +85,7 @@
         INNER JOIN SCRAP_BOARD SB
                 ON QB.NUM = SB.BOARD_IDX
          WHERE SB.USER_ID = #{writer}
-           AND SB.BOARD_TYPE = 'qa';
+           AND SB.BOARD_TYPE = 'qa'
           <include refid="qaListCategory"/>
     </select>
 

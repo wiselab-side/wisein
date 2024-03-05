@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="board-cell board-answer  gray" id="board-answer">
-                                        답변
-                                    </div>
+                    답변
+                </div>
 
                  <div class="board-cell board-like gray" id="likeOrder" value="${sortValue}" onclick="changeOrder('likeOrder')">
                     좋아요
