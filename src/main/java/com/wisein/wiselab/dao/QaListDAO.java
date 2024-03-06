@@ -6,6 +6,7 @@ import com.wisein.wiselab.dto.QaListDTO;
 import com.wisein.wiselab.dto.ScrapBoardDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QaListDAO {
 
@@ -259,7 +260,7 @@ public interface QaListDAO {
      * 조회수 증가
      * param : num
      * return : -
-     * 날짜 : 2024-02-14
+     * 날짜 : 2024-03-06
      * */
-    public void updateCount(int num) throws Exception;
+    public void updateCount(Map<String, Object> countMap) throws Exception;
 }

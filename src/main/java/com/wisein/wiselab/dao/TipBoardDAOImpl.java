@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class TipBoardDAOImpl implements TipBoardDAO {
@@ -88,7 +89,7 @@ public class TipBoardDAOImpl implements TipBoardDAO {
 
     /* 조회수 증가 */
     @Override
-    public void updateCount(int num) throws Exception {
-        sql.update(NS+ ".updateCount", num);
+    public void updateCount(Map<String, Object> countMap) throws Exception {
+        sql.update(NS+ ".updateCount", countMap);
     }
 }

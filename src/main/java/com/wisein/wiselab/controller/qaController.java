@@ -211,6 +211,10 @@ public class qaController {
             model.addAttribute("side_gubun", side_gubun);
         }
         model.addAttribute("meetLink", meetLink);
+
+        // 게시글 조회수 증가
+        qaListservice.updateCount(num, member.getId());
+
         return "cmn/qaDetail";
     }
 

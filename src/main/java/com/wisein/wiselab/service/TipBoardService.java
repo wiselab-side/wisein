@@ -39,6 +39,6 @@ public interface TipBoardService {
     public List<TipBoardDTO> categoryList() throws Exception;
 
     /* 조회수 증가 */
-    public void updateCount(TipBoardDTO dto) throws Exception;
+    public void updateCount(int num, String userId) throws Exception;
 
 }

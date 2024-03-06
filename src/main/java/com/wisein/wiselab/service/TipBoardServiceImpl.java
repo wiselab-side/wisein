@@ -7,7 +7,9 @@ import com.wisein.wiselab.dto.TipBoardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TipBoardServiceImpl implements TipBoardService {
@@ -40,7 +42,6 @@ public class TipBoardServiceImpl implements TipBoardService {
     /* TipBoard 단건조회 */
     @Override
     public TipBoardDTO selectTipOne(TipBoardDTO dto) throws Exception {
-        dao.updateCount(dto.getNum());
         return dao.selectTipOne(dto);
     }
 
@@ -94,8 +95,11 @@ public class TipBoardServiceImpl implements TipBoardService {
 
     /* 조회수 증가 */
     @Override
-    public void updateCount(TipBoardDTO dto) throws Exception {
-
+    public void updateCount(int num, String userId) throws Exception {
+        Map<String, Object> countMap = new HashMap<>();
+        countMap.put("num", num);
+        countMap.put("userId", userId);
+        dao.updateCount(countMap);
     }
 
 }

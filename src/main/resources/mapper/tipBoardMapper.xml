@@ -285,10 +285,11 @@
     </select>
 
     <!-- 조회수 증가 -->
-    <update id="updateCount" parameterType="Integer">
+    <update id="updateCount" parameterType="map">
         UPDATE TIP_BOARD
         SET COUNT = COUNT+1
         WHERE NUM = #{num}
+        AND WRITER != #{userId}
     </update>
 
 </mapper>

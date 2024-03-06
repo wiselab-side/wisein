@@ -261,5 +261,6 @@ public interface QaListService {
     /* 댓글 삭제 시 스크랩 삭제*/
     public void deleteScrapQaBoard(int num) throws Exception;
 
-
+    /* 게시글 조회수 증가 */
+    public void updateCount(int num, String userId) throws Exception;
 }

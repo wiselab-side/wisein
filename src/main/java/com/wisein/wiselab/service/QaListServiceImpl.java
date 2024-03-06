@@ -12,10 +12,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.ArrayList;
+import java.util.*;
 import javax.servlet.http.HttpSession;
-import java.util.Iterator;
-import java.util.List;
 
 @Service
 public class QaListServiceImpl implements QaListService {
@@ -103,7 +101,6 @@ public class QaListServiceImpl implements QaListService {
      * */
     @Override
     public QaListDTO selectQaOne(QaListDTO qaListDTO) throws Exception {
-        dao.updateCount(qaListDTO.getNum());
         return dao.selectQaOne(qaListDTO);
     }
 
@@ -445,5 +442,14 @@ public class QaListServiceImpl implements QaListService {
     @Override
     public void deleteScrapQaBoard(int num) throws Exception {
         dao.deleteScrapQaBoard(num);
+    }
+
+    /* 게시글 조회수 증가 */
+    @Override
+    public void updateCount(int num, String userId) throws Exception {
+        Map<String, Object> countMap = new HashMap<>();
+        countMap.put("num", num);
+        countMap.put("userId", userId);
+        dao.updateCount(countMap);
     }
 }

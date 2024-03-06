@@ -184,6 +184,9 @@ public class tipController {
         TipBoardDTO TipBoardDTO = tipBoardService.selectTipOne(dto);
         List<CommentDTO> commentList = commentService.selectComment(CommentDTO);
 
+        //조회수 증가
+        tipBoardService.updateCount(num, member.getId());
+
         //사이드바 설정
         String side_gubun = "Y";
 

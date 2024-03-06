@@ -3,6 +3,7 @@ package com.wisein.wiselab.dao;
 import com.wisein.wiselab.dto.TipBoardDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TipBoardDAO {
 
@@ -43,5 +44,5 @@ public interface TipBoardDAO {
     public List<TipBoardDTO> categoryList() throws Exception;
 
     /* 조회수 증가 */
-    public void updateCount(int dto) throws Exception;
+    public void updateCount(Map<String, Object> countMap) throws Exception;
 }

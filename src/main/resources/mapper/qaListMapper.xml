@@ -564,13 +564,14 @@
         WHERE BOARD_IDX = #{num}
     </delete>
 
-    <!-- 조회수 -->
-    <update id="updateCount" parameterType="int">
+    <!-- 게시글 조회수 증가 -->
+    <update id="updateCount" parameterType="map">
         UPDATE
         qa_board
         SET
         COUNT = COUNT+1
         WHERE NUM = #{num}
+        AND WRITER != #{userId}
     </update>
 
 </mapper>
