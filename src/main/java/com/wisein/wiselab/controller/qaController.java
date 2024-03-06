@@ -26,8 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.lang.model.SourceVersion;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -121,6 +124,7 @@ public class qaController {
 
     @GetMapping(value="/qaDetail")
     public String qaDetail (HttpServletRequest request
+            , HttpServletResponse response
             , QaListDTO dto
             , Model model
             , @RequestParam("num") int num) throws Exception {
@@ -213,7 +217,33 @@ public class qaController {
         model.addAttribute("meetLink", meetLink);
 
         // 게시글 조회수 증가
-        qaListservice.updateCount(num, member.getId());
+        LocalDate now = LocalDate.now();
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("qaCountCookie_" + now + "_" + member.getId())) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie == null) {
+            Cookie newCookie = new Cookie("qaCountCookie_" + now + "_" + member.getId(), num + "_");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+            qaListservice.updateCount(num, member.getId());
+        } else if(oldCookie != null) {
+            if(!oldCookie.getValue().contains(num + "_")) {
+                oldCookie.setValue(oldCookie.getValue() + num + "_");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+                qaListservice.updateCount(num, member.getId());
+            }
+        }
 
         return "cmn/qaDetail";
     }

@@ -110,27 +110,26 @@
             let currentUrl = window.location.href;
 
             // 파라미터가 있는지 확인 (indexOf : 값이 있으면 인덱스값, 없으면 -1 반환)
-            let ParamTF = currentUrl.indexOf('sort=');
-            let OrderParamTF = currentUrl.indexOf('order=');
+            let sortParamTF = currentUrl.indexOf('sort=');
+            let orderParamTF = currentUrl.indexOf('order=');
 
-            // sort, order 포함 여부
+            // currentUrl 에서 newUrl 로 변경
             let newUrl;
-            if (ParamTF !== -1) {               // sort O
-                // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
-                newUrl = currentUrl.replace(/sort=[^&]+/, 'sort=' + sorted);
-
-                if(OrderParamTF !== -1) {       // sort O, orderParam O
-                    if(newUrl.search('desc') !== -1) { // sort O, order=desc O
+            if (sortParamTF !== -1) {
+                if(currentUrl.search(sorted) !== -1) {
+                    if(currentUrl.search('desc') !== -1) {
                         order = 'asc';
-                    } else {                    // sort O, order=desc X
+                    } else {
                         order = 'desc';
                     }
-                    newUrl = newUrl.replace(/order=[^&]+/, 'order=' + order);
-                } else {                        // sort X, order X
-                    newUrl = newUrl + (newUrl.indexOf('?') !== -1 ? '&' : '?') + 'order=desc';
+                    newUrl = currentUrl.replace(/order=[^&]+/, 'order=' + order);
+                } else if(currentUrl.search(sorted) === -1) {
+                    // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
+                    newUrl = currentUrl.replace(/sort=[^&]+/, 'sort=' + sorted);
+                    newUrl = newUrl.replace(/order=[^&]+/, 'order=desc');
                 }
-            } else {                            // sort X, order X
-                // category 파라미터가 없으면 추가
+            } else if (sortParamTF === -1) {
+                // 파라미터가 없으면 추가
                 newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'sort=' + sorted + '&order=desc';
             }
 

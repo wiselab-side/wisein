@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -151,7 +154,8 @@ public class tipController {
 
     //단건 조회
     @GetMapping(value="/tipDetail")
-    public String tipDetail (HttpSession session, TipBoardDTO dto, Model model,  @RequestParam("num") int num) throws Exception {
+    public String tipDetail (HttpSession session, TipBoardDTO dto, Model model, @RequestParam("num") int num
+                           , HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //meetLink
         String meetLink = tipBoardService.selectMeetLink(num);
@@ -184,8 +188,34 @@ public class tipController {
         TipBoardDTO TipBoardDTO = tipBoardService.selectTipOne(dto);
         List<CommentDTO> commentList = commentService.selectComment(CommentDTO);
 
-        //조회수 증가
-        tipBoardService.updateCount(num, member.getId());
+        // 게시글 조회수 증가
+        LocalDate now = LocalDate.now();
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("tipCountCookie_" + now + "_" + member.getId())) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if(oldCookie == null) {
+            Cookie newCookie = new Cookie("tipCountCookie_" + now + "_" + member.getId(), num + "_");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+            tipBoardService.updateCount(num, member.getId());
+        } else if(oldCookie != null) {
+            if(!oldCookie.getValue().contains(num + "_")) {
+                oldCookie.setValue(oldCookie.getValue() + num + "_");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+                tipBoardService.updateCount(num, member.getId());
+            }
+        }
 
         //사이드바 설정
         String side_gubun = "Y";

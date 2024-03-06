@@ -7,6 +7,7 @@ import com.wisein.wiselab.dto.ScrapBoardDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 

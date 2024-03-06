@@ -99,33 +99,32 @@
          * 날짜 : 2024-02-20
          * */
         function sort(event){
-            let sorted = event.target.closest('.board-cell').getAttribute('value');
-            let order;
-
             // 현재 URL 가져오기
             let currentUrl = window.location.href;
 
+            let sorted = event.target.closest('.board-cell').getAttribute('value');
+            let order;
+
             // 파라미터가 있는지 확인 (indexOf : 값이 있으면 인덱스값, 없으면 -1 반환)
-            let ParamTF = currentUrl.indexOf('sort=');
-            let OrderParamTF = currentUrl.indexOf('order=');
+            let sortParamTF = currentUrl.indexOf('sort=');
+            let orderParamTF = currentUrl.indexOf('order=');
 
-            // sort param 여부
+            // currentUrl 에서 newUrl 로 변경
             let newUrl;
-            if (ParamTF !== -1) { // sortParam O
-                // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
-                newUrl = currentUrl.replace(/sort=[^&]+/, 'sort=' + sorted);
-
-                if(OrderParamTF !== -1) { // orderParam O
-                    if(newUrl.search('desc') !== -1) { // order=desc O
+            if(sortParamTF !== -1) {
+                if(currentUrl.search(sorted) !== -1) {
+                    if(currentUrl.search('desc') !== -1) {
                         order = 'asc';
-                    } else { // order=desc X
+                    } else {
                         order = 'desc';
                     }
-                    newUrl = newUrl.replace(/order=[^&]+/, 'order=' + order);
-                } else { // orderParam X
-                    newUrl = newUrl + (newUrl.indexOf('?') !== -1 ? '&' : '?') + 'order=desc';
+                    newUrl = currentUrl.replace(/order=[^&]+/, 'order=' + order);
+                } else if(currentUrl.search(sorted) === -1) {
+                    // 이미 category 파라미터(&를 제외^한 전체[] 문자)가 있으면 해당 파라미터 대체
+                    newUrl = currentUrl.replace(/sort=[^&]+/, 'sort=' + sorted);
+                    newUrl = newUrl.replace(/order=[^&]+/, 'order=desc');
                 }
-            } else { // sortParam X
+            } else if(sortParamTF === -1) {
                 // 파라미터가 없으면 추가
                 newUrl = currentUrl + (currentUrl.indexOf('?') !== -1 ? '&' : '?') + 'sort=' + sorted + '&order=desc';
             }
