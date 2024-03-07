@@ -234,17 +234,16 @@
 
     <!-- QA Scrap 모아보기 -->
     <select id="selectQaScrap" parameterType="Map" resultType="QaListDTO">
-        SELECT A.NUM
+        SELECT DISTINCT B.PARENT_NUM AS NUM
               ,A.CATEGORY
               ,A.WRITER
               ,A.SUBJECT
               ,A.CONTENT
               ,A.REG_DATE
               ,A.UPD_DATE
-              ,A.PARENT_NUM
               ,A.LIKE_COUNT
               ,A.SCRAP_COUNT
-              ,B.COUNT
+              ,A.COUNT
         FROM (
                   SELECT A.NUM
                         ,A.CATEGORY
@@ -261,6 +260,7 @@
                                 , BOARD_TYPE
                              FROM SCRAP_BOARD
                             WHERE USER_ID = #{userId}
+                              AND BOARD_TYPE = 'qa'
                               AND DEL_YN = 'N' ) SB
                         , ( SELECT NUM
                                  , CATEGORY
@@ -279,13 +279,13 @@
                   AND SB.BOARD_TYPE = 'qa'
                   AND SB.BOARD_IDX = A.NUM
                   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
-              ) A
+              ) B
              , (
                    SELECT *
                    FROM QA_BOARD
-               ) B
+               ) A
         WHERE 1=1
-        AND A.PARENT_NUM = B.NUM
+        AND B.PARENT_NUM = A.NUM
         ORDER BY <include refid='sort'/> <include refid='order'/> A.NUM DESC
         <![CDATA[
         LIMIT #{qaListDTO.firstRecordIndex}, #{qaListDTO.RECORDSPERPAGE}
@@ -295,7 +295,7 @@
     <!-- QA Scrap 게시글 개수 조회 -->
     <select id="selectQaTotalCount" parameterType="Map" resultType="int">
         <![CDATA[
-		SELECT COUNT(A.NUM)
+		SELECT COUNT(DISTINCT A.PARENT_NUM)
 		  FROM QA_BOARD A
 		      , (SELECT BOARD_IDX
                    FROM SCRAP_BOARD
@@ -304,7 +304,7 @@
                     AND DEL_YN = 'N' ) SB
 	     WHERE 1=1
 		   AND SB.BOARD_IDX = A.NUM
-		   AND A.DELYN = 'N'
+		   AND A.DEL_YN = 'N'
 		   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
 		   AND NUM > 0
 		]]>

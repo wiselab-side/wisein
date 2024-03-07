@@ -99,6 +99,6 @@ public class ScrapDAOImpl implements ScrapDAO {
     /* QA Scrap Cnt */
     @Override
     public int selectQaTotalCount(Map<String, Object> qaMap) throws Exception {
-        return sql.selectOne(NS + ".selectTipTotalCount", qaMap);
+        return sql.selectOne(NS + ".selectQaTotalCount", qaMap);
     }
 }
