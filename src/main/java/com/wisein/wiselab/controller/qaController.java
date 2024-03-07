@@ -230,14 +230,14 @@ public class qaController {
         }
 
         if(oldCookie == null) {
-            Cookie newCookie = new Cookie("qaCountCookie_" + now + "_" + member.getId(), num + "_");
+            Cookie newCookie = new Cookie("qaCountCookie_" + now + "_" + member.getId(), "'" + num + "'_");
             newCookie.setPath("/");
             newCookie.setMaxAge(60 * 60 * 24);
             response.addCookie(newCookie);
             qaListservice.updateCount(num, member.getId());
         } else if(oldCookie != null) {
-            if(!oldCookie.getValue().contains(num + "_")) {
-                oldCookie.setValue(oldCookie.getValue() + num + "_");
+            if(!oldCookie.getValue().contains("'" + num + "'_")) {
+                oldCookie.setValue(oldCookie.getValue() + "'" + num + "'_");
                 oldCookie.setPath("/");
                 oldCookie.setMaxAge(60 * 60 * 24);
                 response.addCookie(oldCookie);
