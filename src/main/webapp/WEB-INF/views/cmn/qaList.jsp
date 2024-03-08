@@ -16,7 +16,7 @@
              <div class="header-section">
                  <div class="title">QA</div>
                  <div class="content-top-group">
-                    <button type="button" onClick="location.href='/qaBoard'" ></button>
+                    <button type="button" onclick="location.href='/qaBoard'" ></button>
                 </div>
              </div>
             <img src ="../resources/image/nonPosting.png" class="noPost">
@@ -31,13 +31,13 @@
             <div class="title">QA</div>
             <div class="content-top-group">
                 <c:if test="${side_gubun ne 'Y'}">
-                    <button type="button" onClick="location.href='/qaBoard'" ></button>
+                    <button type="button" onclick="location.href='/qaBoard'" ></button>
                 </c:if>
             </div>
         </div>
         <div class="board-list">
             <div class="board-line board-header">
-                <div class="board-cell board-no" value="num" onClick="sort(event)">
+                <div class="board-cell board-no" value="num" onclick="sort(event)">
                 </div>
                 <div class="board-cell board-category purple2">
                     <p class="category-select">
@@ -53,7 +53,7 @@
                     <span class="material-icons">expand_more</span>
                     -->
                 </div>
-                <div class="board-cell board-title" value="subject" onClick="sort(event)">
+                <div class="board-cell board-title" value="subject" onclick="sort(event)">
                     제목(가나다)
                     <c:if test="${param.sort eq 'subject' && param.order eq 'desc'}">
                         <span class="material-icons" id="order-icons-desc">
@@ -74,7 +74,7 @@
 
                 <c:if test="${param.reply eq 'N'}"></c:if>
                 <c:if test="${param.reply ne 'N'}">
-                    <div class="board-cell board-answer gray" value="commCnt" onClick="sort(event)">
+                    <div class="board-cell board-answer gray" value="commCnt" onclick="sort(event)">
                         답변
                         <c:if test="${param.sort eq 'commCnt' && param.order eq 'desc'}">
                             <span class="material-icons" id="order-icons-desc">
@@ -94,7 +94,7 @@
                     </div>
                 </c:if>
 
-                <div class="board-cell board-like gray" value="likeCount" onClick="sort(event)">
+                <div class="board-cell board-like gray" value="likeCount" onclick="sort(event)">
                     좋아요
                     <c:if test="${param.sort eq 'likeCount' && param.order eq 'desc'}">
                         <span class="material-icons" id="order-icons-desc">
@@ -112,7 +112,7 @@
                         </span>
                     </c:if>
                 </div>
-                <div class="board-cell board-scrap gray" value="scrapCount" onClick="sort(event)">
+                <div class="board-cell board-scrap gray" value="scrapCount" onclick="sort(event)">
                     스크랩
                     <c:if test="${param.sort eq 'scrapCount' && param.order eq 'desc'}">
                         <span class="material-icons" id="order-icons-desc">
@@ -130,7 +130,7 @@
                     </span>
                 </c:if>
                 </div>
-                <div class="board-cell board-writer gray" value="writer" onClick="sort(event)">
+                <div class="board-cell board-writer gray" value="writer" onclick="sort(event)">
                     작성자
                     <c:if test="${param.sort eq 'writer' && param.order eq 'desc'}">
                         <span class="material-icons" id="order-icons-desc">
@@ -148,7 +148,7 @@
                         </span>
                     </c:if>
                 </div>
-                <div class="board-cell board-date gray" value="regDate" onClick="sort(event)">
+                <div class="board-cell board-date gray" value="regDate" onclick="sort(event)">
                     날짜
                     <c:if test="${param.sort eq 'regDate' && param.order eq 'desc'}">
                         <span class="material-icons" id="order-icons-desc">
@@ -166,7 +166,7 @@
                         </span>
                     </c:if>
                 </div>
-                <div class="board-cell board-count gray" value="count" onClick="sort(event)">
+                <div class="board-cell board-count gray" value="count" onclick="sort(event)">
                     조회
                     <c:if test="${param.sort eq 'count' && param.order eq 'desc'}">
                         <span class="material-icons" id="order-icons-desc">
