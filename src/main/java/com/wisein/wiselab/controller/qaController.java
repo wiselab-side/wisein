@@ -233,6 +233,8 @@ public class qaController {
             Cookie newCookie = new Cookie("qaCountCookie_" + now + "_" + member.getId(), "'" + num + "'_");
             newCookie.setPath("/");
             newCookie.setMaxAge(60 * 60 * 24);
+            newCookie.setHttpOnly(true);
+            newCookie.setSecure(true);
             response.addCookie(newCookie);
             qaListservice.updateCount(num, member.getId());
         } else if(oldCookie != null) {
@@ -240,6 +242,8 @@ public class qaController {
                 oldCookie.setValue(oldCookie.getValue() + "'" + num + "'_");
                 oldCookie.setPath("/");
                 oldCookie.setMaxAge(60 * 60 * 24);
+                oldCookie.setHttpOnly(true);
+                oldCookie.setSecure(true);
                 response.addCookie(oldCookie);
                 qaListservice.updateCount(num, member.getId());
             }

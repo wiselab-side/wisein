@@ -205,6 +205,8 @@ public class tipController {
             Cookie newCookie = new Cookie("tipCountCookie_" + now + "_" + member.getId(), "'" + num + "'_");
             newCookie.setPath("/");
             newCookie.setMaxAge(60 * 60 * 24);
+            newCookie.setHttpOnly(true);
+            newCookie.setSecure(true);
             response.addCookie(newCookie);
             tipBoardService.updateCount(num, member.getId());
         } else if(oldCookie != null) {
@@ -212,6 +214,8 @@ public class tipController {
                 oldCookie.setValue(oldCookie.getValue() + "'" + num + "'_");
                 oldCookie.setPath("/");
                 oldCookie.setMaxAge(60 * 60 * 24);
+                oldCookie.setHttpOnly(true);
+                oldCookie.setSecure(true);
                 response.addCookie(oldCookie);
                 tipBoardService.updateCount(num, member.getId());
             }
