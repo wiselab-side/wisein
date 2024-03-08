@@ -9,3 +9,6 @@
   float: left;
 }
 
+#go_back:hover {
+    cursor: pointer;
+}

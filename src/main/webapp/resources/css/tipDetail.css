@@ -312,3 +312,6 @@ header ul li:nth-child(2) .select-wrap select {
       vertical-align: top;
   }
 
+#go_back:hover {
+    cursor: pointer;
+}

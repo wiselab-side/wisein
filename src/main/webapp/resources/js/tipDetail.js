@@ -299,5 +299,7 @@
              obj.style.height = (10 + obj.scrollHeight) + 'px';
          }
 
-
-
+        // 뒤로 가기
+        function go_back() {
+            window.history.back();
+        }

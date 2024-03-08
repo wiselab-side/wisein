@@ -1428,3 +1428,15 @@ div.signUp-input-wrap i {
     top: 7px;
     color: gray;
 }
+
+.wrap-title div {
+    font-size: 15px;
+    line-height: 3;
+    display: inline-block;
+}
+
+.wrap-title div a {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 3;
+}

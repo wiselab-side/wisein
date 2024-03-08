@@ -4,7 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <div class="content-wrap tipDetail">
+    <section class="wrap-title">
+        <div><a href="/tipList?reply=Y">&ensp; TIP &ensp;</a>/<c:out value="${tipBoardDTO.subject}" /></div>
+    </section>
     <section class="questions content-frame">
+        <div id="go_back" onclick="go_back()">< &ensp; 뒤로가기</div><br/>
         <div class="icon" style="float:right;">
            <c:if test="${tipBoardDTO.writer != memberId}">
                 <!--좋아요-->

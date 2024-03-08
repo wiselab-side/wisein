@@ -8,7 +8,11 @@
 
 <body>
 <div class="content-wrap">
+    <section class="wrap-title">
+        <div><a href="/qalist?reply=Y">&ensp; QA &ensp;</a>/<c:out value="${qaListDTO.subject}" /></div>
+    </section>
     <section class="questions content-frame">
+        <div id="go_back" onclick="go_back()">< &ensp; 뒤로가기</div><br/>
         <div class="info">
             <div class="title">
                 <c:out value="${qaListDTO.subject}" />
