@@ -17,12 +17,12 @@
             <div class="icon">
                 <c:if test="${qaListDTO.adpYn eq 'N'}" />
                 <div>
-                    <span class="material-icons purple2">bookmarks</span>
-                    <div><c:out value="${qaListDTO.scrapCount}"/></div>
+                    <div><c:out value="${qaListDTO.likeCount}"/></div>
+                    <span class="material-icons purple2">thumb_up</span>
                 </div>
                 <div>
-                    <span class="material-icons purple2">thumb_up</span>
-                    <div><c:out value="${qaListDTO.likeCount}"/></div>
+                    <div><c:out value="${qaListDTO.scrapCount}"/></div>
+                    <span class="material-icons purple2">bookmarks</span>
                 </div>
             </div>
         </span>

@@ -167,6 +167,7 @@
                   ,COUNT
                   ,PARENT_NUM
                   ,LIKE_COUNT
+                  ,SCRAP_COUNT
              FROM TIP_BOARD
             WHERE NUM = #{num}
     </select>

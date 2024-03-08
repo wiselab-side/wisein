@@ -315,3 +315,18 @@ header ul li:nth-child(2) .select-wrap select {
 #go_back:hover {
     cursor: pointer;
 }
+
+.icon span {
+    float: right;
+}
+
+.icon span span {
+    max-width: 24px;
+    padding-left: 20px;
+}
+
+.icon span div {
+    margin: 5px;
+    font-weight: bold;
+    float: right;
+}

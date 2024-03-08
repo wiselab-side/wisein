@@ -13,6 +13,7 @@
            <c:if test="${tipBoardDTO.writer != memberId}">
                 <!--좋아요-->
                 <span id="changeLikeHtml">
+                    <div><c:out value="${tipBoardDTO.likeCount}"/></div>
                     <c:if test="${likeDelYn == 'none'}">
                         <span class="material-icons gray" id="like_btn" onclick="regLikeTip(${tipBoardDTO.num})">thumb_up</span>
                     </c:if>
@@ -26,6 +27,7 @@
 
                 <!--북마크-->
                 <span id="changeScrapHtml">
+                    <div class="icon-count"><c:out value="${tipBoardDTO.scrapCount}"/></div>
                     <c:if test="${scrapDelYn == 'none'}">
                         <span class="material-icons gray" id="bookmark_btn" onclick="regScrapTip(${tipBoardDTO.num})">bookmarks</span>
                     </c:if>
@@ -36,7 +38,21 @@
                         <span class="material-icons purple2" id="bookmark_btn" onclick="udpScrapTip(${tipBoardDTO.num})">bookmarks</span>
                     </c:if>
                 </span>
-            </c:if>
+           </c:if>
+
+           <c:if test="${tipBoardDTO.writer == memberId}">
+               <!--좋아요-->
+               <span id="changeLikeHtml">
+                   <div><c:out value="${tipBoardDTO.likeCount}"/></div>
+                   <span class="material-icons gray">thumb_up</span>
+               </span>
+
+               <!--북마크-->
+               <span id="changeScrapHtml">
+                   <div class="icon-count"><c:out value="${tipBoardDTO.scrapCount}"/></div>
+                   <span class="material-icons gray">bookmarks</span>
+               </span>
+           </c:if>
         </div>
 
 
