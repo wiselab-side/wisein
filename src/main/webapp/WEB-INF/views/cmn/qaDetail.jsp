@@ -13,16 +13,25 @@
     </section>
     <section class="questions content-frame">
         <div id="go_back" onclick="go_back()">< &ensp; 뒤로가기</div><br/>
-        <div class="info">
-            <div class="title">
-                <c:out value="${qaListDTO.subject}" />
-                <div class="icon" style="float:right;">
-                    <c:if test="${qaListDTO.adpYn eq 'N'}">
-                        <a href="#" role="button" class="button btn_register" onclick="comment_btn('${fn:replace(writer, "'", "\\'") }','${fn:replace(category, "'", "\\'") }',${num});"  id="comment_btn" name="comment_btn" style="float: right;">답변!</a>
-                    </c:if>
+        <span class="info-icon">
+            <div class="icon">
+                <c:if test="${qaListDTO.adpYn eq 'N'}" />
+                <div>
+                    <span class="material-icons purple2">bookmarks</span>
+                    <div><c:out value="${qaListDTO.scrapCount}"/></div>
+                </div>
+                <div>
+                    <span class="material-icons purple2">thumb_up</span>
+                    <div><c:out value="${qaListDTO.likeCount}"/></div>
                 </div>
             </div>
-        </div>
+        </span>
+        <span class="info">
+            <div class="title">
+                <c:out value="${qaListDTO.subject}" />
+            </div>
+        </span>
+
 
         <div class="writer-wrap">
             <p class="writer"><c:out value="${qaListDTO.writer}" /></p>

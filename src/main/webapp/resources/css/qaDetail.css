@@ -12,3 +12,22 @@
 #go_back:hover {
     cursor: pointer;
 }
+
+.info-icon {
+    float: right;
+}
+
+.info-icon .icon div {
+    font-weight: bold;
+    float: right;
+}
+
+.info-icon .icon span {
+    max-width: 24px;
+    padding-left: 20px;
+    flex-wrap: wrap;
+}
+
+.info-icon .icon div div {
+    margin: 5px;
+}
