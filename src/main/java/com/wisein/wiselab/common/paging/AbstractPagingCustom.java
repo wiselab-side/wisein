@@ -24,7 +24,7 @@ public abstract class AbstractPagingCustom {
 				map1.put("sort", pageInfo.getSort());
 				map1.put("order", pageInfo.getOrder());
 				map1.put("reply", pageInfo.getReply());
-				
+
 				sbuilder.append(replacesTag(getFirstPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map1)));
 			}
 			
