@@ -452,3 +452,7 @@
 #go_back:hover {
     cursor: pointer;
 }
+
+.matzip-list-cell:hover {
+    cursor: pointer;
+}
