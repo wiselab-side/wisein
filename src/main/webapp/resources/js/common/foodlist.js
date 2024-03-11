@@ -76,6 +76,14 @@ function foodCategorySelect(target) {
     }
 }
 
+// 뒤로가기 버튼 클릭 후 (지역별 맛집리스트)
+if(location.href.includes('category=')) {
+    let urlParams = new URL(location.href).searchParams;
+    let category = urlParams.get('category');
+
+    getMatzipList(category);
+}
+
 //맛집 리스트, 파견 지역별 페이징 처리
 function getMatzipList(location, currentPage) {
     region = location;
@@ -392,4 +400,6 @@ function setPageBlock(currentPage, pageBlock) {
     endPage = startPage + pageBlock - 1;
 }
 
-init();
+if(!location.href.includes('category=')) {
+    init();
+}

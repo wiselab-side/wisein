@@ -18,6 +18,7 @@
     document.getElementById('food-info-addr').innerText = matzip_obj.address_name
     document.getElementById('food-info-title').innerText = matzip_obj.place_name;
     document.getElementById('info-wrap-title').innerText = matzip_obj.place_name;
+    document.getElementById('place-name').innerText = matzip_obj.place_name;
     document.getElementById('food-info-content').innerText = matzip_obj.place_url;
 
     // 댓글 삭제
@@ -111,4 +112,10 @@
         item.forEach(function(i) {
             i.parentNode.remove();
         });
+    }
+
+    // 뒤로가기
+    function go_back_with_cate() {
+        let category = document.querySelector('#category').value;
+        window.location.href = "/matzipList?category=" + category;
     }

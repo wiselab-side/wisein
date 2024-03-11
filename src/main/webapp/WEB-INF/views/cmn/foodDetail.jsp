@@ -10,6 +10,14 @@ ${matzip.matzipData}
 
 
 <div class="content-wrap">
+    <section class="wrap-title">
+        <div>
+            <a href="/matzipList">&ensp; 맛집 &ensp;</a>
+            /<div id="place-name"></div>
+            <input type="hidden" id="category" value="${matzip.category}" />
+        </div>
+    </section>
+    <div id="go_back" onclick="go_back_with_cate()">< &ensp; 뒤로가기</div><br/>
     <div class="info-wrap" style="margin-top:0">
         <ul class="info">
             <li id="info-wrap-title">회현 쌀국수</li>
