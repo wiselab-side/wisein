@@ -117,6 +117,8 @@
                 parent.innerHTML='';
                 parent.innerHTML= html;
             }
+
+            window.location.reload();
         }
 
 
@@ -172,6 +174,8 @@
                 parent.innerHTML='';
                 parent.innerHTML= html;
             }
+
+            window.location.reload();
         }
 
         function regLike(writer,num){

@@ -12,7 +12,7 @@
     </select>
 
     <select id="QaLikeYN" parameterType="LikeBoardDTO" resultType="String">
-        SELECT DEL_YN
+       SELECT DEL_YN
          FROM LIKE_BOARD
         WHERE USER_ID = #{userId}
           AND BOARD_TYPE = #{boardType}

@@ -416,9 +416,9 @@ public class qaController {
         // 원본게시글 like/scrap 카운트하려면 parentNum 값 필요
         int parentNum = likeService.getQaParentNum(num);
 
-        String likeDelYn = likeService.TipLikeYN(dto);
+        String likeDelYn = likeService.QaLikeYN(dto);
 
-        if(likeDelYn.equals("N")){ //해제
+        if("N".equals(likeDelYn)){ //해제
             likeService.undoLike(dto);
             likeService.delQaLikeCount(num);
             qaListservice.delQaLikeCount(parentNum); // 원본게시글 전체 likeCount 값 감소
@@ -556,7 +556,7 @@ public class qaController {
 
         int parentNum = scrapService.getScrapParentNum(num);
 
-        String scrapDelYn = scrapService.TipScrapYN(dto);
+        String scrapDelYn = scrapService.QaScrapYN(dto);
 
         if("N".equals(scrapDelYn)){ //해제
             scrapService.undoScrap(dto);
