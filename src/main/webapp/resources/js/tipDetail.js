@@ -192,6 +192,8 @@
               let parent = document.getElementById('changeLikeHtml');
               parent.innerHTML='';
               parent.innerHTML= html;
+
+              window.location.reload();
           }
 
           function regLikeTip(tipNum){
@@ -250,6 +252,8 @@
               let parent = document.getElementById('changeScrapHtml');
               parent.innerHTML='';
               parent.innerHTML= html;
+
+              window.location.reload();
           }
 
           function regScrapTip(tipNum){
