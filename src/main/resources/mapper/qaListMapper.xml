@@ -470,7 +470,7 @@
         WHERE NUM = #{parentNum}
     </update>
 
-    <!-- Like 해제시 게시글 LikeCount 증가-->
+    <!-- Like 해제시 게시글 LikeCount 감소-->
     <update id="delQaLikeCount" parameterType="int">
         UPDATE
         qa_board
@@ -488,7 +488,7 @@
         WHERE NUM = #{parentNum}
     </update>
 
-    <!-- Scrap 해제시 게시글 LikeCount 증가-->
+    <!-- Scrap 해제시 게시글 ScrapCount 감소-->
     <update id="delQaScrapCount" parameterType="int">
         UPDATE
         qa_board
@@ -497,6 +497,7 @@
         WHERE NUM = #{parentNum}
     </update>
 
+    <!-- Scrap 등록 시 원본 게시글 count 증가를 위한 parentNum 조회-->
     <select id="getParentNum" parameterType="QaListDTO" resultType="int">
         SELECT
         parent_num
