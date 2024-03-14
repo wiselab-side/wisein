@@ -114,8 +114,10 @@
                 //console.log(check);
                 //console.log(id);
                 let parent = document.getElementById(id);
-                parent.innerHTML='';
-                parent.innerHTML= html;
+                if(parent) {
+                    parent.innerHTML='';
+                    parent.innerHTML= html;
+                }
             }
 
             window.location.reload();
@@ -171,8 +173,10 @@
                 //console.log(checkScrap);
                 //console.log(id);
                 let parent = document.getElementById(id);
-                parent.innerHTML='';
-                parent.innerHTML= html;
+                if(parent) {
+                    parent.innerHTML='';
+                    parent.innerHTML= html;
+                }
             }
 
             window.location.reload();

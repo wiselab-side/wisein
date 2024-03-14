@@ -109,7 +109,7 @@
                             <c:set var="done_loop" value="true"/>
                         </c:if>
                     </c:forEach>
-                </c:if>
+
 
                 <span id="changeLikeHtml${i}">
                     <c:if test="${check == 0}">
@@ -150,7 +150,8 @@
                         </div>
                     </c:if>
                 </span>
-                <c:if test="${member.id == qaListDTO.writer && member.id != commentQa.writer && commentQa.adpYn eq 'N'}">
+                </c:if>
+                <c:if test="${member.id == qaListDTO.writer && member.id != commentQa.writer && qaListDTO.adpYn eq 'N'}">
                     <a href="#" role="button" class="" id="adp_btn" onclick="adp_btn('${fn:replace(writer, "'", "\\'") }',${qaListDTO.num},${commentQaNum});" style="float: right;">채택하기!</a>
                 </c:if>
                 <c:if test="${qaListDTO.adpNum == commentQaNum && commentQa.adpYn eq 'Y'}">
