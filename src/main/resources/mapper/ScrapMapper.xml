@@ -74,7 +74,7 @@
 
     <!-- Scrap 등록-->
     <insert id="insertScrap" parameterType="ScrapBoardDTO">
-        INSERT INTO Scrap_board
+        INSERT IGNORE INTO Scrap_board
         (
             IDX
             ,USER_ID
@@ -150,7 +150,7 @@
         WHERE num = #{num}
     </update>
 
-    <!-- like 게시글 parentNum -->
+    <!-- Scrap 게시글 parentNum -->
     <select id="getScrapParentNum" parameterType="int" resultType="int">
         SELECT
             PARENT_NUM

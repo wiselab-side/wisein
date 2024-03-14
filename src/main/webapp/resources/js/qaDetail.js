@@ -136,14 +136,14 @@
                 for(let j=0; j<json.scrapQaBoardList.scrapQaBoardList.length; j++){
                     let scrapQaBoardIdx = json.scrapQaBoardList.scrapQaBoardList[j].boardIdx;
                     let scrapQaBoardDelYn = json.scrapQaBoardList.scrapQaBoardList[j].delYn;
-                    if(commentQaNum == scrapQaBoardIdx && scrapQaBoardDelYn == 'N'){
+                    if(!!(commentQaNum == scrapQaBoardIdx && scrapQaBoardDelYn == 'N')){
                         checkScrap = 1;
-                        id = "changeScrapHtml"+i;
+                        //id = "changeScrapHtml"+i;
                         break;
                     }
-                    if(commentQaNum == scrapQaBoardIdx && scrapQaBoardDelYn == 'Y'){
+                    if(!!(commentQaNum == scrapQaBoardIdx && scrapQaBoardDelYn == 'Y')){
                         checkScrap = 2;
-                        id = "changeScrapHtml"+i;
+                        //id = "changeScrapHtml"+i;
                         break;
                     }
                 }
@@ -200,6 +200,7 @@
                commonPopup.alertPopup("로그인 후 이용가능합니다.");
                window.location.href="/login";
             }
+            window.location.reload();
         }
 
         function udpLike(writer,num){
@@ -225,6 +226,7 @@
                commonPopup.alertPopup("로그인 후 이용가능합니다.");
                window.location.href="/login";
             }
+            window.location.reload();
         }
 
         function regScrap(writer,num){

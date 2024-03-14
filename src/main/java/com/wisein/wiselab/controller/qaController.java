@@ -524,7 +524,7 @@ public class qaController {
             jArrayScrap.add(sObject);
         }
         jsonObjScrap.put("scrapQaBoardList", jArrayScrap);
-//        System.out.println(jsonObjLike.toString());
+//        System.out.println(jsonObjScrap.toString());
 
         response.put("commentQaList",jsonObjComment);
         response.put("scrapQaBoardList",jsonObjScrap);
@@ -562,7 +562,7 @@ public class qaController {
             scrapService.undoScrap(dto);
             scrapService.delQaScrapCount(num);
             qaListservice.delQaScrapCount(parentNum); // 원본게시글 전체 ScrapCount 값 감소
-        }else{//재등록
+        }else if("Y".equals(scrapDelYn)){//재등록
             scrapService.doScrap(dto);
             scrapService.addQaScrapCount(num);
             qaListservice.addQaScrapCount(parentNum); // 원본게시글 전체 ScrapCount 값 증가
