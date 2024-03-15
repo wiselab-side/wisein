@@ -162,7 +162,6 @@ header ul li:nth-child(2) .select-wrap select {
 
 .content-wrap .board-list .board-line .board-category {
   position: relative;
-  cursor: pointer;
   -ms-flex-preferred-size: 160px;
   flex-basis: 160px;
   -ms-flex-negative: 2;

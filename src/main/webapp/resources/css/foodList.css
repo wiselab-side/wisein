@@ -125,6 +125,7 @@
 
 .category-select #selectOption {
     border: 0;
+    cursor: pointer;
     /*-webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;*/

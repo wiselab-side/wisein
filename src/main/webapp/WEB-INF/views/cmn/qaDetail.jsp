@@ -155,7 +155,7 @@
                     <a href="#" role="button" class="" id="adp_btn" onclick="adp_btn('${fn:replace(writer, "'", "\\'") }',${qaListDTO.num},${commentQaNum});" style="float: right;">채택하기!</a>
                 </c:if>
                 <c:if test="${qaListDTO.adpNum == commentQaNum && commentQa.adpYn eq 'Y'}">
-                   <a href="#" style="float: right;">질문자채택!</a>
+                   <a href="#" style="float: right; cursor:default;">질문자채택!</a>
                 </c:if>
             </div>
         </div>

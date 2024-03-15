@@ -148,6 +148,10 @@
     height: 35px;
  }
 
+.matzip-write .button-wrap input {
+    cursor: pointer;
+}
+
 
 .matzip-write {
     width: 100%;
@@ -220,6 +224,7 @@
     width: 80px;
     height: 35px;
     border: none;
+    cursor: pointer;
 }
 
 .content-radio {
@@ -453,6 +458,10 @@
     cursor: pointer;
 }
 
-.matzip-list-cell:hover {
+.matzip-list-cell {
     cursor: pointer;
+}
+
+.matzip-list-cell .material-icons {
+    cursor: default;
 }
