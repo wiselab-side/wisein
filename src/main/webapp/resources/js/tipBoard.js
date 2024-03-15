@@ -136,3 +136,8 @@
             // 새로운 URL로 이동
             window.location.href = newUrl;
         };
+
+        // 글작성페이지로 이동
+        function go_regTipPage(searchType){
+           window.location.href="/tipBoard?" + "searchType=" + searchType;
+        }

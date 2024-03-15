@@ -104,10 +104,10 @@ public class qaController {
             session.removeAttribute("qaRegListDTO");
         }
         // 게시글안에서 수정일 경우 작성 후 해당 게시글로 이동
-        String udpGubun = request.getParameter("updGubun");
+        String updGubun = request.getParameter("updGubun");
 //        System.out.println(udpGubun);
 
-        if(udpGubun.equals("Y")){
+        if(updGubun.equals("Y")){
             qaListDTO.setNum(qaListDTO.getParentNum());
             qaListDTO = qaListservice.selectQaOne(qaListDTO);
 

@@ -10,12 +10,20 @@
     <form autocomplete="off" id="qaBoardForm">
        <div class="content-wrap">
             <div class="matzip-write">
+                <div class="title">QA</div>
                 <div class="content-inner-box">
                      <div class="select-wrap">
-                         <select id="category" name="category" >
-                             <option value="FRONT" <c:if test="${param.category eq 'FRONT'}">selected</c:if>>FRONT</option>
-                             <option value="BACK"  <c:if test="${param.category eq 'BACK'}">selected</c:if>>BACK</option>
-                             <option value="DB"    <c:if test="${param.category eq 'DB'}">selected</c:if>>DB</option>
+                         <select id="category" name="category">
+                             <c:if test="${empty qaListDTO.category}">
+                                 <option value="FRONT" <c:if test="${param.searchType eq 'FRONT' || param.category eq 'all'}">selected</c:if>>FRONT</option>
+                                 <option value="BACK"  <c:if test="${param.searchType eq 'BACK'}">selected</c:if>>BACK</option>
+                                 <option value="DB"    <c:if test="${param.searchType eq 'DB'}">selected</c:if>>DB</option>
+                             </c:if>
+                             <c:if test="${!empty qaListDTO.category}">
+                                 <option value="FRONT" <c:if test="${qaListDTO.category == 'FRONT'}">selected</c:if>>FRONT</option>
+                                 <option value="BACK"  <c:if test="${qaListDTO.category == 'BACK'}">selected</c:if>>BACK</option>
+                                 <option value="DB"    <c:if test="${qaListDTO.category == 'DB'}">selected</c:if>>DB</option>
+                             </c:if>
                          </select>
                     </div>
                     <p>

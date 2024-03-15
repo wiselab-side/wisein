@@ -31,7 +31,7 @@
             <div class="title">QA</div>
             <div class="content-top-group">
                 <c:if test="${side_gubun ne 'Y'}">
-                    <button type="button" onclick="go_regQaPage('${fn:replace(param.searchType, "'", "\\'")}')" ></button>
+                    <button type="button" onclick="go_regQaPage('${fn:replace(param.searchType, "'", "\\'") }')" ></button>
                 </c:if>
             </div>
         </div>
@@ -43,10 +43,10 @@
                     <p class="category-select">
                         <select id="selectOption" name="category" onchange="selectSearchType()">
                             <option hidden="">카테고리</option>
-                            <option value="all" <c:if test="${param.searchType eq 'all'}">selected</c:if>>전체</option>
+                            <option value="all"   <c:if test="${param.searchType eq 'all'}">selected</c:if>>전체</option>
                             <option value="FRONT" <c:if test="${param.searchType eq 'FRONT'}">selected</c:if>>FRONT</option>
-                            <option value="BACK" <c:if test="${param.searchType eq 'BACK'}">selected</c:if>>BACK</option>
-                            <option value="DB" <c:if test="${param.searchType eq 'DB'}">selected</c:if>>DB</option>
+                            <option value="BACK"  <c:if test="${param.searchType eq 'BACK'}">selected</c:if>>BACK</option>
+                            <option value="DB"    <c:if test="${param.searchType eq 'DB'}">selected</c:if>>DB</option>
                         </select>
                     </p>
                     <!--

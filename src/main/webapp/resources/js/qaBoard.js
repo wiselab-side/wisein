@@ -134,6 +134,6 @@
         };
 
         // 글작성페이지로 이동
-        function go_regQaPage(category){
-           window.location.href="/qaBoard?" + "category=" + category;
+        function go_regQaPage(searchType){
+           window.location.href="/qaBoard?" + "searchType=" + searchType;
         }

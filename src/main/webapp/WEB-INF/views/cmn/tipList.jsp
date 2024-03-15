@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!--무게시글-->
 <c:if test="${tipList == null}">
     <div class="content-wrap boardList">
@@ -8,7 +10,7 @@
              <div class="header-section">
                  <div class="title">TIP</div>
                  <div class="content-top-group">
-                    <button type="button" onClick="location.href='tipBoard'"></button>
+                    <button type="button" onClick="go_regTipPage('${fn:replace(param.searchType, "'", "\\'")}')"></button>
                 </div>
              </div>
             <img src ="../resources/image/nonPosting.png" class="noPost">
@@ -24,7 +26,7 @@
                 <div class="title">TIP</div>
                 <div class="content-top-group">
                    <c:if test="${side_gubun ne 'Y'}">
-                        <button type="button" onClick="location.href='tipBoard'" ></button>
+                       <button type="button" onClick="go_regTipPage('${fn:replace(param.searchType, "'", "\\'")}')"></button>
                    </c:if>
                 </div>
             </div>

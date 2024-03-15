@@ -1444,3 +1444,12 @@ div.signUp-input-wrap i {
 .material-icons {
     cursor: pointer;
 }
+
+.content-wrap .matzip-write .title {
+    font-weight: bold;
+    font-size: 18px;
+    font-style: normal;
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+}
