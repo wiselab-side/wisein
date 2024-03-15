@@ -199,12 +199,13 @@
                 .catch(error => console.log(error))
                 .then(json =>  {
                     changeLikeHtml(json);
+                    window.location.reload();
                 })
             } else if(writer == ""){
                commonPopup.alertPopup("로그인 후 이용가능합니다.");
                window.location.href="/login";
             }
-            window.location.reload();
+
         }
 
         function udpLike(writer,num){
@@ -225,12 +226,13 @@
                 .catch(error => console.log(error))
                 .then(json =>  {
                     changeLikeHtml(json);
+                    window.location.reload();
                 })
             } else if(writer == ""){
                commonPopup.alertPopup("로그인 후 이용가능합니다.");
                window.location.href="/login";
             }
-            window.location.reload();
+
         }
 
         function regScrap(writer,num){
@@ -251,6 +253,7 @@
                 .catch(error => console.log(error))
                 .then(json =>  {
                     changeScrapHtml(json);
+                    window.location.reload();
                 })
             } else if(writer == ""){
                commonPopup.alertPopup("로그인 후 이용가능합니다.");
@@ -276,6 +279,7 @@
                 .catch(error => console.log(error))
                 .then(json =>  {
                     changeScrapHtml(json);
+                    window.location.reload();
                 })
             } else if(writer == ""){
                commonPopup.alertPopup("로그인 후 이용가능합니다.");

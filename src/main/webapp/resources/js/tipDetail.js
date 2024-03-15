@@ -214,8 +214,8 @@
               .catch(error => console.error('Error:', error))
               .then(json =>  {
                  changeLikeHtmlTip(json);
+                 window.location.reload();
               })
-              window.location.reload();
           }
 
           function udpLikeTip(tipNum){
@@ -235,9 +235,9 @@
               .then(response => response.json())
               .catch(error => console.error('Error:', error))
               .then(json =>  {
-                changeLikeHtmlTip(json);
+                  changeLikeHtmlTip(json);
+                  window.location.reload();
              })
-             window.location.reload();
           }
 
           function changeScrapHtmlTip(json){
@@ -276,8 +276,8 @@
               .catch(error => console.error('Error:', error))
               .then(json =>  {
                   changeScrapHtmlTip(json);
+                  window.location.reload();
               })
-              window.location.reload();
           }
 
           function udpScrapTip(tipNum){
@@ -298,8 +298,8 @@
               .catch(error => console.error('Error:', error))
               .then(json =>  {
                   changeScrapHtmlTip(json);
+                  window.location.reload();
               })
-              window.location.reload();
           }
 
          function resize(obj){
