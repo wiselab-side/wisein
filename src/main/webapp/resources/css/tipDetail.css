@@ -330,3 +330,26 @@ header ul li:nth-child(2) .select-wrap select {
     font-weight: bold;
     float: right;
 }
+
+.toUser:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background-color: #7E57C2;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 5px;
+    transition: opacity 1s ease-in-out;
+
+    position: relative;
+    z-index: 1;
+    left: 0;
+    top: 110%;
+}
+
+.toUser:hover:before {
+   opacity: 1;
+   visibility: visible;
+}

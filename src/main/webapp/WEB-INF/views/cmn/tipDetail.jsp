@@ -41,20 +41,21 @@
            </c:if>
 
            <c:if test="${tipBoardDTO.writer == memberId}">
-               <!--좋아요-->
-               <span id="changeLikeHtml">
-                   <div><c:out value="${tipBoardDTO.likeCount}"/></div>
-                   <span class="material-icons gray">thumb_up</span>
-               </span>
+               <div class="toUser" data-hover="본인글은 좋아요 또는 스크랩 할 수 없습니다">
+                   <!--좋아요-->
+                   <span id="changeLikeHtml">
+                       <div><c:out value="${tipBoardDTO.likeCount}"/></div>
+                       <span class="material-icons gray">thumb_up</span>
+                   </span>
 
-               <!--북마크-->
-               <span id="changeScrapHtml">
-                   <div class="icon-count"><c:out value="${tipBoardDTO.scrapCount}"/></div>
-                   <span class="material-icons gray">bookmarks</span>
-               </span>
+                   <!--북마크-->
+                   <span id="changeScrapHtml">
+                       <div class="icon-count"><c:out value="${tipBoardDTO.scrapCount}"/></div>
+                       <span class="material-icons gray">bookmarks</span>
+                   </span>
+               </div>
            </c:if>
         </div>
-
 
         <!--제목-->
         <div class="title">

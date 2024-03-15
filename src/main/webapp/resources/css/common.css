@@ -1440,3 +1440,7 @@ div.signUp-input-wrap i {
     font-size: 20px;
     line-height: 3;
 }
+
+.material-icons {
+    cursor: pointer;
+}

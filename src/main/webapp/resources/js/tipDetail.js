@@ -215,6 +215,7 @@
               .then(json =>  {
                  changeLikeHtmlTip(json);
               })
+              window.location.reload();
           }
 
           function udpLikeTip(tipNum){
@@ -236,6 +237,7 @@
               .then(json =>  {
                 changeLikeHtmlTip(json);
              })
+             window.location.reload();
           }
 
           function changeScrapHtmlTip(json){
@@ -275,6 +277,7 @@
               .then(json =>  {
                   changeScrapHtmlTip(json);
               })
+              window.location.reload();
           }
 
           function udpScrapTip(tipNum){
@@ -296,6 +299,7 @@
               .then(json =>  {
                   changeScrapHtmlTip(json);
               })
+              window.location.reload();
           }
 
          function resize(obj){
