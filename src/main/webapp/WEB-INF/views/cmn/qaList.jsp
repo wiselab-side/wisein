@@ -16,7 +16,7 @@
              <div class="header-section">
                  <div class="title">QA</div>
                  <div class="content-top-group">
-                    <button type="button" onclick="location.href='/qaBoard'" ></button>
+                    <button type="button" onclick="go_regQaPage('${fn:replace(param.searchType, "'", "\\'") }')" ></button>
                 </div>
              </div>
             <img src ="../resources/image/nonPosting.png" class="noPost">
@@ -31,7 +31,7 @@
             <div class="title">QA</div>
             <div class="content-top-group">
                 <c:if test="${side_gubun ne 'Y'}">
-                    <button type="button" onclick="location.href='/qaBoard'" ></button>
+                    <button type="button" onclick="go_regQaPage('${fn:replace(param.searchType, "'", "\\'")}')" ></button>
                 </c:if>
             </div>
         </div>

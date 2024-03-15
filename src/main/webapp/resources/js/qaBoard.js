@@ -132,3 +132,8 @@
             // 새로운 URL로 이동
             window.location.href = newUrl;
         };
+
+        // 글작성페이지로 이동
+        function go_regQaPage(category){
+           window.location.href="/qaBoard?" + "category=" + category;
+        }

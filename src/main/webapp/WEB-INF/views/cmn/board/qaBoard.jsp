@@ -13,14 +13,9 @@
                 <div class="content-inner-box">
                      <div class="select-wrap">
                          <select id="category" name="category" >
-                            <c:if test="${empty qaListDTO.category}">
-                                   <option value="FRONT">FRONT</option>
-                                   <option value="BACK">BACK</option>
-                                   <option value="DB">DB</option>
-                            </c:if>
-                            <c:if test="${!empty qaListDTO.category}">
-                                <option> <c:out value="${qaListDTO.category}" /> </option>
-                            </c:if>
+                             <option value="FRONT" <c:if test="${param.category eq 'FRONT'}">selected</c:if>>FRONT</option>
+                             <option value="BACK"  <c:if test="${param.category eq 'BACK'}">selected</c:if>>BACK</option>
+                             <option value="DB"    <c:if test="${param.category eq 'DB'}">selected</c:if>>DB</option>
                          </select>
                     </div>
                     <p>
