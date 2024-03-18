@@ -26,6 +26,15 @@
 
 <c:if test="${qaList != null}">
 <div class="content-wrap boardList">
+    <c:choose>
+        <c:when test="${param.gather == 'Y' || param.commentListWriter == member.id || questionsListWriter == member.id}">
+            <div class="board-type">작성 글 모아보기</div>
+        </c:when>
+        <c:when test="${param.reply == 'N'}">
+            <div class="board-type">스크랩 모아보기</div>
+        </c:when>
+        <c:otherwise></c:otherwise>
+    </c:choose>
     <section class="content-frame boardList">
         <div class="header-section">
             <div class="title">QA</div>
