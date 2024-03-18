@@ -274,11 +274,11 @@
     </select>
 
     <select id="checkLikeQaBoard" parameterType="LikeBoardDTO" resultType="LikeBoardDTO">
-        SELECT * FROM like_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
+        SELECT * FROM like_board WHERE board_idx = #{boardIdx} AND user_id = #{userId} AND BOARD_TYPE = 'qa'
     </select>
 
     <select id="checkScrapQaBoard" parameterType="ScrapBoardDTO" resultType="ScrapBoardDTO">
-        SELECT * FROM scrap_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
+        SELECT * FROM scrap_board WHERE board_idx = #{boardIdx} AND user_id = #{userId} AND BOARD_TYPE = 'qa'
     </select>
 
     <insert id="insertLikeQaBoard" parameterType="LikeBoardDTO">
@@ -297,7 +297,7 @@
         <if test="likeCheck == 0">
             SET LIKE_CHECK = 1
         </if>
-        WHERE board_idx = #{boardIdx}
+        WHERE board_idx = #{boardIdx} AND BOARD_TYPE = 'qa'
     </update>
 
     <update id="updateScrapQaBoard" parameterType="ScrapBoardDTO">
@@ -308,23 +308,23 @@
         <if test="scrapCheck == 0">
             SET scrap_check = 1
         </if>
-        WHERE board_idx = #{boardIdx}
+        WHERE board_idx = #{boardIdx} AND BOARD_TYPE = 'qa'
     </update>
 
     <select id="selectLikeQaBoardList" parameterType="MemberDTO" resultType="LikeBoardDTO">
-        SELECT * FROM like_board WHERE user_id = #{id}
+        SELECT * FROM like_board WHERE user_id = #{id} AND BOARD_TYPE = 'qa'
     </select>
 
     <select id="selectScrapQaBoardList" parameterType="MemberDTO" resultType="ScrapBoardDTO">
-        SELECT * FROM scrap_board WHERE user_id = #{id}
+        SELECT * FROM scrap_board WHERE user_id = #{id} AND BOARD_TYPE = 'qa'
     </select>
 
     <select id="selectOneLikeQaBoard" parameterType="LikeBoardDTO" resultType="LikeBoardDTO">
-        SELECT * FROM like_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
+        SELECT * FROM like_board WHERE board_idx = #{boardIdx} AND user_id = #{userId} AND BOARD_TYPE = 'qa'
     </select>
 
     <select id="selectOneScrapQaBoard" parameterType="ScrapBoardDTO" resultType="ScrapBoardDTO">
-        SELECT * FROM scrap_board WHERE board_idx = #{boardIdx} AND user_id = #{userId}
+        SELECT * FROM scrap_board WHERE board_idx = #{boardIdx} AND user_id = #{userId} AND BOARD_TYPE = 'qa'
     </select>
 
     <update id="adoptQaBoard" parameterType="QaListDTO">
@@ -429,6 +429,7 @@
              , A.PARENT_NUM
              , A.LIKE_COUNT
              , A.SCRAP_COUNT
+             , A.COUNT
           FROM (SELECT @ROWNUM:=@ROWNUM+1 AS RNUM
                      , QB.NUM
                      , QB.CATEGORY
@@ -442,15 +443,18 @@
                      , QB.PARENT_NUM
                      , QB.LIKE_COUNT
                      , QB.SCRAP_COUNT
+                     , QB2.COUNT
                   FROM QA_BOARD QB
                      , (SELECT @ROWNUM:=0) R
+                     , QA_BOARD QB2
                  WHERE 1=1
-				   AND CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE CATEGORY END
-           		   AND SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
-				   AND WRITER = #{writer}
-                   AND DEL_YN = 'N'
+				   AND QB.CATEGORY = CASE WHEN #{searchType} != 'all' THEN #{searchType} ELSE QB.CATEGORY END
+           		   AND QB.SUBJECT LIKE CONCAT ('%', #{keyword}, '%')
+				   AND QB.WRITER = #{writer}
+                   AND QB.DEL_YN = 'N'
                    AND QB.NUM > 0
-                   AND PARENT_NUM is NOT NULL
+                   AND QB.PARENT_NUM is NOT NULL
+                   AND QB.PARENT_NUM = QB2.NUM
                  GROUP BY QB.NUM
                  ORDER BY NUM DESC
                 ) AS A
