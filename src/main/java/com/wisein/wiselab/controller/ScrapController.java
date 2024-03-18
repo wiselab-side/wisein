@@ -54,7 +54,7 @@ public class ScrapController {
         model.addAttribute("qaList", qaList);
         model.addAttribute("pagination", pagination);
 
-        return "cmn/QaScrapList";
+        return "cmn/qaScrapList";
     }
 
     // TIP Scrap 모아보기
@@ -80,6 +80,6 @@ public class ScrapController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("pagination", pagination);
 
-        return "cmn/TipScrapList";
+        return "cmn/tipScrapList";
     }
 }
