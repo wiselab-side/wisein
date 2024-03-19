@@ -19,14 +19,19 @@
 </c:if>
 
 <!--유게시글-->
+
 <c:if test="${tipList != null}">
     <div class="content-wrap boardList">
-        <c:if test="${param.reply == 'N'}">
-            <div class="board-type">스크랩 모아보기</div>
-        </c:if>
-        <c:if test="${param.gather == 'Y' || writer == 'null'}">
-            <div class="board-type">작성 글 모아보기</div>
-        </c:if>
+        <c:choose>
+            <c:when test="${param.reply == 'Y'}"></c:when>
+            <c:when test="${param.who == 'null' && param.reply == 'N'}">
+                <div class="board-type">스크랩 모아보기</div>
+            </c:when>
+            <c:when test="${param.who != null && param.reply == 'null' || param.who != null && param.gather == 'Y'}">
+                <div class="board-type">작성 글 모아보기</div>
+            </c:when>
+            <c:otherwise></c:otherwise>
+        </c:choose>
         <section class="content-frame boardList">
             <div class="header-section">
                 <div class="title">TIP</div>

@@ -81,7 +81,7 @@ public class memberController {
 			return "redirect:qalist";
 		}
 
-		return "redirect:qalist";
+		return "redirect:qalist?reply=Y";
 	}
 
 	@GetMapping(value = "/user/logout")

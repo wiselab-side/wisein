@@ -83,10 +83,10 @@ public class tipController {
     @GetMapping(value="/gatherMemTip")
     public String gatherMemTip (HttpServletRequest request
             , @ModelAttribute("TipBoardDTO") TipBoardDTO dto
-            ,  @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
+            , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
             , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
             , @RequestParam(value="commentListWriter", required = false) String commentListWriter
-            , @RequestParam(value="tipWriter", required = false) String tipWriter
+            , @RequestParam(value="who", required = false) String who
             , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -94,20 +94,20 @@ public class tipController {
         // 카테고리 목록 가져오기
         List<TipBoardDTO> categoryList = tipBoardService.categoryList();
 
-        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
-            questionsListWriter = questionsListWriter.substring(1);
-            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
-            dto.setWriter(questionsListWriter);
-        }
-        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
-            commentListWriter = commentListWriter.substring(1);
-            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
-            dto.setWriter(commentListWriter);
-        }
-        if(tipWriter != null && !tipWriter.equals("\"\"")){
-            tipWriter = tipWriter.substring(1);
-            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
-            dto.setWriter(tipWriter);
+//        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
+//            questionsListWriter = questionsListWriter.substring(1);
+//            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
+//            dto.setWriter(questionsListWriter);
+//        }
+//        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
+//            commentListWriter = commentListWriter.substring(1);
+//            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
+//            dto.setWriter(commentListWriter);
+//        }
+        if(who != null && !who.equals("\"\"")){
+            who = who.substring(1);
+            who = who.substring(0, who.length()-1);
+            dto.setWriter(who);
         }
 
         //석삼 모아보기 첫진입
@@ -127,12 +127,12 @@ public class tipController {
         dto.setWriter((String)session.getAttribute("tipWriter"));
         session.setAttribute("tipWriter",dto.getWriter());
 
-        if(null != session.getAttribute("questionsListWriter")){
-            session.removeAttribute("questionsListWriter");
-        }
-        if(null != session.getAttribute("commentListWriter")){
-            session.removeAttribute("commentListWriter");
-        }
+//        if(null != session.getAttribute("questionsListWriter")){
+//            session.removeAttribute("questionsListWriter");
+//        }
+//        if(null != session.getAttribute("commentListWriter")){
+//            session.removeAttribute("commentListWriter");
+//        }
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
@@ -144,9 +144,12 @@ public class tipController {
         dto.setTotalRecordCount(tipBoardService.selectMemberTipTotalCount(dto));
         String pagination = PagingTagCustom.render(dto);
 
+        model.addAttribute("member", member);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("tipList", tipList);
         model.addAttribute("pagination", pagination);
+
+        System.out.println("tipList 확인 : " + tipList);
 
         return "cmn/tipList";
     }

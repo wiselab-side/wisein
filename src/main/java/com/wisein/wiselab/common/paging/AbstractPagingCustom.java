@@ -24,6 +24,8 @@ public abstract class AbstractPagingCustom {
 				map1.put("sort", pageInfo.getSort());
 				map1.put("order", pageInfo.getOrder());
 				map1.put("reply", pageInfo.getReply());
+
+				map1.put("who", pageInfo.getWho());
 				
 				sbuilder.append(replacesTag(getFirstPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map1)));
 			}
@@ -39,6 +41,8 @@ public abstract class AbstractPagingCustom {
 				map2.put("order", pageInfo.getOrder());
 				map2.put("reply", pageInfo.getReply());
 
+				map2.put("who", pageInfo.getWho());
+
 				sbuilder.append(replacesTag(getPreviousPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map2)));
 			}
 			
@@ -51,6 +55,8 @@ public abstract class AbstractPagingCustom {
 				map.put("sort", pageInfo.getSort());
 				map.put("order", pageInfo.getOrder());
 				map.put("reply", pageInfo.getReply());
+
+				map.put("who", pageInfo.getWho());
 
 				sbuilder.append(replacesTag(getPageNumTag(), pageInfo.getViewAddr()+"?"+makeQueryString(map) , pageInfo.getCurrentPageNo()==idx ? "active":"", idx+""));
 			}
@@ -66,6 +72,8 @@ public abstract class AbstractPagingCustom {
 				map3.put("order", pageInfo.getOrder());
 				map3.put("reply", pageInfo.getReply());
 
+				map3.put("who", pageInfo.getWho());
+
 				sbuilder.append(replacesTag(getNextPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map3)));
 			}
 			
@@ -79,6 +87,8 @@ public abstract class AbstractPagingCustom {
 				map4.put("sort", pageInfo.getSort());
 				map4.put("order", pageInfo.getOrder());
 				map4.put("reply", pageInfo.getReply());
+
+				map4.put("who", pageInfo.getWho());
 				
 				sbuilder.append(replacesTag(getLastPagetag(), pageInfo.getViewAddr()+"?"+makeQueryString(map4)));
 			}

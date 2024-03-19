@@ -1,15 +1,15 @@
 
         // 댓글-댓글모아보기
-        function comment_commentList_btn(commentQaWriter) {
-            window.location.href="/commentList?writer="+commentQaWriter;
+        function comment_commentList_btn(who) {
+            window.location.href='/commentList?who="'+who+'"';
         }
         // 원본-댓글모아보기
-        function commentList_btn(writer) {
-            window.location.href="/commentList?writer="+writer;
+        function commentList_btn(who) {
+            window.location.href='/commentList?who="'+who+'"';
         }
         // 댓글-질문모아보기
-        function comment_questionsList_btn(commentQaWriter) {
-            window.location.href="/questionsList?writer="+commentQaWriter;
+        function comment_questionsList_btn(who) {
+            window.location.href='/questionsList?who="'+who+'"';
         }
 
         // 원본-질문모아보기

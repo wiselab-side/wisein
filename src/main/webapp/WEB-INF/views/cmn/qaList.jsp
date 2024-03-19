@@ -27,11 +27,12 @@
 <c:if test="${qaList != null}">
 <div class="content-wrap boardList">
     <c:choose>
-        <c:when test="${param.gather == 'Y' || param.commentListWriter == member.id || questionsListWriter == member.id}">
-            <div class="board-type">작성 글 모아보기</div>
-        </c:when>
-        <c:when test="${param.reply == 'N'}">
+        <c:when test="${param.reply == 'Y'}"></c:when>
+        <c:when test="${param.who == 'null' && param.reply == 'N'}">
             <div class="board-type">스크랩 모아보기</div>
+        </c:when>
+        <c:when test="${param.who != null}">
+            <div class="board-type">작성 글 모아보기</div>
         </c:when>
         <c:otherwise></c:otherwise>
     </c:choose>

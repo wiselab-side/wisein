@@ -800,28 +800,28 @@ public class qaController {
     public String questionsList (HttpServletRequest request
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
             , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
-            , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
+            , @RequestParam(value="who", required = false) String who
             , @RequestParam(value="commentListWriter", required = false) String commentListWriter
             , @RequestParam(value="tipWriter", required = false) String tipWriter
            , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
-            questionsListWriter = questionsListWriter.substring(1);
-            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
-            qaListDTO.setWriter(questionsListWriter);
+        if(who != null && !who.equals("\"\"")){
+            who = who.substring(1);
+            who = who.substring(0, who.length()-1);
+            qaListDTO.setWriter(who);
         }
-        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
-            commentListWriter = commentListWriter.substring(1);
-            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
-            qaListDTO.setWriter(commentListWriter);
-        }
-        if(tipWriter != null && !tipWriter.equals("\"\"")){
-            tipWriter = tipWriter.substring(1);
-            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
-            qaListDTO.setWriter(tipWriter);
-        }
+//        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
+//            commentListWriter = commentListWriter.substring(1);
+//            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
+//            qaListDTO.setWriter(commentListWriter);
+//        }
+//        if(tipWriter != null && !tipWriter.equals("\"\"")){
+//            tipWriter = tipWriter.substring(1);
+//            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
+//            qaListDTO.setWriter(tipWriter);
+//        }
 
         // 사이드모아보기 처음일경우
         if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
@@ -843,12 +843,12 @@ public class qaController {
 
         session.setAttribute("questionsListWriter", qaListDTO.getWriter());
 
-        if(null != session.getAttribute("commentListWriter")){
-            session.removeAttribute("commentListWriter");
-        }
-        if(null != session.getAttribute("tipWriter")){
-            session.removeAttribute("tipWriter");
-        }
+//        if(null != session.getAttribute("commentListWriter")){
+//            session.removeAttribute("commentListWriter");
+//        }
+//        if(null != session.getAttribute("tipWriter")){
+//            session.removeAttribute("tipWriter");
+//        }
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
@@ -870,27 +870,27 @@ public class qaController {
             , @ModelAttribute("qaListDTO") QaListDTO qaListDTO
             , @RequestParam(value="sideCheck", required = false, defaultValue = "N") String sideCheck
             , @RequestParam(value="questionsListWriter", required = false) String questionsListWriter
-            , @RequestParam(value="commentListWriter", required = false) String commentListWriter
+            , @RequestParam(value="who", required = false) String who
             , @RequestParam(value="tipWriter", required = false) String tipWriter
             , Model model) throws Exception {
         HttpSession session= request.getSession();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
 
-        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
-            questionsListWriter = questionsListWriter.substring(1);
-            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
-            qaListDTO.setWriter(questionsListWriter);
+//        if(questionsListWriter != null && !questionsListWriter.equals("\"\"")){
+//            questionsListWriter = questionsListWriter.substring(1);
+//            questionsListWriter = questionsListWriter.substring(0, questionsListWriter.length()-1);
+//            qaListDTO.setWriter(questionsListWriter);
+//        }
+        if(who != null && !who.equals("\"\"")){
+            who = who.substring(1);
+            who = who.substring(0, who.length()-1);
+            qaListDTO.setWriter(who);
         }
-        if(commentListWriter != null && !commentListWriter.equals("\"\"")){
-            commentListWriter = commentListWriter.substring(1);
-            commentListWriter = commentListWriter.substring(0, commentListWriter.length()-1);
-            qaListDTO.setWriter(commentListWriter);
-        }
-        if(tipWriter != null && !tipWriter.equals("\"\"")){
-            tipWriter = tipWriter.substring(1);
-            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
-            qaListDTO.setWriter(tipWriter);
-        }
+//        if(tipWriter != null && !tipWriter.equals("\"\"")){
+//            tipWriter = tipWriter.substring(1);
+//            tipWriter = tipWriter.substring(0, tipWriter.length()-1);
+//            qaListDTO.setWriter(tipWriter);
+//        }
 
         // 사이드바에서 QA답글모아보기 예외처리
         if(qaListDTO.getWriter() == null && sideCheck.equals("Y")){
@@ -912,12 +912,12 @@ public class qaController {
 
         session.setAttribute("commentListWriter", qaListDTO.getWriter());
 
-        if(null != session.getAttribute("questionsListWriter")){
-            session.removeAttribute("questionsListWriter");
-        }
-        if(null != session.getAttribute("tipWriter")){
-            session.removeAttribute("tipWriter");
-        }
+//        if(null != session.getAttribute("questionsListWriter")){
+//            session.removeAttribute("questionsListWriter");
+//        }
+//        if(null != session.getAttribute("tipWriter")){
+//            session.removeAttribute("tipWriter");
+//        }
 
         String side_gubun = "Y";
         model.addAttribute("side_gubun", side_gubun);
