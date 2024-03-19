@@ -1441,8 +1441,23 @@ div.signUp-input-wrap i {
     line-height: 3;
 }
 
-.material-icons {
+.board-type {
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.board-header {
     cursor: pointer;
+}
+
+.board-header .board-text, .board-header .board-map, .board-header .food-list-title, .board-map>material-icons, .matzip-list-line .matzip-category {
+    cursor: default;
+}
+
+.board-line .material-icons {
+    cursor: default;
 }
 
 .content-wrap .matzip-write .title {

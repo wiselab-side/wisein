@@ -31,7 +31,7 @@
                      <c:if test="${not empty member}">
                          <li><a href="/questionsList?sideCheck=Y&gather=Y&who=%22${member.id}%22">작성 글 모아보기</a> </li>
                          <li><a href="/gatherQaScrap?sideCheck=Y&reply=N&who=null">스크랩 모아보기</a> </li>
-                         <li onclick="userUpd()">정보 수정 </li>
+                         <li onclick="userUpd()"><a href="#">정보 수정</a></li>
                          <li><a href="/user/logout">로그아웃</a></li>
                          <li onclick="userWithdraw()">탈퇴</a> </li>
                      </c:if>
