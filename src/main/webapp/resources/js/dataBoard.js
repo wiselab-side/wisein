@@ -17,7 +17,7 @@ console.log(tipWriter);
 var pathName = window.location.pathname
 //console.log(pathName);
 if(pathName !== "/questionsList" && pathName !== "/commentList" && pathName !== "/gatherMemTip" && pathName !== "/gatherQaScrap" && pathName !== "/gatherTipScrap"){
-    var title = document.querySelector(".title").getInnerHTML().trim()
+    var title = document.querySelector(".title").getInnerHTML().trim();
 
 //console.log(title);
     leftSideBar.innerHTML +='<li style = "cursor: pointer; padding-left: 10px; padding-bottom: 5px"><a>' + title +' </a></li>';
