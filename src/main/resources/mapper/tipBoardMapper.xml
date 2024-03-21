@@ -170,7 +170,7 @@
                   ,SCRAP_COUNT
              FROM TIP_BOARD
             WHERE NUM = #{num}
-    </select>
+        </select>
 
     <!--TipBoard 게시글 등록-->
     <insert id="insertTipBoard" parameterType="TipBoardDTO">

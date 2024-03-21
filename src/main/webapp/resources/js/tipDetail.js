@@ -9,7 +9,7 @@
         if (memId != "") memId = memId.innerHTML;
 
         function gatherMemTip(tipWriter){
-            window.location.href="/gatherMemTip?writer="+tipWriter;
+            window.location.href="/gatherMemTip?who="+tipWriter;
         }
 
          async function delTip(){

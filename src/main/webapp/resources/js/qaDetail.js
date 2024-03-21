@@ -13,8 +13,8 @@
         }
 
         // 원본-질문모아보기
-        function questionsList_btn(writer) {
-            window.location.href="/questionsList?writer="+writer;
+        function questionsList_btn(who) {
+            window.location.href='/questionsList?who="'+who+'"';
         }
 
 
@@ -179,7 +179,7 @@
                 }
             }
 
-            window.location.reload();
+
         }
 
         function regLike(writer,num){

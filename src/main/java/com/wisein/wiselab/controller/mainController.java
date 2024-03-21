@@ -11,7 +11,7 @@ public class mainController {
 
 	@GetMapping(value = "/")
 	public String main() throws Exception {
-		return "redirect:qalist";
+		return "redirect:qalist?reply=Y";
 	}
 
 	@GetMapping(value = "/totalSearch")
