@@ -35,9 +35,9 @@ if(pathName === "/questionsList" || pathName === "/commentList" || pathName === 
         who = tipWriter;
     }
     who = (who != null ? who : member.id)
-    leftSideBar.innerHTML +="<li class='questionsList' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/questionsList?gather=Y&who=" + "\"" + who + "\">Qa질문 모아보기</a></li>";
-    leftSideBar.innerHTML +="<li class='commentList' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/commentList?gather=Y&reply=N&who=" + "\"" + who + "\">Qa답글 모아보기</a></li>";
-    leftSideBar.innerHTML +="<li class='gatherMemTip' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherMemTip?gather=Y&who=" + "\"" + who + "\">Tip게시글 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='questionsList' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/questionsList?gather=Y&who=" + "\"" + who + "\">QA질문 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='commentList' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/commentList?gather=Y&reply=N&who=" + "\"" + who + "\">QA답글 모아보기</a></li>";
+    leftSideBar.innerHTML +="<li class='gatherMemTip' style='cursor: pointer; padding-left: 10px; padding-bottom: 5px'><a href=/gatherMemTip?gather=Y&who=" + "\"" + who + "\">TIP게시글 모아보기</a></li>";
 
     const temp = document.querySelector(".questionsList");
     temp.style="color: #949494; margin: 1em 0; cursor: pointer; padding-left: 10px; padding-bottom: 5px; font-weight: 300;";

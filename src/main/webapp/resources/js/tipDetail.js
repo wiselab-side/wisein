@@ -8,8 +8,8 @@
         if (tipWriter != "") tipWriter = tipWriter.innerHTML;
         if (memId != "") memId = memId.innerHTML;
 
-        function gatherMemTip(tipWriter){
-            window.location.href="/gatherMemTip?who="+tipWriter;
+        function gatherMemTip(who){
+            window.location.href='/gatherMemTip?who="'+who+'"';
         }
 
          async function delTip(){
